@@ -2,9 +2,14 @@ import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from 
 import { Phone, Menu, X, Star, Sparkles, ShieldCheck, Globe as Globe2, Clock, Users, Heart, Briefcase, Coins, Home as HomeIcon, Flame, Brain, Compass, Activity, CalendarClock, PlayCircle, ChevronDown, Video, Headphones, CheckCircle2, ArrowRight, Mail, MapPin, Facebook, Instagram, Youtube, Twitter, Award } from 'lucide-react';
 import { BookingModal } from './components/BookingModal';
 import { ChatWidget } from './components/ChatWidget';
+import { WhatsAppWidget } from './components/WhatsAppWidget';
 
-const PHONE = '+91 98763-44400';
-const PHONE_TEL = 'tel:+919876344400';
+/** Contact details aligned with SadhguruANAND site */
+const PHONE = '+91 95551 40404';
+const PHONE_TEL = 'tel:+919555140404';
+const EMAIL = 'info@sadhguruanand.com';
+const EMAIL_MAILTO = `mailto:${EMAIL}`;
+const WHATSAPP_URL = 'https://wa.me/919555140404';
 
 const GURU_IMG =
   'https://images.pexels.com/photos/6076009/pexels-photo-6076009.jpeg?auto=compress&cs=tinysrgb&w=1200';
@@ -87,6 +92,7 @@ function App() {
       <Reveal><FinalCTA onBook={() => booking.book('normal')} /></Reveal>
       <Reveal><Footer /></Reveal>
       <BookingModal open={booking.open} onClose={booking.close} defaultType={booking.type} />
+      <WhatsAppWidget whatsappHref={WHATSAPP_URL} />
       <ChatWidget
         phone={PHONE}
         phoneTel={PHONE_TEL}
@@ -153,21 +159,31 @@ function TopBar({ onBook }: { onBook: () => void }) {
           ))}
         </nav>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 md:gap-3 shrink-0">
+          <a
+            href={EMAIL_MAILTO}
+            className={`hidden xl:inline-flex max-w-[200px] min-w-0 items-center gap-2 text-xs font-semibold truncate ${
+              scrolled ? 'text-slate-600 hover:text-royal-800' : 'text-white/85 hover:text-white'
+            }`}
+            title={EMAIL}
+          >
+            <Mail size={15} className="text-gold-500 shrink-0" />
+            <span className="truncate">{EMAIL}</span>
+          </a>
           <a
             href={PHONE_TEL}
-            className={`hidden md:inline-flex items-center gap-2 text-sm font-semibold ${
+            className={`hidden md:inline-flex items-center gap-2 text-sm font-semibold whitespace-nowrap ${
               scrolled ? 'text-royal-900' : 'text-white'
             }`}
           >
-            <Phone size={16} className="text-gold-500" />
+            <Phone size={16} className="text-gold-500 shrink-0" />
             {PHONE}
           </a>
           <button
             onClick={onBook}
-            className="inline-flex items-center gap-2 px-4 md:px-5 py-2.5 rounded-full bg-gradient-to-r from-gold-500 to-gold-600 text-white text-sm font-semibold shadow-md hover:shadow-lg hover:-translate-y-0.5 transition"
+            className="inline-flex items-center gap-2 px-4 md:px-5 py-2.5 rounded-full bg-gradient-to-r from-gold-500 to-gold-600 text-white text-xs sm:text-sm font-semibold uppercase tracking-wide shadow-md hover:shadow-lg hover:-translate-y-0.5 transition touch-manipulation"
           >
-            Consult Now
+            Contact Now
             <ArrowRight size={15} />
           </button>
           <button
@@ -195,6 +211,17 @@ function TopBar({ onBook }: { onBook: () => void }) {
             ))}
             <a href={PHONE_TEL} className="py-2 text-royal-800 font-semibold flex items-center gap-2">
               <Phone size={16} /> {PHONE}
+            </a>
+            <a href={EMAIL_MAILTO} className="py-2 text-royal-800 font-semibold flex items-center gap-2">
+              <Mail size={16} /> {EMAIL}
+            </a>
+            <a
+              href={WHATSAPP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="py-2 text-emerald-700 font-semibold"
+            >
+              WhatsApp — {PHONE}
             </a>
           </div>
         </div>
@@ -1005,7 +1032,7 @@ function Footer() {
             </li>
             <li className="flex items-start gap-2">
               <Mail size={15} className="text-gold-400 mt-1 flex-shrink-0" />
-              <a href="mailto:sadhguruanand@gmail.com">sadhguruanand@gmail.com</a>
+              <a href={EMAIL_MAILTO}>{EMAIL}</a>
             </li>
             <li className="flex items-start gap-2">
               <MapPin size={15} className="text-gold-400 mt-1 flex-shrink-0" />
