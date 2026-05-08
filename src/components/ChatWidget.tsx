@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
+
+const MOBILE_CHAT_MQ = '(max-width: 639px)';
 import { MessageCircle, X, Send, Sparkles } from 'lucide-react';
 
 export type ChatMessage = {
@@ -46,6 +48,21 @@ export function ChatWidget({ phone, phoneTel, onBookConsultation }: Props) {
     listRef.current?.scrollTo({ top: listRef.current.scrollHeight, behavior: 'smooth' });
   }, [messages, open]);
 
+  useEffect(() => {
+    if (!open) return;
+    const saved = document.body.style.overflow;
+    const mq = window.matchMedia(MOBILE_CHAT_MQ);
+    const sync = () => {
+      document.body.style.overflow = mq.matches ? 'hidden' : saved;
+    };
+    sync();
+    mq.addEventListener('change', sync);
+    return () => {
+      mq.removeEventListener('change', sync);
+      document.body.style.overflow = saved;
+    };
+  }, [open]);
+
   const send = () => {
     const text = draft.trim();
     if (!text) return;
@@ -73,118 +90,144 @@ export function ChatWidget({ phone, phoneTel, onBookConsultation }: Props) {
   };
 
   return (
-    <div className="fixed bottom-5 right-5 z-[90] flex flex-col items-end gap-3 font-sans">
+    <>
       {open && (
-        <div
-          id="chat-widget-panel"
-          role="dialog"
-          aria-labelledby="chat-widget-title"
-          className="w-[min(100vw-2rem,380px)] max-h-[min(72vh,520px)] flex flex-col rounded-3xl bg-white shadow-premium border border-slate-100 overflow-hidden animate-scale-in origin-bottom-right"
-        >
-          <header className="relative px-5 py-4 bg-gradient-to-r from-royal-900 to-royal-700 text-white flex items-center gap-3">
-            <div className="w-11 h-11 rounded-full gold-border flex items-center justify-center flex-shrink-0 bg-royal-900">
-              <Sparkles size={18} className="text-gold-400" aria-hidden />
-            </div>
-            <div className="min-w-0 flex-1">
-              <div id="chat-widget-title" className="font-serif text-lg font-semibold leading-tight">
-                SadhguruANAND
-              </div>
-              <div className="text-xs text-white/75">We typically reply within a few hours</div>
-            </div>
-            <button
-              type="button"
-              onClick={() => setOpen(false)}
-              className="p-2 rounded-full hover:bg-white/10 transition text-white"
-              aria-label="Close chat"
-            >
-              <X size={20} />
-            </button>
-          </header>
-
-          <div
-            ref={listRef}
-            className="flex-1 overflow-y-auto px-4 py-4 space-y-3 min-h-[200px]"
-            style={{
-              scrollbarGutter: 'stable',
-              background: 'linear-gradient(180deg, #fdfbf7 0%, #ffffff 45%)',
-            }}
-          >
-            {messages.map((msg) => (
-              <div
-                key={msg.id}
-                className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
-              >
-                <div
-                  className={`max-w-[88%] rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed ${
-                    msg.role === 'user'
-                      ? 'bg-royal-800 text-white rounded-br-md'
-                      : 'bg-white text-slate-700 border border-slate-100 shadow-sm rounded-bl-md'
-                  }`}
-                >
-                  {msg.text}
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="border-t border-slate-100 p-3 bg-white space-y-2">
-            <div className="flex flex-wrap gap-2">
-              <a
-                href={phoneTel}
-                className="text-xs font-semibold text-royal-800 hover:text-gold-600 transition px-2.5 py-1 rounded-full bg-royal-50"
-              >
-                Call {phone}
-              </a>
-              {onBookConsultation && (
-                <button
-                  type="button"
-                  onClick={() => {
-                    onBookConsultation();
-                    setOpen(false);
-                  }}
-                  className="text-xs font-semibold text-royal-800 hover:text-gold-600 transition px-2.5 py-1 rounded-full bg-gold-400/15"
-                >
-                  Book consultation
-                </button>
-              )}
-            </div>
-            <div className="flex items-end gap-2">
-              <textarea
-                ref={inputRef}
-                rows={2}
-                value={draft}
-                onChange={(e) => setDraft(e.target.value)}
-                onKeyDown={onKeyDown}
-                placeholder="Type your message..."
-                className="flex-1 resize-none rounded-2xl border border-slate-200 px-3.5 py-2.5 text-sm text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-royal-600/25 focus:border-royal-600 transition"
-              />
-              <button
-                type="button"
-                onClick={send}
-                disabled={!draft.trim()}
-                className="flex-shrink-0 w-11 h-11 rounded-2xl bg-gradient-to-br from-gold-500 to-gold-600 text-white flex items-center justify-center shadow-md hover:shadow-lg hover:-translate-y-0.5 transition disabled:opacity-45 disabled:translate-y-0 disabled:shadow-none"
-                aria-label="Send message"
-              >
-                <Send size={18} className="ml-px" />
-              </button>
-            </div>
-          </div>
-        </div>
+        <button
+          type="button"
+          className="fixed inset-0 z-[89] bg-royal-900/50 backdrop-blur-[2px] sm:hidden animate-fade-in touch-manipulation"
+          aria-label="Close chat"
+          onClick={() => setOpen(false)}
+        />
       )}
 
-      <button
-        type="button"
-        onClick={() => setOpen((o) => !o)}
-        className={`group flex items-center justify-center rounded-full shadow-premium transition focus:outline-none focus-visible:ring-2 focus-visible:ring-gold-500 focus-visible:ring-offset-2 ${
-          open
-            ? 'w-14 h-14 bg-royal-800 text-white hover:bg-royal-900'
-            : 'w-16 h-16 bg-gradient-to-br from-gold-500 to-gold-600 text-white hover:-translate-y-0.5 hover:shadow-premium ring-4 ring-white/90'
-        }`}
-        aria-expanded={open}
-        aria-controls="chat-widget-panel"
+      <div
+        className="fixed z-[90] flex flex-col font-sans pointer-events-none
+          inset-x-0 bottom-0 max-sm:gap-2
+          pb-[max(0.75rem,env(safe-area-inset-bottom,0px))]
+          pl-[max(0.75rem,env(safe-area-inset-left,0px))]
+          pr-[max(0.75rem,env(safe-area-inset-right,0px))]
+          pt-2
+          sm:inset-auto sm:left-auto sm:right-5 sm:bottom-5 sm:top-auto sm:max-w-none sm:gap-3 sm:p-0 sm:pt-0
+          items-stretch sm:items-end"
       >
-        {open ? <X size={24} /> : <MessageCircle size={28} strokeWidth={2} className="group-hover:scale-105 transition" />}
-      </button>
-    </div>
+        {open && (
+          <div
+            id="chat-widget-panel"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="chat-widget-title"
+            className="pointer-events-auto flex min-h-0 w-full flex-col overflow-hidden rounded-t-[1.75rem] border border-slate-100 border-b-0 bg-white shadow-premium
+              max-sm:max-h-[min(88dvh,100svh)]
+              sm:max-h-[min(72vh,520px)] sm:w-[min(100vw-2.5rem,380px)] sm:rounded-3xl sm:border-b
+              animate-scale-in max-sm:origin-bottom sm:origin-bottom-right"
+          >
+            <header className="relative flex flex-shrink-0 items-center gap-3 bg-gradient-to-r from-royal-900 to-royal-700 px-4 py-3.5 text-white sm:px-5 sm:py-4">
+              <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full bg-royal-900 gold-border">
+                <Sparkles size={18} className="text-gold-400" aria-hidden />
+              </div>
+              <div className="min-w-0 flex-1">
+                <div id="chat-widget-title" className="font-serif text-base font-semibold leading-tight sm:text-lg">
+                  SadhguruANAND
+                </div>
+                <div className="text-xs text-white/75">We typically reply within a few hours</div>
+              </div>
+              <button
+                type="button"
+                onClick={() => setOpen(false)}
+                className="touch-manipulation rounded-full p-2.5 text-white transition hover:bg-white/10 min-h-[44px] min-w-[44px] flex items-center justify-center"
+                aria-label="Close chat"
+              >
+                <X size={20} />
+              </button>
+            </header>
+
+            <div
+              ref={listRef}
+              className="min-h-[min(40dvh,220px)] flex-1 space-y-3 overflow-y-auto overscroll-contain px-4 py-4 sm:min-h-[200px]"
+              style={{
+                scrollbarGutter: 'stable',
+                background: 'linear-gradient(180deg, #fdfbf7 0%, #ffffff 45%)',
+                WebkitOverflowScrolling: 'touch',
+              }}
+            >
+              {messages.map((msg) => (
+                <div
+                  key={msg.id}
+                  className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
+                >
+                  <div
+                    className={`max-w-[min(88%,20rem)] rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed sm:max-w-[88%] ${
+                      msg.role === 'user'
+                        ? 'rounded-br-md bg-royal-800 text-white'
+                        : 'rounded-bl-md border border-slate-100 bg-white text-slate-700 shadow-sm'
+                    }`}
+                  >
+                    {msg.text}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="flex-shrink-0 space-y-2 border-t border-slate-100 bg-white p-3 pb-[max(0.75rem,env(safe-area-inset-bottom,0px))] sm:pb-3">
+              <div className="flex flex-wrap gap-2">
+                <a
+                  href={phoneTel}
+                  className="inline-flex min-h-[40px] items-center rounded-full bg-royal-50 px-3 py-2 text-xs font-semibold text-royal-800 transition hover:text-gold-600 touch-manipulation"
+                >
+                  Call {phone}
+                </a>
+                {onBookConsultation && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      onBookConsultation();
+                      setOpen(false);
+                    }}
+                    className="inline-flex min-h-[40px] items-center rounded-full bg-gold-400/15 px-3 py-2 text-xs font-semibold text-royal-800 transition hover:text-gold-600 touch-manipulation"
+                  >
+                    Book consultation
+                  </button>
+                )}
+              </div>
+              <div className="flex items-end gap-2">
+                <textarea
+                  ref={inputRef}
+                  rows={2}
+                  value={draft}
+                  onChange={(e) => setDraft(e.target.value)}
+                  onKeyDown={onKeyDown}
+                  placeholder="Type your message..."
+                  enterKeyHint="send"
+                  className="min-h-[44px] flex-1 resize-none rounded-2xl border border-slate-200 px-3.5 py-3 text-base text-slate-800 placeholder:text-slate-400 transition focus:border-royal-600 focus:outline-none focus:ring-2 focus:ring-royal-600/25 sm:min-h-0 sm:py-2.5 sm:text-sm"
+                />
+                <button
+                  type="button"
+                  onClick={send}
+                  disabled={!draft.trim()}
+                  className="flex h-12 w-12 flex-shrink-0 touch-manipulation items-center justify-center rounded-2xl bg-gradient-to-br from-gold-500 to-gold-600 text-white shadow-md transition hover:-translate-y-0.5 hover:shadow-lg disabled:translate-y-0 disabled:opacity-45 disabled:shadow-none sm:h-11 sm:w-11"
+                  aria-label="Send message"
+                >
+                  <Send size={18} className="ml-px" />
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        <button
+          type="button"
+          onClick={() => setOpen((o) => !o)}
+          className={`group pointer-events-auto touch-manipulation self-end flex items-center justify-center rounded-full shadow-premium transition focus:outline-none focus-visible:ring-2 focus-visible:ring-gold-500 focus-visible:ring-offset-2 max-sm:ring-2 max-sm:ring-white/90 ${
+            open
+              ? 'h-14 w-14 bg-royal-800 text-white hover:bg-royal-900'
+              : 'h-[3.75rem] w-[3.75rem] bg-gradient-to-br from-gold-500 to-gold-600 text-white hover:-translate-y-0.5 hover:shadow-premium sm:h-16 sm:w-16 sm:ring-4 sm:ring-white/90'
+          }`}
+          aria-expanded={open}
+          aria-controls="chat-widget-panel"
+        >
+          {open ? <X size={24} /> : <MessageCircle size={28} strokeWidth={2} className="transition group-hover:scale-105" />}
+        </button>
+      </div>
+    </>
   );
 }
