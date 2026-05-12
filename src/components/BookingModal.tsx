@@ -68,7 +68,7 @@ export function BookingModal({ open, onClose, defaultType = 'normal' }: Props) {
             </p>
             <button
               onClick={reset}
-              className="px-6 py-3 rounded-full bg-royal-800 text-white font-medium hover:bg-royal-900 transition"
+              className="px-6 py-3 rounded-md bg-cta-500 text-white font-medium hover:bg-cta-600 transition"
             >
               Close
             </button>
@@ -145,7 +145,7 @@ export function BookingModal({ open, onClose, defaultType = 'normal' }: Props) {
             <button
               type="submit"
               disabled={loading}
-              className="mt-6 w-full py-3.5 rounded-full bg-royal-800 text-white font-semibold hover:bg-royal-900 transition flex items-center justify-center gap-2 disabled:opacity-60"
+              className="mt-6 w-full py-3.5 rounded-md bg-cta-500 text-white font-semibold hover:bg-cta-600 transition flex items-center justify-center gap-2 disabled:opacity-60"
             >
               {loading && <Loader2 className="animate-spin" size={18} />}
               {loading ? 'Submitting' : 'Confirm Booking Request'}
@@ -167,7 +167,7 @@ export function BookingModal({ open, onClose, defaultType = 'normal' }: Props) {
           font-size: 0.95rem;
           transition: border-color .15s, box-shadow .15s;
         }
-        .input:focus { outline: none; border-color: #1e3a8a; box-shadow: 0 0 0 3px rgba(30,58,138,0.15); }
+        .input:focus { outline: none; border-color: #29abe2; box-shadow: 0 0 0 3px rgba(41, 171, 226, 0.2); }
       `}</style>
     </div>
   );

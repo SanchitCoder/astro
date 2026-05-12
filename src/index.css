@@ -7,44 +7,55 @@
     scroll-behavior: smooth;
   }
   body {
-    @apply font-sans text-slate-800 antialiased;
-    background-color: #fbfaf6;
+    @apply font-sans text-charcoal antialiased;
+    background-color: #ffffff;
   }
   h1, h2, h3, h4 {
-    @apply font-serif;
+    @apply font-sans font-bold text-royal-900;
     line-height: 1.2;
   }
   p {
     line-height: 1.65;
+    @apply text-charcoal-muted;
   }
 }
 
 @layer utilities {
   .bg-hero-gradient {
-    background: radial-gradient(1200px 600px at 10% -10%, rgba(229, 169, 53, 0.18), transparent 60%),
-                radial-gradient(900px 500px at 110% 10%, rgba(42, 76, 184, 0.22), transparent 60%),
-                linear-gradient(135deg, #0a1740 0%, #15296b 55%, #1e3a8a 100%);
+    background:
+      radial-gradient(900px 520px at 50% 18%, rgba(41, 171, 226, 0.12), transparent 55%),
+      radial-gradient(700px 400px at 10% 90%, rgba(0, 74, 124, 0.35), transparent 50%),
+      radial-gradient(800px 500px at 95% 80%, rgba(0, 51, 102, 0.45), transparent 50%),
+      linear-gradient(165deg, #003366 0%, #004A7C 45%, #085580 100%);
   }
   .bg-soft-gradient {
-    background: linear-gradient(180deg, #fbfaf6 0%, #fff7e8 100%);
+    background: linear-gradient(180deg, #ffffff 0%, #f4f4f4 100%);
   }
   .bg-cta-gradient {
-    background: linear-gradient(135deg, #0f1f52 0%, #1e3a8a 45%, #c88a1e 130%);
+    background: linear-gradient(135deg, #003366 0%, #004a7c 42%, #1a7aad 88%, #29abe2 130%);
   }
   .gold-border {
-    background: linear-gradient(135deg, #f7d27a, #c88a1e);
+    background: linear-gradient(135deg, #dcc68a, #96773e);
   }
   .text-gradient-gold {
-    background: linear-gradient(135deg, #f7d27a 0%, #e5a935 50%, #c88a1e 100%);
+    background: linear-gradient(135deg, #dcc68a 0%, #c5a059 45%, #96773e 100%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
   }
   .section-heading {
-    @apply font-serif text-3xl md:text-4xl lg:text-5xl font-semibold text-royal-900;
+    @apply font-sans text-3xl md:text-4xl lg:text-5xl font-bold text-royal-900 tracking-tight;
   }
   .ring-gold {
-    box-shadow: 0 0 0 1px rgba(200, 138, 30, 0.35), 0 20px 40px -18px rgba(15, 31, 82, 0.35);
+    box-shadow:
+      0 0 0 1px rgba(197, 160, 89, 0.45),
+      0 20px 40px -18px rgba(0, 51, 102, 0.35);
+  }
+  .quote-script {
+    font-family: 'Great Vibes', cursive;
+    font-weight: 400;
+    color: #b22222;
+    letter-spacing: 0.02em;
   }
 
   .reveal {
@@ -86,8 +97,12 @@
 }
 
 @keyframes fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes scale-in {
@@ -102,13 +117,23 @@
 }
 
 @keyframes drift {
-  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
-  50% { transform: translate3d(12px, -10px, 0) scale(1.03); }
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(12px, -10px, 0) scale(1.03);
+  }
 }
 
 @keyframes drift-reverse {
-  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
-  50% { transform: translate3d(-10px, 12px, 0) scale(1.02); }
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(-10px, 12px, 0) scale(1.02);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

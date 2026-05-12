@@ -6,26 +6,47 @@ export default {
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
         serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+        script: ['"Great Vibes"', 'cursive'],
       },
       colors: {
+        /** Deep navy — hero, footer, dark sections (reference ~#004A7C / #003366) */
         royal: {
-          50: '#eef2ff',
-          100: '#dae3ff',
-          500: '#2a4cb8',
-          600: '#1e3a8a',
-          700: '#15296b',
-          800: '#0f1f52',
-          900: '#0a1740',
+          50: '#e8f4fa',
+          100: '#d1e8f5',
+          200: '#a8d4ea',
+          300: '#7ab8d9',
+          400: '#4596c4',
+          500: '#1a7aad',
+          600: '#0d6494',
+          700: '#085580',
+          800: '#004A7C',
+          900: '#003366',
         },
+        /** Brand gold / muted tan (reference ~#C5A059) */
         gold: {
-          300: '#f7d27a',
-          400: '#f0bf50',
-          500: '#e5a935',
-          600: '#c88a1e',
+          300: '#dcc68a',
+          400: '#C5A059',
+          500: '#b08d4a',
+          600: '#96773e',
+          700: '#7d6234',
         },
+        /** Primary action — sky blue CTAs (reference ~#29ABE2) */
+        cta: {
+          400: '#4db8e8',
+          500: '#29ABE2',
+          600: '#0099FF',
+          700: '#0088e6',
+        },
+        /** Body copy on light surfaces */
+        charcoal: {
+          DEFAULT: '#333333',
+          muted: '#555555',
+        },
+        /** Muted section wash */
+        section: '#F4F4F4',
       },
       boxShadow: {
-        premium: '0 20px 50px -12px rgba(15, 31, 82, 0.25)',
+        premium: '0 20px 50px -12px rgba(0, 51, 102, 0.22)',
       },
     },
   },
