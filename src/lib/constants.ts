@@ -16,7 +16,3 @@ export const GURU_IMG_RESOURCE = '/guru-resource.png';
 
 /** Testimonials gallery — from project `image copy 3.png` (cutout portrait) */
 export const GURU_IMG_GALLERY = '/guru-gallery-cutout.png';
-
-/** Normal consultation — sticky bar compares audio vs video from pricing */
-export const PRICE_AUDIO_INR = 11_000;
-export const PRICE_VIDEO_INR = 15_000;

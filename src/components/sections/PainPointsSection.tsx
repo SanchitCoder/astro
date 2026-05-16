@@ -1,21 +1,34 @@
-import { XCircle, ArrowRight } from 'lucide-react';
+import { XCircle } from 'lucide-react';
 import { Reveal } from '../ui/Reveal';
-import { CTAButton } from '../ui/CTAButton';
 
 const PROBLEMS = [
-  { title: 'Career Confusion', line: 'Stuck in direction, job delays, or struggling for that next breakthrough.' },
-  { title: 'Relationship Issues', line: 'Marriage delays, compatibility doubts, or recurring conflicts at home.' },
-  { title: 'Financial Stress', line: 'Blocked income, uncontrolled expenses, or unstable cash flow cycles.' },
-  { title: 'Family Conflict', line: 'Ongoing disputes, disharmony, or generational disputes weighing on you.' },
-  { title: 'Delayed Success', line: 'Despite effort, results are slow, opportunities keep slipping past you.' },
-  { title: 'Fear & Indecision', line: 'Negative patterns, anxiety, or inability to take confident decisions.' },
+  {
+    title: 'Career Confusion',
+    line: 'When promotions stall or the right path feels hidden, Guru Ji traces the planetary periods shaping your professional life and names the windows worth acting on.',
+  },
+  {
+    title: 'Relationship Issues',
+    line: 'Marriage delays, compatibility doubts, and recurring conflict at home often reflect deeper chart patterns — he reads both partners with care when needed.',
+  },
+  {
+    title: 'Financial Stress',
+    line: 'Blocked income and unstable cycles can feel personal; Guru Ji explains the wealth houses and timing in your kundali so you see what is temporary and what needs remedy.',
+  },
+  {
+    title: 'Family Conflict',
+    line: 'Generational tension and disharmony at home are areas he has guided countless families through, with counsel rooted in dharma and practical steps.',
+  },
+  {
+    title: 'Delayed Success',
+    line: 'When effort alone is not enough, he shows why certain dashas delay results and how to align your actions with more supportive planetary phases.',
+  },
+  {
+    title: 'Fear & Indecision',
+    line: 'Anxiety and second-guessing often lift once the chart is understood — Guru Ji is known for calm, clear explanations that restore confidence in your next step.',
+  },
 ];
 
-type Props = {
-  onBook: () => void;
-};
-
-export function PainPointsSection({ onBook }: Props) {
+export function PainPointsSection() {
   return (
     <section className="py-20 md:py-28 bg-soft-gradient">
       <div className="max-w-7xl mx-auto px-4 lg:px-8">
@@ -25,16 +38,18 @@ export function PainPointsSection({ onBook }: Props) {
               &ldquo;Why does uncertainty keep returning in career, relationships and finance, despite your
               effort?&rdquo;
             </h2>
-            <p className="mt-6 text-charcoal-muted text-sm md:text-base">
-              Life has patterns. When you understand them, the right decisions become obvious. Guru Ji reads your
-              kundali to surface what is silently shaping your journey.
+            <p className="mt-6 text-charcoal-muted text-sm md:text-base leading-relaxed">
+              Life has patterns — in career, love, money, and health — that repeat until they are understood. Guru Ji
+              Sadhguru ANAND has spent decades reading kundalis for people who feel they have tried everything else. He
+              does not offer vague reassurance; he names what your chart shows, why it has felt stuck, and what can
+              shift when you work with the right timing and remedies.
             </p>
           </div>
         </Reveal>
 
         <div className="mt-12 grid sm:grid-cols-2 gap-4 max-w-5xl mx-auto">
-          {PROBLEMS.map((p) => (
-            <Reveal key={p.title}>
+          {PROBLEMS.map((p, i) => (
+            <Reveal key={p.title} variant="fade" once={false} delay={i * 55}>
               <div className="flex gap-4 rounded-lg bg-white border border-slate-200 p-5 md:p-6 shadow-sm hover:shadow-premium transition card-lift">
                 <XCircle className="text-rose-600 shrink-0 mt-0.5" size={22} />
                 <div>
@@ -47,18 +62,15 @@ export function PainPointsSection({ onBook }: Props) {
         </div>
 
         <Reveal>
-          <p className="mt-12 text-center font-sans text-xl md:text-2xl font-bold text-royal-900">
-            The answer is in a <span className="text-cta-600">personalised Vedic astrology consultation</span> with Guru Ji Sadhguru ANAND.
+          <p className="mt-12 text-center font-sans text-lg md:text-xl text-royal-900 max-w-3xl mx-auto leading-relaxed">
+            <span className="font-bold">
+              Guru Ji Sadhguru ANAND
+            </span>{' '}
+            brings that understanding to you in a private session — patient, thorough, and focused on the decisions
+            you are carrying today.
           </p>
         </Reveal>
 
-        <Reveal>
-          <div className="mt-8 flex justify-center">
-            <CTAButton variant="secondary" onClick={onBook} icon={ArrowRight}>
-              Get Clarity Today
-            </CTAButton>
-          </div>
-        </Reveal>
       </div>
     </section>
   );

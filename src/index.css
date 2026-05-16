@@ -18,6 +18,23 @@
     line-height: 1.65;
     @apply text-charcoal-muted;
   }
+
+  /* Dark sections: global `p { text-charcoal-muted }` must not override hero/about copy */
+  #home .hero-copy p,
+  #home p.hero-copy,
+  #about .about-copy p,
+  .bg-hero-gradient .hero-copy {
+    @apply text-white;
+  }
+
+  .contact-input {
+    @apply w-full rounded-md border border-slate-200 bg-white px-3 py-2.5 text-sm text-charcoal transition;
+  }
+  .contact-input:focus {
+    outline: none;
+    border-color: #29abe2;
+    box-shadow: 0 0 0 3px rgba(41, 171, 226, 0.2);
+  }
 }
 
 @layer utilities {
@@ -69,6 +86,18 @@
   .reveal.is-visible {
     opacity: 1;
     transform: translateY(0) scale(1);
+  }
+
+  /** Scroll-driven fade only — pairs with `Reveal variant="fade"` + `once={false}` for cards */
+  .reveal-fade {
+    opacity: 0;
+    transition: opacity 0.55s ease;
+    transition-delay: var(--reveal-delay, 0ms);
+    will-change: opacity;
+  }
+
+  .reveal-fade.is-visible {
+    opacity: 1;
   }
 
   .card-lift {
@@ -149,5 +178,135 @@
   .reveal {
     opacity: 1;
     transform: none;
+  }
+
+  .reveal-fade {
+    opacity: 1;
+  }
+
+  .zodiac-marquee-track {
+    animation: none !important;
+    transform: translate3d(0, 0, 0) !important;
+  }
+
+  .zodiac-depth-tilt {
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+@keyframes zodiac-marquee-ltr {
+  0% {
+    transform: translate3d(-50%, 0, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.zodiac-marquee-track {
+  animation: zodiac-marquee-ltr 78s linear infinite;
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+@keyframes zodiac-icon-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(-1.6deg);
+  }
+  50% {
+    transform: translate3d(0, -5px, 0) rotate(1.6deg);
+  }
+}
+
+.zodiac-icon-float {
+  animation: zodiac-icon-float 6.8s cubic-bezier(0.45, 0, 0.2, 1) infinite;
+  animation-delay: var(--z-float-delay, 0s);
+  will-change: transform;
+}
+
+@keyframes zodiac-twinkle {
+  0%,
+  100% {
+    opacity: 0.22;
+    transform: scale3d(1, 1, 1);
+  }
+  50% {
+    opacity: 0.95;
+    transform: scale3d(1.35, 1.35, 1);
+  }
+}
+
+.zodiac-star-twinkle {
+  animation-name: zodiac-twinkle;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+@keyframes zodiac-mote-drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(var(--z-mote-scale, 1));
+    opacity: 0.28;
+  }
+  50% {
+    transform: translate3d(var(--z-drift-x, 12px), -18px, 0) scale(var(--z-mote-scale, 1));
+    opacity: 0.82;
+  }
+}
+
+.zodiac-mote-drift {
+  animation-name: zodiac-mote-drift;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+@keyframes zodiac-nebula-drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(18px, -14px, 0) scale(1.04);
+  }
+}
+
+@keyframes zodiac-nebula-drift-reverse {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(-16px, 16px, 0) scale(1.03);
+  }
+}
+
+@keyframes zodiac-slow-pan {
+  0% {
+    transform: translate3d(-2%, 0, 0);
+  }
+  100% {
+    transform: translate3d(2%, 0, 0);
+  }
+}
+
+@layer utilities {
+  .animate-zodiac-nebula-drift {
+    animation: zodiac-nebula-drift 22s ease-in-out infinite;
+  }
+
+  .animate-zodiac-nebula-drift-reverse {
+    animation: zodiac-nebula-drift-reverse 26s ease-in-out infinite;
+  }
+
+  .animate-zodiac-slow-pan {
+    animation: zodiac-slow-pan 48s linear infinite alternate;
+  }
+
+  .zodiac-depth-tilt {
+    transform-style: preserve-3d;
+    transition: transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+    transform: rotateX(calc(var(--zm-parallax-y, 0) * -5deg)) rotateY(calc(var(--zm-parallax-x, 0) * 7deg));
   }
 }

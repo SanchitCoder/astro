@@ -1,4 +1,5 @@
 import { Reveal } from '../ui/Reveal';
+import { PressCapsule } from '../ui/PressCapsule';
 
 const BADGES = ['Telegraph', 'Mid-Day', 'News18', 'Tribune', 'LatestLY'];
 
@@ -9,11 +10,9 @@ export function FeaturedInBar() {
         <Reveal className="shrink-0">
           <span className="text-xs uppercase tracking-widest text-charcoal-muted font-bold">Featured In</span>
         </Reveal>
-        <div className="flex flex-wrap items-center justify-center md:justify-start gap-x-8 gap-y-3 flex-1">
+        <div className="flex flex-wrap items-center justify-center md:justify-start gap-2 md:gap-3 flex-1">
           {BADGES.map((b) => (
-            <span key={b} className="font-sans font-semibold text-royal-800 text-base md:text-lg">
-              {b}
-            </span>
+            <PressCapsule key={b} label={b} />
           ))}
         </div>
       </div>

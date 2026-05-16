@@ -13,10 +13,10 @@ export function StatBlock({ value, label, light }: Props) {
           : 'bg-section border-slate-200 text-royal-900'
       }`}
     >
-      <div className="font-sans text-xl md:text-2xl font-bold text-gradient-gold">
+      <div className={`font-sans text-xl md:text-2xl font-bold ${light ? 'text-white' : 'text-gradient-gold'}`}>
         {value}
       </div>
-      <div className={`text-xs mt-1 ${light ? 'text-white/70' : 'text-charcoal-muted'}`}>{label}</div>
+      <div className={`text-xs mt-1 ${light ? 'text-white' : 'text-charcoal-muted'}`}>{label}</div>
     </div>
   );
 }

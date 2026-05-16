@@ -12,10 +12,9 @@ export type ChatMessage = {
 type Props = {
   phone: string;
   phoneTel: string;
-  onBookConsultation?: () => void;
 };
 
-export function ChatWidget({ phone, phoneTel, onBookConsultation }: Props) {
+export function ChatWidget({ phone, phoneTel }: Props) {
   const [open, setOpen] = useState(false);
   const [draft, setDraft] = useState('');
   const [messages, setMessages] = useState<ChatMessage[]>(() => [
@@ -76,7 +75,7 @@ export function ChatWidget({ phone, phoneTel, onBookConsultation }: Props) {
         {
           id: crypto.randomUUID(),
           role: 'assistant',
-          text: `Thank you — we’ve received your message and will reply as soon as we can. For urgent help, phone ${phone} or use “Book consultation” below.`,
+          text: `Thank you — we’ve received your message and will reply as soon as we can. For urgent help, phone ${phone}.`,
         },
       ]);
     }, 650);
@@ -176,18 +175,6 @@ export function ChatWidget({ phone, phoneTel, onBookConsultation }: Props) {
                 >
                   Call {phone}
                 </a>
-                {onBookConsultation && (
-                  <button
-                    type="button"
-                    onClick={() => {
-                      onBookConsultation();
-                      setOpen(false);
-                    }}
-                    className="inline-flex min-h-[40px] items-center rounded-md bg-cta-500/15 px-3 py-2 text-xs font-semibold text-royal-800 transition hover:text-cta-600 touch-manipulation"
-                  >
-                    Book consultation
-                  </button>
-                )}
               </div>
               <div className="flex items-end gap-2">
                 <textarea
