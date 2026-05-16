@@ -18,7 +18,7 @@ export function HeroSection() {
             <p className="text-gold-400 text-sm md:text-base font-semibold uppercase tracking-widest">
               Guru Ji Sadhguru ANAND
             </p>
-            <h1 className="mt-3 font-sans font-bold text-3xl sm:text-4xl md:text-5xl lg:text-[2.75rem] xl:text-[3.25rem] leading-[1.1] text-white">
+            <h1 className="mt-3 font-michroma font-normal text-2xl sm:text-3xl md:text-4xl lg:text-[2.35rem] xl:text-[2.85rem] leading-[1.15] tracking-tight text-white">
               Remove <span className="text-gradient-gold">Uncertainty</span> from Career, Relationships & Finance
             </h1>
           </Reveal>

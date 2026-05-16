@@ -7,6 +7,13 @@ export default {
         sans: ['Inter', 'system-ui', 'sans-serif'],
         serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
         script: ['"Great Vibes"', 'cursive'],
+        /** Hero headline — Remove Uncertainty… */
+        display: ['Michroma', 'Audiowide', 'sans-serif'],
+        audiowide: ['Audiowide', 'sans-serif'],
+        michroma: ['Michroma', 'sans-serif'],
+        playwrite: ['"Playwrite GB S"', 'cursive'],
+        lubrifont: ['"WDXL Lubrifont TC"', 'sans-serif'],
+        mono: ['"Iosevka Charon Mono"', 'ui-monospace', 'monospace'],
       },
       colors: {
         /** Deep navy — hero, footer, dark sections (reference ~#004A7C / #003366) */
