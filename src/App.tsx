@@ -1,11 +1,13 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { SiteLayout } from './components/layout/SiteLayout';
+import { ScrollToTop } from './components/layout/ScrollToTop';
 import { HomePage } from './pages/HomePage';
 import { ContactPage } from './pages/ContactPage';
 
 function App() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Routes>
         <Route element={<SiteLayout />}>
           <Route index element={<HomePage />} />

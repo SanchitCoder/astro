@@ -1,4 +1,3 @@
-import { CalendarClock } from 'lucide-react';
 import { Reveal } from '../ui/Reveal';
 import { StatBlock } from '../ui/StatBlock';
 import { GURU_IMG } from '../../lib/constants';
@@ -39,13 +38,6 @@ export function HeroSection() {
                     Vedic astrologer · Vastu consultant · Medical astrology · Practising since 1998
                   </div>
                 </div>
-              </div>
-            </div>
-            <div className="hidden md:flex absolute -left-4 top-20 items-center gap-2 rounded-lg bg-white text-royal-900 px-4 py-3 shadow-xl max-w-[200px]">
-              <CalendarClock size={18} className="text-cta-600 shrink-0" />
-              <div>
-                <div className="text-xs text-slate-500">Next Available</div>
-                <div className="text-sm font-semibold">Today · 5 PM IST</div>
               </div>
             </div>
           </Reveal>
