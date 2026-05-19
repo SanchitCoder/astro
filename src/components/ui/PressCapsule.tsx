@@ -1,17 +1,11 @@
-type Props = {
+﻿type Props = {
   label: string;
   variant?: 'light' | 'dark';
 };
 
-export function PressCapsule({ label, variant = 'light' }: Props) {
+export function PressCapsule({ label }: Props) {
   return (
-    <span
-      className={
-        variant === 'dark'
-          ? 'inline-flex items-center rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-semibold text-white shadow-sm'
-          : 'inline-flex items-center rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-royal-800 shadow-sm'
-      }
-    >
+    <span className="inline-flex items-center rounded-full glass-card border border-warm-300 px-4 py-1.5 text-[11px] font-bold text-ink-500 uppercase tracking-wide hover:border-gold-400/25 hover:text-gold-300/70 transition-colors cursor-default">
       {label}
     </span>
   );

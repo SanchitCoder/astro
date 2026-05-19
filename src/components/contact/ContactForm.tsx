@@ -1,5 +1,6 @@
-import { useState, FormEvent } from 'react';
-import { Loader2, CheckCircle2, Send } from 'lucide-react';
+﻿import { useState, FormEvent } from 'react';
+import { motion } from 'framer-motion';
+import { Loader2, CheckCircle2, Send, Sparkles } from 'lucide-react';
 
 type Props = {
   onBook?: () => void;
@@ -27,41 +28,46 @@ export function ContactForm({ onBook }: Props) {
 
   if (done) {
     return (
-      <div className="rounded-2xl border border-slate-200 bg-white p-10 text-center shadow-sm">
-        <div className="mx-auto w-16 h-16 rounded-full bg-emerald-50 flex items-center justify-center mb-4">
-          <CheckCircle2 className="text-emerald-600" size={32} />
+      <motion.div
+        initial={{ opacity: 0, scale: 0.97 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="rounded-2xl glass-card border border-warm-300 p-10 text-center"
+      >
+        <div className="mx-auto w-16 h-16 rounded-full bg-emerald-500/15 border border-emerald-400/25 flex items-center justify-center mb-5">
+          <CheckCircle2 className="text-emerald-400" size={30} />
         </div>
-        <h3 className="font-sans text-2xl font-bold text-royal-900 mb-2">Message received</h3>
-        <p className="text-slate-600 text-sm leading-relaxed max-w-sm mx-auto">
-          Thank you for reaching out. Our team will contact you within a few hours to confirm your consultation with
-          Guru Ji Sadhguru ANAND.
+        <h3 className="font-cinzel text-xl text-ink-900 mb-2">Message Received</h3>
+        <p className="text-ink-500 text-sm leading-relaxed max-w-sm mx-auto">
+          Thank you for reaching out. Our team will contact you within a few hours to confirm
+          your consultation with Gurudev Anand.
         </p>
         {onBook && (
           <button
             type="button"
             onClick={onBook}
-            className="mt-6 text-sm font-semibold text-cta-600 hover:text-cta-700"
+            className="mt-6 text-sm font-semibold text-gold-400 hover:text-gold-300 transition-colors"
           >
             Prefer to book directly? Open booking form →
           </button>
         )}
-      </div>
+      </motion.div>
     );
   }
 
   return (
     <form
       onSubmit={submit}
-      className="rounded-2xl border border-slate-200 bg-white p-6 md:p-8 shadow-sm"
+      className="rounded-2xl glass-card border border-warm-300 p-6 md:p-8"
     >
-      <div className="mb-6">
-        <span className="inline-block px-3 py-1 rounded-md bg-royal-50 text-royal-800 text-xs font-bold uppercase tracking-wider">
-          Send a message
-        </span>
-        <h3 className="mt-3 font-sans text-xl md:text-2xl font-bold text-royal-900">Request a consultation</h3>
-        <p className="mt-2 text-sm text-slate-600 leading-relaxed">
-          Share your birth details and concern. Guru Ji&apos;s team will reply with available slots — usually within
-          24–48 hours.
+      <div className="mb-7">
+        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gold-400/10 border border-gold-400/20 text-gold-300 text-[11px] font-bold uppercase tracking-widest mb-3">
+          <Sparkles size={10} />
+          Send a Message
+        </div>
+        <h3 className="font-cinzel text-xl text-white">Request a consultation</h3>
+        <p className="mt-2 text-sm text-ink-500 leading-relaxed">
+          Share your birth details and concern. Gurudev Anand&apos;s team will reply with available
+          slots — usually within 24–48 hours.
         </p>
       </div>
 
@@ -71,6 +77,7 @@ export function ContactForm({ onBook }: Props) {
             required
             value={form.name}
             onChange={(e) => setForm({ ...form, name: e.target.value })}
+            placeholder="Your full name"
             className="contact-input"
           />
         </Field>
@@ -79,6 +86,7 @@ export function ContactForm({ onBook }: Props) {
             required
             value={form.phone}
             onChange={(e) => setForm({ ...form, phone: e.target.value })}
+            placeholder="+91 98765 43210"
             className="contact-input"
           />
         </Field>
@@ -88,6 +96,7 @@ export function ContactForm({ onBook }: Props) {
             required
             value={form.email}
             onChange={(e) => setForm({ ...form, email: e.target.value })}
+            placeholder="your@email.com"
             className="contact-input"
           />
         </Field>
@@ -128,12 +137,12 @@ export function ContactForm({ onBook }: Props) {
       <button
         type="submit"
         disabled={loading}
-        className="mt-6 w-full py-3.5 rounded-md bg-cta-500 text-white font-semibold hover:bg-cta-600 transition flex items-center justify-center gap-2 disabled:opacity-60 shadow-sm"
+        className="mt-6 w-full py-3.5 rounded-full bg-gradient-to-r from-gold-300 via-gold-400 to-gold-600 text-cosmic-950 font-bold text-sm uppercase tracking-wide flex items-center justify-center gap-2 disabled:opacity-60 btn-shimmer hover:shadow-gold-glow transition-shadow duration-300"
       >
-        {loading ? <Loader2 className="animate-spin" size={18} /> : <Send size={18} />}
-        {loading ? 'Sending…' : 'Send message'}
+        {loading ? <Loader2 className="animate-spin" size={16} /> : <Send size={16} />}
+        {loading ? 'Sending…' : 'Send Message'}
       </button>
-      <p className="text-center text-xs text-slate-400 mt-3">
+      <p className="text-center text-[11px] text-ink-300 mt-3">
         Your details are confidential and used only to schedule your consultation.
       </p>
     </form>
@@ -153,8 +162,8 @@ function Field({
 }) {
   return (
     <label className={`block ${className}`}>
-      <span className="block text-xs font-semibold text-slate-600 uppercase tracking-wide mb-1.5">
-        {label} {required && <span className="text-gold-600">*</span>}
+      <span className="block text-[11px] font-bold text-ink-400 uppercase tracking-widest mb-1.5">
+        {label} {required && <span className="text-gold-400">*</span>}
       </span>
       {children}
     </label>

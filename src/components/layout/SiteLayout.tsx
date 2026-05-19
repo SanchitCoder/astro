@@ -1,4 +1,4 @@
-import { Outlet, useLocation } from 'react-router-dom';
+﻿import { Outlet, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import { Navbar } from './Navbar';
 import { FooterSection } from '../sections/FooterSection';
@@ -23,9 +23,9 @@ export function SiteLayout() {
   }, [location.pathname, location.hash]);
 
   return (
-    <div className="min-h-screen bg-white text-charcoal">
+    <div className="min-h-screen overflow-x-clip bg-warm-50 text-ink-900">
       <Navbar onBook={() => booking.book('normal')} />
-      <main>
+      <main className="fab-safe-pb sm:pb-0">
         <Outlet context={{ onBook: () => booking.book('normal') } satisfies SiteOutletContext} />
       </main>
       <FooterSection />

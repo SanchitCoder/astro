@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+﻿import { useEffect, useRef, useState } from 'react';
 
 const MOBILE_CHAT_MQ = '(max-width: 639px)';
 import { MessageCircle, X, Send, Sparkles } from 'lucide-react';
@@ -21,7 +21,7 @@ export function ChatWidget({ phone, phoneTel }: Props) {
     {
       id: 'welcome',
       role: 'assistant',
-      text: `Hi — you’re chatting with SadhguruANAND support. Ask us about consultations, timings, or book a slot. We reply during business hours, or call ${phone} anytime.`,
+      text: `Hi — you’re chatting with Gurudev Anand support. Ask us about consultations, timings, or book a slot. We reply during business hours, or call ${phone} anytime.`,
     },
   ]);
   const listRef = useRef<HTMLDivElement>(null);
@@ -120,20 +120,20 @@ export function ChatWidget({ phone, phoneTel }: Props) {
               sm:max-h-[min(72vh,520px)] sm:w-[min(100vw-2.5rem,380px)] sm:rounded-3xl sm:border-b
               animate-scale-in max-sm:origin-bottom sm:origin-bottom-right"
           >
-            <header className="relative flex flex-shrink-0 items-center gap-3 bg-gradient-to-r from-royal-900 to-royal-700 px-4 py-3.5 text-white sm:px-5 sm:py-4">
+            <header className="relative flex flex-shrink-0 items-center gap-3 bg-gradient-to-r from-royal-900 to-royal-700 px-4 py-3.5 text-ink-900 sm:px-5 sm:py-4">
               <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full bg-royal-900 gold-border">
                 <Sparkles size={18} className="text-gold-400" aria-hidden />
               </div>
               <div className="min-w-0 flex-1">
                 <div id="chat-widget-title" className="font-sans text-base font-bold leading-tight sm:text-lg">
-                  SadhguruANAND
+                  Gurudev Anand
                 </div>
                 <div className="text-xs text-white/75">We typically reply within a few hours</div>
               </div>
               <button
                 type="button"
                 onClick={() => setOpen(false)}
-                className="touch-manipulation rounded-full p-2.5 text-white transition hover:bg-white/10 min-h-[44px] min-w-[44px] flex items-center justify-center"
+                className="touch-manipulation rounded-full p-2.5 text-ink-900 transition hover:bg-white/10 min-h-[44px] min-w-[44px] flex items-center justify-center"
                 aria-label="Close chat"
               >
                 <X size={20} />
@@ -191,7 +191,7 @@ export function ChatWidget({ phone, phoneTel }: Props) {
                   type="button"
                   onClick={send}
                   disabled={!draft.trim()}
-                  className="flex h-12 w-12 flex-shrink-0 touch-manipulation items-center justify-center rounded-md bg-cta-500 text-white shadow-md transition hover:bg-cta-600 hover:-translate-y-0.5 hover:shadow-lg disabled:translate-y-0 disabled:opacity-45 disabled:shadow-none sm:h-11 sm:w-11"
+                  className="flex h-12 w-12 flex-shrink-0 touch-manipulation items-center justify-center rounded-md bg-cta-500 text-ink-900 shadow-md transition hover:bg-cta-600 hover:-translate-y-0.5 hover:shadow-lg disabled:translate-y-0 disabled:opacity-45 disabled:shadow-none sm:h-11 sm:w-11"
                   aria-label="Send message"
                 >
                   <Send size={18} className="ml-px" />
@@ -206,8 +206,8 @@ export function ChatWidget({ phone, phoneTel }: Props) {
           onClick={() => setOpen((o) => !o)}
           className={`group pointer-events-auto touch-manipulation self-end flex items-center justify-center rounded-full shadow-premium transition focus:outline-none focus-visible:ring-2 focus-visible:ring-cta-500 focus-visible:ring-offset-2 max-sm:ring-2 max-sm:ring-white/90 ${
             open
-              ? 'h-14 w-14 bg-royal-800 text-white hover:bg-royal-900'
-              : 'h-[3.75rem] w-[3.75rem] bg-cta-500 text-white hover:bg-cta-600 hover:-translate-y-0.5 hover:shadow-premium sm:h-16 sm:w-16 sm:ring-4 sm:ring-white/90'
+              ? 'h-14 w-14 bg-royal-800 text-ink-900 hover:bg-royal-900'
+              : 'h-[3.75rem] w-[3.75rem] bg-cta-500 text-ink-900 hover:bg-cta-600 hover:-translate-y-0.5 hover:shadow-premium sm:h-16 sm:w-16 sm:ring-4 sm:ring-white/90'
           }`}
           aria-expanded={open}
           aria-controls="chat-widget-panel"

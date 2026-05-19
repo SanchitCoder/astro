@@ -1,18 +1,37 @@
-import { Reveal } from '../ui/Reveal';
-import { PressCapsule } from '../ui/PressCapsule';
+const PRESS = [
+  'Times of India', 'Tribune', 'Hindustan Times',
+  'Bhagya Channel', 'Living India Channel', 'Dainik Bhaskar', 'The Voice of Chandigarh',
+];
 
-const BADGES = ['Telegraph', 'Mid-Day', 'News18', 'Tribune', 'LatestLY'];
+const ITEMS = [...PRESS, ...PRESS];
 
 export function FeaturedInBar() {
   return (
-    <section className="bg-section border-y border-slate-200/90">
-      <div className="max-w-7xl mx-auto px-4 lg:px-8 py-5 md:py-6 flex flex-col md:flex-row md:items-center gap-4 md:gap-10">
-        <Reveal className="shrink-0">
-          <span className="text-xs uppercase tracking-widest text-charcoal-muted font-bold">Featured In</span>
-        </Reveal>
-        <div className="flex flex-wrap items-center justify-center md:justify-start gap-2 md:gap-3 flex-1">
-          {BADGES.map((b) => (
-            <PressCapsule key={b} label={b} />
+    <section
+      className="relative py-5 overflow-hidden border-y border-white/[0.06]"
+      style={{ background: 'linear-gradient(90deg, #031018 0%, #062E3C 50%, #031018 100%)' }}
+    >
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_120%_at_50%_50%,rgba(224,114,16,0.06),transparent_70%)] pointer-events-none" />
+
+      <div className="mb-4 flex flex-col gap-2 px-4 sm:flex-row sm:items-center sm:gap-8 sm:px-8">
+        <span className="shrink-0 text-[9px] font-bold uppercase tracking-[0.28em] text-white/25">
+          Featured In
+        </span>
+        <div className="flex-1 h-px bg-gradient-to-r from-white/10 to-transparent" />
+      </div>
+
+      <div className="relative overflow-hidden [mask-image:linear-gradient(90deg,transparent_0%,black_6%,black_94%,transparent_100%)]">
+        <div
+          className="flex gap-3 w-max"
+          style={{ animation: 'press-marquee 38s linear infinite' }}
+        >
+          {ITEMS.map((name, i) => (
+            <span
+              key={i}
+              className="shrink-0 px-4 py-2 rounded-full border border-white/[0.08] bg-white/[0.04] text-[11px] font-bold uppercase tracking-[0.18em] text-white/40 whitespace-nowrap hover:text-gold-300/70 hover:border-gold-400/20 transition-colors duration-300 cursor-default"
+            >
+              {name}
+            </span>
           ))}
         </div>
       </div>

@@ -1,118 +1,152 @@
-import { CheckCircle2, Award } from 'lucide-react';
-import { Reveal } from '../ui/Reveal';
-import { PressCapsule } from '../ui/PressCapsule';
+import { motion } from 'framer-motion';
+import { CheckCircle2, Star, Newspaper } from 'lucide-react';
 import { GURU_IMG_ABOUT } from '../../lib/constants';
 
+const DARK_BG = 'linear-gradient(160deg, #031825 0%, #062E3C 40%, #084557 70%, #031018 100%)';
+
 const BULLETS = [
-  'Award-winning practitioner in Vedic and Medical astrology, recognised for depth and accuracy',
-  'Featured in leading Indian and international media for his work with clients and public guidance',
   'Reads each kundali personally — no assistants, no templated reports',
-  'Offers private one-to-one consultations online and in person, with complete confidentiality',
-  'Draws remedies directly from classical texts, adapted to your chart and daily life',
-  'Known for explaining complex planetary influences in plain, actionable language',
+  'Draws remedies from classical texts, adapted to your chart and life',
+  'Available online and in person, with complete confidentiality',
+  'Known for plain, actionable explanations of complex planetary influences',
 ];
 
-const BADGES = ['Telegraph', 'Mid-Day', 'News18', 'Tribune', 'LatestLY'];
+const STATS = [
+  { value: '25+', label: 'Years', glyph: '♄' },
+  { value: '1.2L+', label: 'Consultations', glyph: '☉' },
+  { value: '50+', label: 'Countries', glyph: '♃' },
+];
+
+const PRESS = ['Times of India', 'Tribune', 'Hindustan Times', 'Bhagya Channel', 'Living India Channel', 'Dainik Bhaskar'];
 
 export function MentorSection() {
   return (
-    <section id="about" className="py-20 md:py-28 bg-royal-900 text-white relative overflow-hidden">
-      <div className="absolute inset-0 pointer-events-none opacity-30">
-        <div className="absolute top-10 left-10 w-80 h-80 rounded-full bg-gold-500/20 blur-3xl" />
-        <div className="absolute bottom-10 right-10 w-96 h-96 rounded-full bg-royal-500/40 blur-3xl" />
+    <section
+      id="about"
+      className="relative py-24 md:py-32 overflow-hidden"
+      style={{ background: DARK_BG }}
+    >
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute -top-20 -left-20 w-[500px] h-[500px] rounded-full bg-[radial-gradient(circle,rgba(232,118,28,0.1),transparent_65%)] blur-3xl" />
+        <div className="absolute -bottom-20 -right-20 w-[500px] h-[500px] rounded-full bg-[radial-gradient(circle,rgba(11,120,150,0.15),transparent_65%)] blur-3xl" />
       </div>
 
       <div className="relative max-w-7xl mx-auto px-4 lg:px-8">
-        <Reveal>
-          <span className="inline-block px-3 py-1 rounded-full bg-white/10 text-gold-400 text-xs font-semibold uppercase tracking-wider">
-            About Guru Ji
-          </span>
-          <h2 className="mt-4 font-sans text-3xl md:text-4xl lg:text-5xl font-bold text-white">Guru Ji Sadhguru ANAND</h2>
-          <p className="mt-4 text-white text-base md:text-lg max-w-3xl leading-relaxed">
-            A trusted name in Vedic astrology, Vastu Shastra, and Medical astrology — devoted to helping people understand
-            why their lives unfold the way they do, and what they can do next.
-          </p>
-        </Reveal>
+        <div className="grid lg:grid-cols-2 gap-14 lg:gap-20 items-center">
 
-        <div className="mt-10 grid lg:grid-cols-2 gap-12 items-start">
-          <Reveal className="space-y-6">
-            <div className="about-copy space-y-4 text-sm md:text-base leading-relaxed">
-              <p className="text-white">
-                Guru Ji Sadhguru ANAND has spent over twenty-five years in disciplined study and practice of the Vedic
-                sciences. What began as a calling rooted in tradition has grown into a lifetime of service: more than 1.2
-                lakh consultations with people from every walk of life — business leaders, homemakers, students, couples,
-                and families seeking direction.
-              </p>
-              <p className="text-white">
-                Those who sit with him describe a rare combination — scholarly rigour and human warmth. He does not rush
-                through a chart. He walks you through your houses, dashas, and transits so you understand not only what
-                may lie ahead, but why certain cycles have felt heavy or stalled. His counsel on career moves, marriage
-                timing, health tendencies, and Vastu corrections comes from the same foundation: classical scripture,
-                applied with care to your unique birth details.
-              </p>
-              <p className="text-white">
-                Whether you are facing a single urgent decision or a longer season of uncertainty, Guru Ji meets you where
-                you are. Every session is personal, confidential, and focused on outcomes you can work toward — remedies,
-                timing, and perspective you can carry into daily life.
-              </p>
+          {/* ── Left: portrait ── */}
+          <motion.div
+            initial={{ opacity: 0, x: -40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
+            className="relative order-2 lg:order-1"
+          >
+            {/* Halo */}
+            <div className="absolute -inset-6 rounded-[3rem] bg-gradient-to-br from-gold-400/15 via-nebula-600/10 to-transparent blur-3xl pointer-events-none" />
+
+            {/* Orbital ring */}
+            <div className="absolute -inset-8 rounded-full border border-gold-400/[0.08] animate-[spin_40s_linear_infinite] pointer-events-none" />
+
+            {/* Portrait */}
+            <div className="relative rounded-[2.5rem] overflow-hidden border border-gold-400/15 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.8)] max-w-md mx-auto lg:max-w-none">
+              <img
+                src={GURU_IMG_ABOUT}
+                alt="Gurudev Anand"
+                className="w-full aspect-[4/5] object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#031018]/80 via-transparent to-transparent" />
+
+              {/* Floating stat badges */}
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.5 }}
+                className="absolute top-5 right-2 rounded-2xl border border-white/[0.1] bg-white/[0.08] px-3 py-2 backdrop-blur-md text-center shadow-xl sm:-right-4 sm:px-4 sm:py-2.5"
+              >
+                <div className="font-cinzel text-lg font-bold" style={{ background: 'linear-gradient(135deg,#ffb36a,#e07210)', WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent' }}>4.9 / 5</div>
+                <div className="text-[9px] text-white/40 uppercase tracking-wide">10,000+ reviews</div>
+              </motion.div>
             </div>
 
-            <ul className="space-y-3 pt-2">
-              {BULLETS.map((t) => (
-                <li key={t} className="flex items-start gap-3 text-white/85">
-                  <CheckCircle2 size={18} className="text-emerald-400 mt-0.5 shrink-0" />
-                  <span className="text-sm md:text-base leading-relaxed">{t}</span>
-                </li>
+            {/* Bottom stats row */}
+            <div className="mt-6 grid grid-cols-3 gap-3">
+              {STATS.map((s) => (
+                <div key={s.label} className="rounded-2xl border border-white/[0.08] bg-white/[0.05] p-4 text-center">
+                  <div className="text-lg font-serif mb-0.5" style={{ color: '#ffb36a', fontFamily: '"Cormorant Garamond","Apple Symbols","Segoe UI Symbol",serif' }}>{s.glyph}</div>
+                  <div className="font-cinzel text-base font-bold" style={{ background: 'linear-gradient(135deg,#ffb36a,#e07210)', WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent' }}>{s.value}</div>
+                  <div className="text-[10px] text-white/35 uppercase tracking-wide mt-0.5">{s.label}</div>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* ── Right: text ── */}
+          <motion.div
+            initial={{ opacity: 0, x: 40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            className="order-1 lg:order-2 space-y-7"
+          >
+            <div>
+              <span className="inline-block mb-4 text-[10px] font-bold uppercase tracking-[0.25em]" style={{ color: '#ffb36a' }}>
+                About Gurudev Anand
+              </span>
+              <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight">
+                Gurudev{' '}
+                <span className="italic font-light" style={{ background: 'linear-gradient(135deg,#ffb36a,#e07210)', WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent' }}>
+                  Anand
+                </span>
+              </h2>
+            </div>
+
+            <p className="text-white/55 text-sm md:text-base leading-relaxed">
+              Over twenty-five years and 1.2 lakh consultations — Gurudev Anand reads your chart with scholarly rigour and human warmth, walking you through your dashas and transits so you understand what is unfolding and why.
+            </p>
+
+            {/* Star rating */}
+            <div className="flex items-center gap-2">
+              {[1,2,3,4,5].map(i => <Star key={i} size={14} className="text-gold-400 fill-gold-400" />)}
+              <span className="text-xs text-white/35 ml-1">Trusted by clients across 50+ countries</span>
+            </div>
+
+            {/* Bullets */}
+            <ul className="space-y-3">
+              {BULLETS.map((b) => (
+                <motion.li
+                  key={b}
+                  initial={{ opacity: 0, x: -16 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  className="flex items-start gap-3"
+                >
+                  <CheckCircle2 size={15} className="text-gold-400 mt-0.5 shrink-0" />
+                  <span className="text-sm text-white/55 leading-relaxed">{b}</span>
+                </motion.li>
               ))}
             </ul>
 
-            <div className="grid sm:grid-cols-3 gap-3 pt-2">
-              {(
-                [
-                  { label: 'Experience', value: '25+ Years' },
-                  { label: 'Consultations', value: '1.2 Lakh+' },
-                  { label: 'Reach', value: '50+ Countries' },
-                ] as const
-              ).map((stat, i) => (
-                <Reveal key={stat.label} variant="fade" once={false} delay={i * 70}>
-                  <div className="rounded-2xl bg-white/10 border border-white/15 p-4 text-center">
-                    <Award className="mx-auto text-gold-400 mb-2" size={22} />
-                    <div className="text-xs text-white/60 uppercase tracking-wide font-semibold">{stat.label}</div>
-                    <div className="font-sans text-xl font-bold text-gradient-gold mt-1">{stat.value}</div>
-                  </div>
-                </Reveal>
-              ))}
-            </div>
-          </Reveal>
-
-          <Reveal delay={100}>
-            <div className="relative">
-              <div className="absolute -inset-4 rounded-[2rem] bg-gradient-to-br from-gold-400/25 to-royal-500/30 blur-xl opacity-80" />
-              <div className="relative rounded-[1.75rem] overflow-hidden shadow-premium aspect-[4/5] max-w-md mx-auto">
-                <img src={GURU_IMG_ABOUT} className="w-full h-full object-cover" alt="Guru Ji Sadhguru ANAND" />
+            {/* Press */}
+            <div className="pt-5 border-t border-white/[0.07]">
+              <div className="flex items-center gap-2 mb-3">
+                <Newspaper size={13} className="text-gold-400" />
+                <span className="text-[10px] uppercase tracking-[0.22em] text-white/30 font-bold">As featured in</span>
               </div>
-              <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-white rounded-2xl shadow-xl px-4 py-3 flex items-center gap-3 border border-slate-100 text-royal-900 whitespace-nowrap">
-                <div className="font-semibold text-sm">4.9 / 5</div>
-                <div className="text-xs text-slate-500 border-l border-slate-200 pl-3">10,000+ client reviews</div>
+              <div className="flex flex-wrap gap-2">
+                {PRESS.map((b) => (
+                  <span
+                    key={b}
+                    className="px-3 py-1.5 rounded-full border border-white/[0.08] bg-white/[0.04] text-[10px] font-bold text-white/35 uppercase tracking-wide hover:border-gold-400/25 hover:text-gold-300/70 transition-colors cursor-default"
+                  >
+                    {b}
+                  </span>
+                ))}
               </div>
             </div>
-          </Reveal>
+          </motion.div>
         </div>
-
-        <Reveal>
-          <div className="mt-14 pt-10 border-t border-white/10">
-            <span className="text-xs uppercase tracking-widest text-white/50 font-bold">As featured in</span>
-            <p className="mt-2 text-sm text-white/60 max-w-2xl leading-relaxed">
-              National and international publications have profiled Guru Ji Sadhguru ANAND for his contributions to
-              Vedic astrology and the lives he has helped transform.
-            </p>
-            <div className="mt-4 flex flex-wrap gap-2 md:gap-3">
-              {BADGES.map((b) => (
-                <PressCapsule key={b} label={b} variant="dark" />
-              ))}
-            </div>
-          </div>
-        </Reveal>
       </div>
     </section>
   );

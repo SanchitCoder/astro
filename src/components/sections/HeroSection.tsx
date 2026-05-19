@@ -1,87 +1,476 @@
-import { Reveal } from '../ui/Reveal';
-import { StatBlock } from '../ui/StatBlock';
+import { useRef } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { ArrowRight, Star, ChevronDown } from 'lucide-react';
 import { GURU_IMG } from '../../lib/constants';
 
-export function HeroSection() {
+/* ─────────────────────────────────────────────────────────────
+   Zodiac Wheel — the hero's primary visual element
+───────────────────────────────────────────────────────────── */
+
+const ZODIAC_SIGNS = [
+  { glyph: '♈', name: 'Aries' },
+  { glyph: '♉', name: 'Taurus' },
+  { glyph: '♊', name: 'Gemini' },
+  { glyph: '♋', name: 'Cancer' },
+  { glyph: '♌', name: 'Leo' },
+  { glyph: '♍', name: 'Virgo' },
+  { glyph: '♎', name: 'Libra' },
+  { glyph: '♏', name: 'Scorpio' },
+  { glyph: '♐', name: 'Sagittarius' },
+  { glyph: '♑', name: 'Capricorn' },
+  { glyph: '♒', name: 'Aquarius' },
+  { glyph: '♓', name: 'Pisces' },
+];
+
+const PLANETS = [
+  { glyph: '☉', angle: 22,  r: 185, color: '#ffb36a', size: 5 },
+  { glyph: '☽', angle: 65,  r: 192, color: '#c7d2fe', size: 4 },
+  { glyph: '♂', angle: 120, r: 188, color: '#fca5a5', size: 4 },
+  { glyph: '♃', angle: 190, r: 183, color: '#86efac', size: 5 },
+  { glyph: '♄', angle: 255, r: 190, color: '#93c5fd', size: 4 },
+  { glyph: '♀', angle: 310, r: 186, color: '#f9a8d4', size: 4 },
+  { glyph: '☿', angle: 350, r: 181, color: '#fde68a', size: 3.5 },
+];
+
+const ASPECT_PAIRS = [[0, 3], [1, 4], [2, 5], [3, 6]];
+
+const WHEEL_VIEW_SIZE = 560;
+
+function ZodiacWheel({ className }: { className?: string }) {
+  const size = WHEEL_VIEW_SIZE;
+  const cx = size / 2;
+  const cy = size / 2;
+  const outerR = size * 0.48;
+  const signR   = size * 0.42;
+  const midR    = size * 0.37;
+  const innerR  = size * 0.32;
+  const portraitR = size * 0.26;
+
+  const planetCoords = PLANETS.map(p => {
+    const rad = (p.angle * Math.PI) / 180;
+    return {
+      ...p,
+      px: cx + (p.r / 200) * midR * Math.cos(rad),
+      py: cy + (p.r / 200) * midR * Math.sin(rad),
+    };
+  });
+
   return (
-    <section id="home" className="relative overflow-hidden bg-hero-gradient text-white pt-10 md:pt-14 pb-16 md:pb-24">
-      <div className="absolute inset-0 pointer-events-none opacity-45">
-        <div className="absolute -top-24 -left-24 w-96 h-96 rounded-full bg-cta-500/20 blur-3xl animate-drift" />
-        <div className="absolute top-40 right-0 w-[30rem] h-[30rem] rounded-full bg-royal-400/25 blur-3xl animate-drift-reverse" />
+    <svg
+      viewBox={`0 0 ${size} ${size}`}
+      className={`pointer-events-none h-full w-full select-none ${className ?? ''}`}
+      aria-hidden
+    >
+      <defs>
+        <radialGradient id="wheelGlow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%"   stopColor="#e07210" stopOpacity="0.18" />
+          <stop offset="60%"  stopColor="#0b7896" stopOpacity="0.08" />
+          <stop offset="100%" stopColor="transparent" stopOpacity="0" />
+        </radialGradient>
+        <radialGradient id="centerGlow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%"   stopColor="#e07210" stopOpacity="0.25" />
+          <stop offset="100%" stopColor="transparent" stopOpacity="0" />
+        </radialGradient>
+        <clipPath id="portraitClip">
+          <circle cx={cx} cy={cy} r={portraitR - 4} />
+        </clipPath>
+        <filter id="glowFilter">
+          <feGaussianBlur stdDeviation="3" result="blur" />
+          <feComposite in="SourceGraphic" in2="blur" operator="over" />
+        </filter>
+      </defs>
+
+      {/* Background glow */}
+      <circle cx={cx} cy={cy} r={outerR} fill="url(#wheelGlow)" />
+
+      {/* Outermost ring */}
+      <circle cx={cx} cy={cy} r={outerR}     fill="none" stroke="#e07210" strokeWidth="0.6" opacity="0.3" />
+      <circle cx={cx} cy={cy} r={signR}      fill="none" stroke="#e07210" strokeWidth="0.4" opacity="0.2" strokeDasharray="4 8" />
+      <circle cx={cx} cy={cy} r={midR}       fill="none" stroke="#4DC3E0" strokeWidth="0.4" opacity="0.18" />
+      <circle cx={cx} cy={cy} r={innerR}     fill="none" stroke="#e07210" strokeWidth="0.6" opacity="0.25" />
+      <circle cx={cx} cy={cy} r={portraitR}  fill="none" stroke="#e07210" strokeWidth="1"   opacity="0.4" />
+
+      {/* 12 sector dividers */}
+      {ZODIAC_SIGNS.map((_, i) => {
+        const angle = (i * 30 * Math.PI) / 180;
+        return (
+          <line
+            key={i}
+            x1={cx + innerR  * Math.cos(angle)}
+            y1={cy + innerR  * Math.sin(angle)}
+            x2={cx + outerR  * Math.cos(angle)}
+            y2={cy + outerR  * Math.sin(angle)}
+            stroke="#e07210"
+            strokeWidth="0.4"
+            opacity="0.2"
+          />
+        );
+      })}
+
+      {/* Degree tick marks */}
+      {Array.from({ length: 72 }).map((_, i) => {
+        const angle = (i * 5 * Math.PI) / 180;
+        const isMajor = i % 6 === 0;
+        const r1 = isMajor ? outerR - 8 : outerR - 4;
+        return (
+          <line
+            key={i}
+            x1={cx + r1       * Math.cos(angle)}
+            y1={cy + r1       * Math.sin(angle)}
+            x2={cx + outerR   * Math.cos(angle)}
+            y2={cy + outerR   * Math.sin(angle)}
+            stroke="#e07210"
+            strokeWidth={isMajor ? 0.8 : 0.4}
+            opacity={isMajor ? 0.35 : 0.15}
+          />
+        );
+      })}
+
+      {/* Zodiac glyphs */}
+      {ZODIAC_SIGNS.map((sign, i) => {
+        const angle = ((i * 30 + 15) * Math.PI) / 180;
+        const r = (signR + outerR) / 2;
+        return (
+          <text
+            key={sign.name}
+            x={cx + r * Math.cos(angle)}
+            y={cy + r * Math.sin(angle)}
+            textAnchor="middle"
+            dominantBaseline="central"
+            fontSize="18"
+            fill="#ffb36a"
+            opacity="0.7"
+            fontFamily='"Cormorant Garamond","Apple Symbols","Segoe UI Symbol",serif'
+          >
+            {sign.glyph}
+          </text>
+        );
+      })}
+
+      {/* Aspect lines between planets */}
+      {ASPECT_PAIRS.map(([a, b], i) => {
+        const pa = planetCoords[a];
+        const pb = planetCoords[b];
+        if (!pa || !pb) return null;
+        return (
+          <line
+            key={i}
+            x1={pa.px} y1={pa.py}
+            x2={pb.px} y2={pb.py}
+            stroke="#4DC3E0"
+            strokeWidth="0.5"
+            opacity="0.18"
+            strokeDasharray="3 5"
+          />
+        );
+      })}
+
+      {/* Planet dots + glyphs */}
+      {planetCoords.map((p) => (
+        <g key={p.glyph}>
+          {/* Glow */}
+          <circle cx={p.px} cy={p.py} r={p.size * 3} fill={p.color} opacity="0.12" />
+          {/* Dot */}
+          <circle cx={p.px} cy={p.py} r={p.size} fill={p.color} opacity="0.9" />
+          {/* Label */}
+          <text
+            x={p.px + p.size * 2.2}
+            y={p.py + p.size * 0.8}
+            fontSize="9"
+            fill={p.color}
+            opacity="0.65"
+            fontFamily='"Cormorant Garamond","Apple Symbols","Segoe UI Symbol",serif'
+          >
+            {p.glyph}
+          </text>
+        </g>
+      ))}
+
+      {/* Center glow */}
+      <circle cx={cx} cy={cy} r={portraitR} fill="url(#centerGlow)" />
+
+      {/* Inner mandala ring details */}
+      {Array.from({ length: 8 }).map((_, i) => {
+        const angle = (i * 45 * Math.PI) / 180;
+        return (
+          <circle
+            key={i}
+            cx={cx + (portraitR + 14) * Math.cos(angle)}
+            cy={cy + (portraitR + 14) * Math.sin(angle)}
+            r="3"
+            fill="#e07210"
+            opacity="0.35"
+          />
+        );
+      })}
+    </svg>
+  );
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Floating ambient particles
+───────────────────────────────────────────────────────────── */
+const PARTICLES = [
+  { x: '8%',  y: '15%', size: 2,   delay: 0,   dur: 7  },
+  { x: '15%', y: '65%', size: 1.5, delay: 1.5, dur: 9  },
+  { x: '88%', y: '20%', size: 2.5, delay: 0.8, dur: 8  },
+  { x: '92%', y: '72%', size: 1.5, delay: 2,   dur: 11 },
+  { x: '45%', y: '8%',  size: 2,   delay: 3,   dur: 6  },
+  { x: '70%', y: '90%', size: 1.5, delay: 1,   dur: 10 },
+  { x: '25%', y: '88%', size: 2,   delay: 4,   dur: 7  },
+  { x: '80%', y: '45%', size: 1,   delay: 0.5, dur: 12 },
+];
+
+const FLOATING_GLYPHS = [
+  { glyph: '♈', x: '6%',  y: '22%', delay: 0   },
+  { glyph: '♌', x: '90%', y: '18%', delay: 1   },
+  { glyph: '♎', x: '4%',  y: '72%', delay: 2   },
+  { glyph: '♐', x: '92%', y: '68%', delay: 0.5 },
+  { glyph: '♒', x: '48%', y: '5%',  delay: 1.5 },
+];
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 24 },
+  visible: { opacity: 1, y: 0 },
+};
+
+/* ─────────────────────────────────────────────────────────────
+   HeroSection
+───────────────────────────────────────────────────────────── */
+export function HeroSection({ onBook }: { onBook?: () => void }) {
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start start', 'end start'] });
+  const wheelY  = useTransform(scrollYProgress, [0, 1], [0, 60]);
+  const textY   = useTransform(scrollYProgress, [0, 1], [0, 40]);
+
+  return (
+    <section
+      ref={sectionRef}
+      id="home"
+      className="relative flex min-h-[100dvh] flex-col justify-center overflow-hidden lg:min-h-screen"
+      style={{ background: 'linear-gradient(160deg, #031825 0%, #062E3C 40%, #084557 70%, #031018 100%)' }}
+    >
+      {/* ── Ambient light blobs ── */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute -top-40 -left-40 w-[600px] h-[600px] rounded-full bg-[radial-gradient(circle,rgba(11,120,150,0.25),transparent_65%)] blur-3xl" />
+        <div className="absolute -bottom-40 -right-20 w-[500px] h-[500px] rounded-full bg-[radial-gradient(circle,rgba(232,118,28,0.15),transparent_65%)] blur-3xl" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-[radial-gradient(circle,rgba(12,95,120,0.1),transparent_60%)] blur-3xl" />
       </div>
 
-      <div className="relative max-w-7xl mx-auto px-4 lg:px-8">
-        <div className="grid lg:grid-cols-2 lg:gap-0 items-center">
-          {/* Heading — top on mobile, left column on desktop */}
-          <Reveal className="order-1 lg:col-start-1 lg:row-start-1 lg:pr-10 xl:pr-14 lg:border-r lg:border-white/10">
-            <p className="text-gold-400 text-sm md:text-base font-semibold uppercase tracking-widest">
-              Guru Ji Sadhguru ANAND
-            </p>
-            <h1 className="mt-3 font-michroma font-normal text-2xl sm:text-3xl md:text-4xl lg:text-[2.35rem] xl:text-[2.85rem] leading-[1.15] tracking-tight text-white">
-              Remove <span className="text-gradient-gold">Uncertainty</span> from Career, Relationships & Finance
-            </h1>
-          </Reveal>
+      {/* ── Star field ── */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        {PARTICLES.map((p, i) => (
+          <motion.div
+            key={i}
+            className="absolute rounded-full bg-white"
+            style={{ left: p.x, top: p.y, width: p.size, height: p.size }}
+            animate={{ opacity: [0.2, 0.9, 0.2], scale: [1, 1.4, 1] }}
+            transition={{ duration: p.dur, repeat: Infinity, delay: p.delay, ease: 'easeInOut' }}
+          />
+        ))}
+      </div>
 
-          {/* Portrait — above paragraphs on mobile, right column on desktop */}
-          <Reveal
-            className="relative order-2 my-8 lg:my-0 lg:col-start-2 lg:row-start-1 lg:row-span-2 lg:pl-10 xl:pl-14 max-w-md mx-auto lg:max-w-none w-full self-center"
-            delay={120}
+      {/* ── Floating zodiac glyphs ── */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden hidden sm:block">
+        {FLOATING_GLYPHS.map((g) => (
+          <motion.div
+            key={g.glyph}
+            className="absolute font-serif text-2xl select-none"
+            style={{
+              left: g.x, top: g.y,
+              color: '#e07210',
+              fontFamily: '"Cormorant Garamond","Apple Symbols","Segoe UI Symbol",serif',
+            }}
+            animate={{ y: [0, -14, 0], opacity: [0.1, 0.25, 0.1] }}
+            transition={{ duration: 8, repeat: Infinity, delay: g.delay, ease: 'easeInOut' }}
           >
-            <div className="absolute -inset-3 md:-inset-5 rounded-2xl gold-border opacity-80 blur-[2px]" />
-            <div className="relative rounded-xl overflow-hidden shadow-premium bg-royal-900 aspect-[4/5] max-w-md lg:max-w-none mx-auto">
-              <img src={GURU_IMG} alt="Guru Ji Sadhguru ANAND" className="w-full h-full object-cover" />
-              <div className="absolute inset-0 bg-gradient-to-t from-royal-900/80 via-transparent to-transparent" />
-              <div className="absolute bottom-4 left-4 right-4 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 p-4 flex items-center gap-3">
-                <div className="min-w-0">
-                  <div className="text-sm font-semibold">Guru Ji Sadhguru ANAND</div>
-                  <div className="text-xs text-white/70 leading-snug">
-                    Vedic astrologer · Vastu consultant · Medical astrology · Practising since 1998
+            {g.glyph}
+          </motion.div>
+        ))}
+      </div>
+
+      {/* ── Main content grid ── */}
+      <div className="relative mx-auto w-full max-w-7xl px-4 py-12 sm:py-16 lg:px-8 lg:py-20">
+        <div className="grid items-center gap-8 lg:grid-cols-[1fr_1.05fr] lg:gap-0 lg:min-h-[80vh]">
+
+          {/* ── LEFT: Text ── */}
+          <motion.div
+            style={{ y: textY }}
+            initial="hidden"
+            animate="visible"
+            variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.13 } } }}
+            className="order-2 z-10 space-y-6 sm:space-y-7 lg:order-1 lg:pr-10"
+          >
+            {/* Badge */}
+            <motion.div variants={itemVariants}>
+              <span className="inline-flex max-w-full flex-wrap items-center justify-center gap-2 rounded-full border border-gold-400/35 bg-gold-400/10 px-3 py-1.5 text-center text-[9px] font-bold uppercase tracking-[0.14em] text-gold-300 sm:justify-start sm:px-4 sm:text-[10px] sm:tracking-[0.22em] lg:text-left">
+                <span className="w-1.5 h-1.5 rounded-full bg-gold-400 animate-pulse" />
+                Vedic Astrology · Vastu · Medical Astrology
+              </span>
+            </motion.div>
+
+            {/* Headline */}
+            <motion.div variants={itemVariants}>
+              <h1 className="font-serif text-4xl sm:text-5xl lg:text-[3.1rem] xl:text-[3.6rem] font-bold leading-[1.08] tracking-tight text-white">
+                The Stars Map
+                <br />
+                <span
+                  className="italic font-light"
+                  style={{
+                    background: 'linear-gradient(130deg, #ffb36a 0%, #e07210 50%, #ffb36a 100%)',
+                    WebkitBackgroundClip: 'text',
+                    backgroundClip: 'text',
+                    color: 'transparent',
+                  }}
+                >
+                  Your Life's Timing
+                </span>
+                <br />
+                <span className="text-white/80 font-light text-3xl sm:text-4xl lg:text-[2.5rem]">— Read Precisely</span>
+              </h1>
+            </motion.div>
+
+            {/* Body */}
+            <motion.div variants={itemVariants}>
+              <p className="text-white/55 text-base md:text-lg leading-relaxed max-w-lg">
+                Over twenty-five years of kundali readings — career, marriage, health, and wealth decoded from your birth chart with classical Vedic precision.
+              </p>
+            </motion.div>
+
+            {/* Stats */}
+            <motion.div variants={itemVariants} className="grid max-w-sm grid-cols-3 gap-2 sm:gap-3">
+              {[
+                { value: '25+', label: 'Years' },
+                { value: '1.2L+', label: 'Clients' },
+                { value: '50+', label: 'Countries' },
+              ].map((s) => (
+                <div
+                  key={s.label}
+                  className="rounded-2xl border border-white/10 bg-white/[0.06] p-3 text-center backdrop-blur-sm sm:p-4"
+                >
+                  <div
+                    className="font-cinzel text-lg font-bold sm:text-xl md:text-2xl"
+                    style={{
+                      background: 'linear-gradient(135deg, #ffb36a 0%, #e07210 100%)',
+                      WebkitBackgroundClip: 'text',
+                      backgroundClip: 'text',
+                      color: 'transparent',
+                    }}
+                  >
+                    {s.value}
                   </div>
+                  <div className="text-[10px] text-white/40 mt-1 uppercase tracking-wide font-semibold">{s.label}</div>
                 </div>
+              ))}
+            </motion.div>
+
+            {/* CTAs */}
+            <motion.div variants={itemVariants} className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:gap-4">
+              <button
+                onClick={onBook}
+                className="inline-flex w-full items-center justify-center gap-2.5 rounded-full px-7 py-3.5 text-sm font-bold uppercase tracking-wide btn-shimmer transition-all duration-300 animate-pulse-glow hover:shadow-gold-glow sm:w-auto"
+                style={{ background: 'linear-gradient(135deg, #ffb36a 0%, #e07210 50%, #c05e0d 100%)', color: '#062E3C' }}
+              >
+                Book Consultation
+                <ArrowRight size={15} />
+              </button>
+              <a
+                href="#kundali"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-white/15 bg-white/[0.07] px-7 py-3.5 text-sm font-semibold text-white/80 backdrop-blur-sm transition-all duration-300 hover:border-gold-400/40 hover:text-gold-300 sm:w-auto"
+              >
+                Free Kundali
+              </a>
+            </motion.div>
+
+            {/* Rating */}
+            <motion.div variants={itemVariants} className="flex flex-wrap items-center justify-center gap-3 sm:justify-start">
+              <div className="flex">
+                {[1, 2, 3, 4, 5].map((i) => (
+                  <Star key={i} size={13} className="text-gold-400 fill-gold-400" />
+                ))}
+              </div>
+              <span className="text-xs text-white/40 font-medium">4.9 / 5 &nbsp;·&nbsp; 10,000+ reviews</span>
+            </motion.div>
+          </motion.div>
+
+          {/* ── RIGHT: Zodiac Wheel + Portrait ── */}
+          <motion.div
+            style={{ y: wheelY }}
+            initial={{ opacity: 0, scale: 0.88 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1.1, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
+            className="relative order-1 mx-auto aspect-square w-full max-w-[min(92vw,420px)] sm:max-w-[460px] lg:order-2 lg:max-w-[520px]"
+          >
+            {/* Outer slow-spin layer */}
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{ duration: 140, repeat: Infinity, ease: 'linear' }}
+              className="absolute inset-0 flex items-center justify-center pointer-events-none"
+            >
+              <ZodiacWheel />
+            </motion.div>
+
+            {/* Counter-rotating inner ring for depth */}
+            <motion.div
+              animate={{ rotate: -360 }}
+              transition={{ duration: 80, repeat: Infinity, ease: 'linear' }}
+              className="pointer-events-none absolute inset-[21%] rounded-full border border-gold-400/12"
+            />
+
+            {/* Static portrait centered in wheel */}
+            <div className="absolute inset-0 z-10 flex items-center justify-center">
+              <div className="relative aspect-square w-[52%] max-w-[220px] sm:max-w-[260px]">
+              {/* Glow pulse */}
+              <div
+                className="absolute -inset-6 rounded-full pointer-events-none animate-pulse-glow"
+                style={{ background: 'radial-gradient(circle, rgba(224,114,16,0.3) 0%, transparent 70%)' }}
+              />
+              {/* Portrait */}
+              <div className="w-full h-full rounded-full overflow-hidden border-2 border-gold-400/40 shadow-[0_0_60px_rgba(224,114,16,0.35),0_0_120px_rgba(224,114,16,0.12)]">
+                <img
+                  src={GURU_IMG}
+                  alt="Gurudev Anand"
+                  className="w-full h-full object-cover object-top"
+                />
+              </div>
+              {/* Name badge */}
+              <div
+                className="absolute -bottom-8 left-1/2 max-w-[calc(100vw-2rem)] -translate-x-1/2 rounded-full border border-gold-400/30 px-3 py-1.5 text-center backdrop-blur-md sm:max-w-none sm:whitespace-nowrap sm:px-4"
+                style={{ background: 'rgba(6,46,60,0.85)' }}
+              >
+                <span className="font-cinzel text-[10px] font-bold text-gold-300 tracking-widest uppercase">
+                  Gurudev Anand
+                </span>
+              </div>
+              {/* Live dot */}
+              <div className="absolute -top-2 right-4 flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-emerald-400/30 bg-emerald-400/10 backdrop-blur-sm">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                <span className="text-[9px] text-emerald-400 font-bold uppercase tracking-wide">Live</span>
+              </div>
               </div>
             </div>
-          </Reveal>
-
-          {/* Body copy — below image on mobile, left column on desktop */}
-          <div className="order-3 lg:col-start-1 lg:row-start-2 lg:pr-10 xl:pr-14 lg:border-r lg:border-white/10">
-            <Reveal>
-              <div className="hero-copy space-y-4 text-base md:text-lg leading-relaxed">
-                <p className="text-white">
-                  For more than twenty-five years, Guru Ji Sadhguru ANAND has guided individuals and families through the
-                  lens of classical Vedic astrology — reading birth charts with precision, compassion, and a deep respect
-                  for scripture.
-                </p>
-                <p className="text-white">
-                  His consultations are not generic forecasts. He studies your kundali in detail, explains the patterns
-                  behind your career, relationships, and finances, and offers remedies you can follow with confidence.
-                  Clients across India and fifty countries turn to him when they need clarity they can act on.
-                </p>
-              </div>
-            </Reveal>
-
-            <Reveal className="mt-8" delay={80}>
-              <div className="grid grid-cols-3 gap-3 max-w-lg">
-                <Reveal variant="fade" once={false} delay={0}>
-                  <StatBlock light value="25+" label="Years of practice" />
-                </Reveal>
-                <Reveal variant="fade" once={false} delay={60}>
-                  <StatBlock light value="1.2L+" label="Consultations" />
-                </Reveal>
-                <Reveal variant="fade" once={false} delay={120}>
-                  <StatBlock light value="50+" label="Countries served" />
-                </Reveal>
-              </div>
-            </Reveal>
-
-            <Reveal className="mt-8" delay={100}>
-              <p className="hero-copy text-sm text-white leading-relaxed max-w-xl">
-                Trusted by more than 1.2 lakh clients worldwide. Guru Ji is known for patient, one-to-one sessions —
-                whether you meet him online or in person — and for guidance that stays practical long after the call ends.
-              </p>
-            </Reveal>
-          </div>
+          </motion.div>
         </div>
       </div>
+
+      {/* ── Scroll hint ── */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.8, duration: 0.8 }}
+        className="pointer-events-none absolute bottom-6 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 sm:bottom-8 sm:flex"
+      >
+        <span className="text-[9px] text-white/25 uppercase tracking-[0.3em] font-bold">Scroll</span>
+        <motion.div
+          animate={{ y: [0, 6, 0] }}
+          transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+        >
+          <ChevronDown size={16} className="text-white/20" />
+        </motion.div>
+      </motion.div>
+
+      {/* ── Bottom fade into next section ── */}
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-warm-50 to-transparent pointer-events-none" />
     </section>
   );
 }

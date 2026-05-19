@@ -1,4 +1,4 @@
-import type { CSSProperties } from 'react';
+﻿import type { CSSProperties } from 'react';
 import { useEffect, useId, useMemo, useRef, useState } from 'react';
 
 const SIGNS = [
@@ -116,7 +116,7 @@ function ZodiacCell({
       style={{ ['--z-float-delay' as string]: `${floatDelay}s` }}
     >
       <div
-        className="relative z-10 flex h-[4.25rem] w-[4.25rem] items-center justify-center md:h-[5.25rem] md:w-[5.25rem] rounded-full border border-white/[0.08] bg-gradient-to-b from-white/[0.07] to-white/[0.02] shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_0_0_1px_rgba(0,0,0,0.35)] outline-none transition-[transform,box-shadow,filter,border-color] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform focus-visible:ring-2 focus-visible:ring-cta-400/60 group-hover:z-20 group-hover:scale-[1.12] group-hover:border-cta-400/35 group-hover:shadow-[0_0_0_1px_rgba(41,171,226,0.25),0_18px_50px_-12px_rgba(0,0,0,0.65),0_0_40px_rgba(41,171,226,0.22)] motion-reduce:transition-none"
+        className="relative z-10 flex h-[4.25rem] w-[4.25rem] items-center justify-center md:h-[5.25rem] md:w-[5.25rem] rounded-full border border-warm-300 bg-gradient-to-b from-white/[0.07] to-white/[0.02] shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_0_0_1px_rgba(0,0,0,0.35)] outline-none transition-[transform,box-shadow,filter,border-color] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform focus-visible:ring-2 focus-visible:ring-cta-400/60 group-hover:z-20 group-hover:scale-[1.12] group-hover:border-cta-400/35 group-hover:shadow-[0_0_0_1px_rgba(21,152,188,0.25),0_18px_50px_-12px_rgba(0,0,0,0.65),0_0_40px_rgba(21,152,188,0.22)] motion-reduce:transition-none"
         tabIndex={interactive ? 0 : -1}
         role={interactive ? 'img' : undefined}
         aria-labelledby={interactive ? tipId : undefined}
@@ -127,10 +127,10 @@ function ZodiacCell({
         />
         <span
           aria-hidden
-          className="pointer-events-none absolute -inset-6 rounded-full bg-[radial-gradient(circle_at_50%_40%,rgba(41,171,226,0.35),transparent_62%)] opacity-0 blur-xl transition-opacity duration-500 group-hover:opacity-100"
+          className="pointer-events-none absolute -inset-6 rounded-full bg-[radial-gradient(circle_at_50%_40%,rgba(21,152,188,0.35),transparent_62%)] opacity-0 blur-xl transition-opacity duration-500 group-hover:opacity-100"
         />
         <span
-          className="relative zodiac-icon-float inline-flex select-none bg-gradient-to-b from-[#f8f0da] from-25% via-[#d4b978] to-[#8a6a3a] bg-clip-text font-serif text-[2.1rem] leading-none text-transparent drop-shadow-[0_0_14px_rgba(212,185,120,0.45)] transition-[transform,filter] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] md:text-[2.65rem] group-hover:scale-[1.06] group-hover:drop-shadow-[0_0_22px_rgba(41,171,226,0.55),0_0_36px_rgba(212,185,120,0.35)] motion-reduce:group-hover:scale-100"
+          className="relative zodiac-icon-float inline-flex select-none bg-gradient-to-b from-[#ffe4bc] from-25% via-[#e8761c] to-[#a84c0e] bg-clip-text font-serif text-[2.1rem] leading-none text-transparent drop-shadow-[0_0_14px_rgba(232,118,28,0.5)] transition-[transform,filter] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] md:text-[2.65rem] group-hover:scale-[1.06] group-hover:drop-shadow-[0_0_22px_rgba(21,152,188,0.55),0_0_36px_rgba(232,118,28,0.4)] motion-reduce:group-hover:scale-100"
           style={{ fontFamily: '"Cormorant Garamond", "Apple Symbols", "Segoe UI Symbol", serif' }}
         >
           {sign.glyph}
@@ -144,10 +144,10 @@ function ZodiacCell({
       ) : null}
 
       <div
-        className="pointer-events-none absolute bottom-[calc(100%+0.65rem)] left-1/2 z-30 min-w-[7.5rem] -translate-x-1/2 translate-y-1 scale-[0.97] rounded-xl border border-white/15 bg-white/[0.06] px-4 py-2 text-center text-[11px] font-semibold uppercase tracking-[0.22em] text-white/90 opacity-0 shadow-[0_12px_40px_-8px_rgba(0,0,0,0.75)] backdrop-blur-xl transition-[opacity,transform] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-y-0 group-hover:scale-100 group-hover:opacity-100 group-focus-within:translate-y-0 group-focus-within:scale-100 group-focus-within:opacity-100 motion-reduce:translate-y-0 motion-reduce:scale-100 motion-reduce:opacity-0 motion-reduce:group-hover:opacity-100 motion-reduce:group-focus-within:opacity-100"
+        className="pointer-events-none absolute bottom-[calc(100%+0.65rem)] left-1/2 z-30 min-w-[7.5rem] -translate-x-1/2 translate-y-1 scale-[0.97] rounded-xl border border-orange-200 bg-white px-4 py-2 text-center text-[11px] font-semibold uppercase tracking-[0.22em] text-ink-700 opacity-0 shadow-[0_12px_40px_-8px_rgba(0,0,0,0.75)] backdrop-blur-xl transition-[opacity,transform] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-y-0 group-hover:scale-100 group-hover:opacity-100 group-focus-within:translate-y-0 group-focus-within:scale-100 group-focus-within:opacity-100 motion-reduce:translate-y-0 motion-reduce:scale-100 motion-reduce:opacity-0 motion-reduce:group-hover:opacity-100 motion-reduce:group-focus-within:opacity-100"
         aria-hidden
       >
-        <span className="absolute -bottom-1 left-1/2 h-2 w-2 -translate-x-1/2 rotate-45 border-b border-r border-white/12 bg-white/[0.06]" />
+        <span className="absolute -bottom-1 left-1/2 h-2 w-2 -translate-x-1/2 rotate-45 border-b border-r border-white/12 bg-white" />
         {sign.name}
       </div>
     </div>
@@ -219,7 +219,7 @@ export function ZodiacMarqueeSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative isolate overflow-hidden border-y border-white/[0.06] bg-[#030712] pt-4 pb-6 md:pt-5 md:pb-7"
+      className="relative isolate overflow-hidden border-y border-warm-200 bg-[#030712] pt-4 pb-6 md:pt-5 md:pb-7"
       style={
         {
           ['--zm-parallax-x' as string]: '0',
@@ -239,13 +239,13 @@ export function ZodiacMarqueeSection() {
             : undefined,
         }}
       >
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_120%_80%_at_50%_-10%,rgba(41,171,226,0.14),transparent_55%),radial-gradient(ellipse_90%_60%_at_100%_50%,rgba(197,160,89,0.08),transparent_45%),radial-gradient(ellipse_80%_50%_at_0%_60%,rgba(0,74,124,0.2),transparent_50%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_120%_80%_at_50%_-10%,rgba(11,120,150,0.16),transparent_55%),radial-gradient(ellipse_90%_60%_at_100%_50%,rgba(232,118,28,0.09),transparent_45%),radial-gradient(ellipse_80%_50%_at_0%_60%,rgba(6,74,94,0.22),transparent_50%)]" />
         <div
-          className="absolute -left-1/4 top-1/2 h-[120%] w-[80%] -translate-y-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(41,171,226,0.12),transparent)] blur-3xl motion-safe:animate-zodiac-nebula-drift"
+          className="absolute -left-1/4 top-1/2 h-[120%] w-[80%] -translate-y-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(21,152,188,0.12),transparent)] blur-3xl motion-safe:animate-zodiac-nebula-drift"
           aria-hidden
         />
         <div
-          className="absolute -right-1/4 top-0 h-[85%] w-[70%] rounded-full bg-[radial-gradient(closest-side,rgba(197,160,89,0.1),transparent)] blur-3xl motion-safe:animate-zodiac-nebula-drift-reverse"
+          className="absolute -right-1/4 top-0 h-[85%] w-[70%] rounded-full bg-[radial-gradient(closest-side,rgba(232,118,28,0.1),transparent)] blur-3xl motion-safe:animate-zodiac-nebula-drift-reverse"
           aria-hidden
         />
         <div
@@ -258,7 +258,7 @@ export function ZodiacMarqueeSection() {
         />
       </div>
 
-      <StarField seed="sadhguru-zodiac-v1" />
+      <StarField seed="gurudev-anand-zodiac-v1" />
       <DustMotes seed="motes-v1" />
 
       <div

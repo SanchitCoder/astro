@@ -1,4 +1,5 @@
-import { Link, useOutletContext } from 'react-router-dom';
+﻿import { Link, useOutletContext } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import type { SiteOutletContext } from '../components/layout/SiteLayout';
 import {
   Phone,
@@ -11,7 +12,6 @@ import {
   Shield,
   Globe,
 } from 'lucide-react';
-import { Reveal } from '../components/ui/Reveal';
 import { ContactForm } from '../components/contact/ContactForm';
 import {
   EMAIL,
@@ -22,7 +22,7 @@ import {
   GURU_IMG_ABOUT,
 } from '../lib/constants';
 
-const ADDRESS = 'C/o Rahul Strore, Sector 28-C, Chandigarh, India';
+const ADDRESS = 'C/o Rahul Store, Sector 28-C, Chandigarh, India';
 
 const TRUST_POINTS = [
   { icon: Shield, text: 'Private, confidential one-to-one sessions' },
@@ -30,151 +30,184 @@ const TRUST_POINTS = [
   { icon: Clock, text: 'Most enquiries answered within 24–48 hours' },
 ];
 
+const itemVariants = {
+  hidden: { opacity: 0, y: 24 },
+  visible: { opacity: 1, y: 0 },
+};
+
 export function ContactPage() {
   const { onBook } = useOutletContext<SiteOutletContext>();
 
   return (
     <>
-      <section className="relative overflow-hidden bg-hero-gradient text-white pt-12 md:pt-16 pb-14 md:pb-20">
-        <div className="absolute inset-0 pointer-events-none opacity-40">
-          <div className="absolute -top-20 left-0 w-80 h-80 rounded-full bg-cta-500/20 blur-3xl" />
-          <div className="absolute bottom-0 right-0 w-[28rem] h-[28rem] rounded-full bg-royal-400/30 blur-3xl" />
+      {/* Hero */}
+      <section className="relative overflow-hidden bg-warm-50 pt-14 pb-16 md:pt-20 md:pb-24">
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_60%_at_60%_20%,rgba(11,120,150,0.18),transparent_60%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_50%_40%_at_10%_80%,rgba(6,74,94,0.2),transparent_55%)]" />
         </div>
         <div className="relative max-w-7xl mx-auto px-4 lg:px-8">
-          <Reveal>
-            <p className="text-gold-400 text-sm font-semibold uppercase tracking-widest">Contact</p>
-            <h1 className="mt-3 font-sans font-bold text-3xl sm:text-4xl md:text-5xl leading-tight max-w-3xl text-white">
-              Speak with <span className="text-gradient-gold">Guru Ji Sadhguru ANAND</span>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <span className="section-eyebrow mb-4 block">Contact</span>
+            <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold leading-tight max-w-3xl text-white">
+              Speak with{' '}
+              <span className="text-gradient-gold">Gurudev Anand</span>
             </h1>
-            <p className="hero-copy mt-5 text-base md:text-lg max-w-2xl leading-relaxed text-white">
-              Whether you need clarity on career, marriage, health, or Vastu — reach out to schedule a private
-              consultation. Guru Ji and his team are here to guide you with the same care offered to over 1.2 lakh
-              clients worldwide.
+            <p className="mt-5 text-ink-600 text-base md:text-lg max-w-2xl leading-relaxed">
+              Whether you need clarity on career, marriage, health, or Vastu — reach out to schedule
+              a private consultation. Gurudev Anand and his team are here to guide you with the same
+              care offered to over 1.2 lakh clients worldwide.
             </p>
-          </Reveal>
+          </motion.div>
         </div>
       </section>
 
-      <section className="py-14 md:py-20 bg-soft-gradient">
+      {/* Main content */}
+      <section className="py-16 md:py-24 bg-warm-100">
         <div className="max-w-7xl mx-auto px-4 lg:px-8">
-          <div className="grid lg:grid-cols-5 gap-10 lg:gap-12 items-start">
-            <Reveal className="lg:col-span-3">
-              <ContactForm onBook={onBook} />
-            </Reveal>
+          <div className="grid lg:grid-cols-5 gap-10 lg:gap-14 items-start">
+            <motion.div
+              className="lg:col-span-3"
+              initial="hidden"
+              animate="visible"
+              variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.1 } } }}
+            >
+              <motion.div variants={itemVariants}>
+                <ContactForm onBook={onBook} />
+              </motion.div>
+            </motion.div>
 
             <div className="lg:col-span-2 space-y-5">
-              <Reveal delay={80}>
-                <div className="rounded-2xl overflow-hidden border border-slate-200 shadow-sm aspect-[4/3] bg-slate-100">
-                  <img
-                    src={GURU_IMG_ABOUT}
-                    alt="Guru Ji Sadhguru ANAND"
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-              </Reveal>
+              {/* Portrait */}
+              <motion.div
+                initial={{ opacity: 0, x: 30 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.7, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+                className="overflow-hidden rounded-2xl border border-warm-300 bg-warm-50 aspect-[4/3] shadow-[0_20px_40px_-10px_rgba(0,0,0,0.5)]"
+              >
+                <img
+                  src={GURU_IMG_ABOUT}
+                  alt="Gurudev Anand"
+                  className="w-full h-full object-cover"
+                />
+              </motion.div>
 
-              <Reveal delay={120}>
-                <div className="rounded-2xl bg-royal-900 text-white p-6 border border-royal-800 space-y-4">
-                  <h2 className="font-sans text-lg font-bold flex items-center gap-2">
-                    <Sparkles size={18} className="text-gold-400" />
-                    Direct contact
-                  </h2>
-                  <ul className="space-y-4 text-sm">
-                    <li>
-                      <a
-                        href={PHONE_TEL}
-                        className="flex items-start gap-3 hover:text-gold-400 transition"
-                      >
-                        <Phone size={18} className="text-gold-400 shrink-0 mt-0.5" />
-                        <span>
-                          <span className="block text-white/60 text-xs uppercase tracking-wide">Phone</span>
-                          <span className="font-semibold">{PHONE}</span>
-                        </span>
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href={EMAIL_MAILTO}
-                        className="flex items-start gap-3 hover:text-gold-400 transition"
-                      >
-                        <Mail size={18} className="text-gold-400 shrink-0 mt-0.5" />
-                        <span>
-                          <span className="block text-white/60 text-xs uppercase tracking-wide">Email</span>
-                          <span className="font-semibold break-all">{EMAIL}</span>
-                        </span>
-                      </a>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <MapPin size={18} className="text-gold-400 shrink-0 mt-0.5" />
+              {/* Direct contact card */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.25 }}
+                className="rounded-2xl glass-card border border-warm-300 p-6 space-y-4"
+              >
+                <h2 className="font-cinzel text-sm font-bold text-ink-900 flex items-center gap-2">
+                  <Sparkles size={14} className="text-gold-400" />
+                  Direct Contact
+                </h2>
+                <ul className="space-y-4 text-sm">
+                  <li>
+                    <a href={PHONE_TEL} className="flex items-start gap-3 group">
+                      <Phone size={15} className="text-gold-400 shrink-0 mt-0.5" />
                       <span>
-                        <span className="block text-white/60 text-xs uppercase tracking-wide">Office</span>
-                        <span className="text-white/90 leading-relaxed">{ADDRESS}</span>
+                        <span className="block text-ink-400 text-[10px] uppercase tracking-wide mb-0.5">Phone</span>
+                        <span className="font-semibold text-ink-700 group-hover:text-gold-300 transition-colors">{PHONE}</span>
                       </span>
-                    </li>
-                    <li className="flex items-start gap-3 text-white/80">
-                      <Clock size={18} className="text-gold-400 shrink-0 mt-0.5" />
+                    </a>
+                  </li>
+                  <li>
+                    <a href={EMAIL_MAILTO} className="flex items-start gap-3 group">
+                      <Mail size={15} className="text-gold-400 shrink-0 mt-0.5" />
                       <span>
-                        <span className="block text-white/60 text-xs uppercase tracking-wide">Hours</span>
-                        Mon – Sat · 10 AM – 7 PM IST
+                        <span className="block text-ink-400 text-[10px] uppercase tracking-wide mb-0.5">Email</span>
+                        <span className="font-semibold text-ink-700 group-hover:text-gold-300 transition-colors break-all">{EMAIL}</span>
                       </span>
-                    </li>
-                  </ul>
-                  <a
-                    href={WHATSAPP_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-2 w-full py-3 rounded-md bg-[#25D366] hover:bg-[#20bd5a] text-white font-semibold text-sm transition"
-                  >
-                    <MessageCircle size={18} />
-                    Chat on WhatsApp
-                  </a>
-                </div>
-              </Reveal>
-
-              <Reveal delay={160}>
-                <ul className="space-y-3">
-                  {TRUST_POINTS.map(({ icon: Icon, text }) => (
-                    <li
-                      key={text}
-                      className="flex items-start gap-3 rounded-xl bg-white border border-slate-200 px-4 py-3 text-sm text-charcoal shadow-sm"
-                    >
-                      <Icon size={18} className="text-cta-600 shrink-0 mt-0.5" />
-                      <span className="leading-relaxed">{text}</span>
-                    </li>
-                  ))}
+                    </a>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <MapPin size={15} className="text-gold-400 shrink-0 mt-0.5" />
+                    <span>
+                      <span className="block text-ink-400 text-[10px] uppercase tracking-wide mb-0.5">Office</span>
+                      <span className="text-ink-600 leading-relaxed">{ADDRESS}</span>
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <Clock size={15} className="text-gold-400 shrink-0 mt-0.5" />
+                    <span>
+                      <span className="block text-ink-400 text-[10px] uppercase tracking-wide mb-0.5">Hours</span>
+                      <span className="text-ink-600">Mon – Sat · 10 AM – 7 PM IST</span>
+                    </span>
+                  </li>
                 </ul>
-              </Reveal>
+                <a
+                  href={WHATSAPP_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-2 w-full py-3 rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-ink-900 font-bold text-sm uppercase tracking-wide transition btn-shimmer"
+                >
+                  <MessageCircle size={16} />
+                  Chat on WhatsApp
+                </a>
+              </motion.div>
+
+              {/* Trust points */}
+              <motion.ul
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.35 }}
+                className="space-y-3"
+              >
+                {TRUST_POINTS.map(({ icon: Icon, text }) => (
+                  <li
+                    key={text}
+                    className="flex items-start gap-3 rounded-xl glass-card border border-warm-300 px-4 py-3 text-sm"
+                  >
+                    <Icon size={15} className="text-gold-400 shrink-0 mt-0.5" />
+                    <span className="text-ink-600 leading-relaxed">{text}</span>
+                  </li>
+                ))}
+              </motion.ul>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="py-12 md:py-16 bg-white border-t border-slate-200">
+      {/* CTA strip */}
+      <section className="py-14 md:py-20 bg-warm-50 border-t border-warm-200">
         <div className="max-w-3xl mx-auto px-4 lg:px-8 text-center">
-          <Reveal>
-            <h2 className="section-heading text-2xl md:text-3xl">What happens after you reach out?</h2>
-            <p className="mt-4 text-charcoal-muted text-sm md:text-base leading-relaxed">
-              Our team reviews your message and birth details, then contacts you to confirm a slot with Guru Ji Sadhguru
-              ANAND. You will receive guidance on audio or video call — whichever you prefer — from anywhere in the
-              world.
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <h2 className="font-serif text-2xl md:text-3xl font-bold text-white">
+              What happens after you reach out?
+            </h2>
+            <p className="mt-4 text-ink-500 text-sm md:text-base leading-relaxed">
+              Our team reviews your message and birth details, then contacts you to confirm a slot
+              with Gurudev Anand. You will receive guidance on audio or video call — whichever you
+              prefer — from anywhere in the world.
             </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
               <button
                 type="button"
                 onClick={onBook}
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-md bg-cta-500 hover:bg-cta-600 text-white font-semibold text-sm transition shadow-sm"
+                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-gradient-to-r from-gold-300 via-gold-400 to-gold-600 text-cosmic-950 font-bold text-sm uppercase tracking-wide btn-shimmer hover:shadow-gold-glow transition-shadow duration-300"
               >
                 Book via quick form
-                <ArrowRight size={16} />
+                <ArrowRight size={15} />
               </button>
               <Link
                 to="/"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-md border border-slate-300 text-royal-900 font-semibold text-sm hover:bg-section transition"
+                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full glass-card border border-orange-200 text-ink-700 text-sm font-semibold hover:border-gold-400/30 hover:text-gold-300 transition-all duration-300"
               >
                 Back to home
               </Link>
             </div>
-          </Reveal>
+          </motion.div>
         </div>
       </section>
     </>

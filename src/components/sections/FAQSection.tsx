@@ -1,73 +1,135 @@
 import { useState } from 'react';
-import { Reveal } from '../ui/Reveal';
-import { AccordionItem } from '../ui/AccordionItem';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ChevronDown } from 'lucide-react';
+
+const DARK_BG = 'linear-gradient(160deg, #031825 0%, #062E3C 40%, #084557 70%, #031018 100%)';
 
 const ITEMS = [
-  {
-    q: 'How does a consultation with Guru Ji Sadhguru ANAND work?',
-    a: 'You share your full birth details in advance. Guru Ji reads your kundali before or during the session, then meets you on a private audio or video call. He explains what he sees in your chart, answers your questions, and outlines remedies tailored to you — not a generic report.',
-  },
-  {
-    q: 'How long is a session with Guru Ji?',
-    a: 'Standard sessions with Guru Ji are thirty minutes — enough time for a focused reading and your most pressing questions. When your situation needs more depth, he also offers extended sixty-minute sessions.',
-  },
-  {
-    q: 'Can I consult Guru Ji online or in person?',
-    a: 'Both are available. Clients worldwide meet Guru Ji by secure audio or video call. In-person sessions are offered when his schedule and location allow — the same personal attention either way.',
-  },
-  {
-    q: 'What details does Guru Ji need from me?',
-    a: 'Your full name, date of birth, exact time of birth, and place of birth. For couple consultations, both partners’ details. Accuracy matters — Guru Ji uses these to cast and interpret your chart with care.',
-  },
-  {
-    q: 'What is Guru Ji’s refund policy?',
-    a: 'Bookings are one-time and non-refundable. If you need to reschedule, his team will support you based on Guru Ji’s availability.',
-  },
-  {
-    q: 'How soon can I speak with Guru Ji?',
-    a: 'Most clients are confirmed within twenty-four to forty-eight hours. When your matter is urgent, ask about priority slots — Guru Ji accommodates pressing cases when possible.',
-  },
-  {
-    q: 'What can I discuss with Guru Ji?',
-    a: 'Career, relationships, marriage, finance, health, family, Vastu, legal concerns, and spiritual questions — the areas he has guided clients through for over twenty-five years. Bring what weighs on you; he will orient the session accordingly.',
-  },
-  {
-    q: 'Are remedies included in Guru Ji’s consultations?',
-    a: 'Yes. Every session includes personalised remedies rooted in classical Vedic scriptures — mantras, rituals, or other guidance Guru Ji selects for your chart and circumstances.',
-  },
+  { q: 'How does a consultation work?',    a: 'Share your birth details in advance. Gurudev Anand reads your kundali, then meets you on a private audio or video call — explaining what the chart shows and outlining remedies tailored to you.' },
+  { q: 'Online or in person?',             a: 'Both. Clients worldwide meet by secure call. In-person sessions are available when his schedule allows — the same personal attention either way.' },
+  { q: 'What details do you need?',        a: 'Full name, date of birth, exact time of birth, and place of birth. For couple consultations, both partners\' details.' },
+  { q: 'How soon can I book?',             a: 'Most clients are confirmed within twenty-four to forty-eight hours. Urgent slots are available for pressing situations.' },
+  { q: 'Are remedies included?',           a: 'Yes — every session includes personalised remedies from classical Vedic texts: mantras, rituals, or guidance chosen specifically for your chart.' },
 ];
+
+function AccordionItem({ q, a, isOpen, onToggle, index }: { q: string; a: string; isOpen: boolean; onToggle: () => void; index: number }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 16 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-40px' }}
+      transition={{ duration: 0.5, delay: index * 0.07, ease: [0.22, 1, 0.36, 1] }}
+      className={`rounded-2xl border overflow-hidden transition-colors duration-300 ${isOpen ? 'border-gold-400/30 bg-gold-400/[0.04]' : 'border-white/[0.08] bg-white/[0.03] hover:border-white/[0.14]'}`}
+    >
+      <button
+        type="button"
+        onClick={onToggle}
+        className="w-full flex items-center gap-4 px-6 py-5 text-left"
+      >
+        {/* Number badge */}
+        <span
+          className="shrink-0 w-7 h-7 rounded-full flex items-center justify-center font-cinzel text-xs font-bold transition-colors duration-300"
+          style={{
+            background: isOpen ? 'rgba(224,114,16,0.18)' : 'rgba(255,255,255,0.06)',
+            color: isOpen ? '#ffb36a' : 'rgba(255,255,255,0.3)',
+            border: isOpen ? '1px solid rgba(224,114,16,0.35)' : '1px solid rgba(255,255,255,0.09)',
+          }}
+        >
+          {String(index + 1).padStart(2, '0')}
+        </span>
+
+        <span className={`flex-1 font-semibold text-sm md:text-base transition-colors duration-200 ${isOpen ? 'text-white/90' : 'text-white/55'}`}>
+          {q}
+        </span>
+
+        <motion.div
+          animate={{ rotate: isOpen ? 180 : 0 }}
+          transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+          className="shrink-0"
+        >
+          <ChevronDown size={18} className={`transition-colors duration-200 ${isOpen ? 'text-gold-400' : 'text-white/25'}`} />
+        </motion.div>
+      </button>
+
+      <AnimatePresence initial={false}>
+        {isOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+            className="overflow-hidden"
+          >
+            <div className="px-6 pb-6 pt-0 ml-11 text-white/45 text-sm leading-relaxed border-t border-white/[0.06] pt-4">
+              {a}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
+  );
+}
 
 export function FAQSection() {
   const [open, setOpen] = useState<number | null>(0);
 
   return (
-    <section className="py-20 md:py-28 bg-white">
-      <div className="max-w-4xl mx-auto px-4 lg:px-8">
-        <Reveal>
-          <div className="text-center mb-10">
-            <span className="inline-block px-3 py-1 rounded-md bg-royal-50 text-royal-800 text-xs font-bold uppercase tracking-wider">
-              FAQs
+    <section className="relative py-24 md:py-32 overflow-hidden" style={{ background: DARK_BG }}>
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] rounded-full bg-[radial-gradient(ellipse,rgba(11,120,150,0.1),transparent_70%)] blur-3xl" />
+        <div className="absolute top-0 right-0 w-[300px] h-[300px] rounded-full bg-[radial-gradient(circle,rgba(232,118,28,0.07),transparent_65%)] blur-3xl" />
+      </div>
+
+      <div className="relative max-w-3xl mx-auto px-4 lg:px-8">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          className="text-center mb-14"
+        >
+          <span className="inline-block mb-4 text-[10px] font-bold uppercase tracking-[0.25em]" style={{ color: '#ffb36a' }}>FAQs</span>
+          <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight">
+            Common{' '}
+            <span className="italic font-light" style={{ background: 'linear-gradient(135deg,#ffb36a,#e07210)', WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent' }}>
+              questions
             </span>
-            <h2 className="mt-4 section-heading">Questions clients ask about Guru Ji</h2>
-            <p className="mt-4 text-slate-600 text-sm md:text-base max-w-2xl mx-auto leading-relaxed">
-              Before you speak with Guru Ji Sadhguru ANAND, here is how his consultations are structured — and what you
-              can expect from time with him.
-            </p>
-          </div>
-        </Reveal>
+          </h2>
+          <p className="mt-4 text-white/40 text-sm max-w-xl mx-auto leading-relaxed">
+            How consultations with Gurudev Anand are structured and what to expect.
+          </p>
+        </motion.div>
 
         <div className="space-y-3">
           {ITEMS.map((it, i) => (
-            <Reveal key={it.q} variant="fade" once={false} delay={i * 45}>
-              <AccordionItem
-                question={it.q}
-                answer={it.a}
-                isOpen={open === i}
-                onToggle={() => setOpen(open === i ? null : i)}
-              />
-            </Reveal>
+            <AccordionItem
+              key={it.q}
+              q={it.q}
+              a={it.a}
+              isOpen={open === i}
+              onToggle={() => setOpen(open === i ? null : i)}
+              index={i}
+            />
           ))}
         </div>
+
+        {/* Bottom CTA strip */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7, delay: 0.3 }}
+          className="mt-14 text-center rounded-2xl border border-white/[0.08] bg-white/[0.04] p-8"
+        >
+          <p className="text-white/50 text-sm mb-5">Still have questions? Reach out directly.</p>
+          <a
+            href="/contact"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-bold uppercase tracking-wide btn-shimmer transition-all duration-300"
+            style={{ background: 'linear-gradient(135deg, #ffb36a 0%, #e07210 50%, #c05e0d 100%)', color: '#062E3C' }}
+          >
+            Contact Gurudev Anand
+          </a>
+        </motion.div>
       </div>
     </section>
   );

@@ -1,22 +1,16 @@
-type Props = {
+﻿type Props = {
   value: string;
   label: string;
   light?: boolean;
 };
 
-export function StatBlock({ value, label, light }: Props) {
+export function StatBlock({ value, label }: Props) {
   return (
-    <div
-      className={`rounded-lg border px-4 py-3 text-center ${
-        light
-          ? 'bg-white/5 border-white/10 text-white'
-          : 'bg-section border-slate-200 text-royal-900'
-      }`}
-    >
-      <div className={`font-sans text-xl md:text-2xl font-bold ${light ? 'text-white' : 'text-gradient-gold'}`}>
-        {value}
+    <div className="rounded-2xl glass-card border border-warm-300 px-4 py-3 text-center hover:border-gold-400/20 transition-colors">
+      <div className="font-cinzel text-xl md:text-2xl font-bold text-gradient-gold">{value}</div>
+      <div className="text-xs mt-1 text-ink-400 uppercase tracking-wide font-semibold leading-tight">
+        {label}
       </div>
-      <div className={`text-xs mt-1 ${light ? 'text-white' : 'text-charcoal-muted'}`}>{label}</div>
     </div>
   );
 }
