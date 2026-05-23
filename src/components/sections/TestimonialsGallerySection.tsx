@@ -71,7 +71,7 @@ export function TestimonialsGallerySection() {
               Gurudev Anand
             </span>
           </h2>
-          <p className="mt-4 text-white/40 text-sm leading-relaxed">
+          <p className="mt-4 text-white/90 text-sm leading-relaxed">
             From Mumbai to Dubai — career turns, marriage decisions, health, and family matters.
           </p>
         </motion.div>
@@ -125,13 +125,20 @@ export function TestimonialsGallerySection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="mt-14 max-w-xl mx-auto rounded-2xl border border-white/[0.08] bg-white/[0.04] p-6 text-center"
+          className="mx-auto mt-14 max-w-xl rounded-2xl border border-white/20 bg-white/[0.08] p-6 text-center shadow-[0_8px_32px_-8px_rgba(0,0,0,0.35)]"
         >
-          <span className="inline-block mb-2 text-[9px] font-bold uppercase tracking-[0.28em]" style={{ color: '#ffb36a' }}>Press</span>
-          <p className="text-xs text-white/35 leading-relaxed mb-5">National and international outlets have featured Gurudev Anand for his work in Vedic astrology.</p>
+          <span className="mb-2 inline-block text-[9px] font-bold uppercase tracking-[0.28em] text-gold-300">Press</span>
+          <p className="mb-5 text-xs leading-relaxed text-white sm:text-sm">
+            National and international outlets have featured Gurudev Anand for his work in Vedic astrology.
+          </p>
           <div className="flex flex-wrap justify-center gap-2">
             {['Times of India', 'Tribune', 'Hindustan Times', 'Bhagya Channel', 'Living India Channel', 'Dainik Bhaskar', 'The Voice of Chandigarh'].map((b) => (
-              <span key={b} className="px-3 py-1.5 rounded-full border border-white/[0.08] bg-white/[0.04] text-[10px] font-bold text-white/35 uppercase tracking-wide hover:border-gold-400/25 hover:text-gold-300/70 transition-colors cursor-default">{b}</span>
+              <span
+                key={b}
+                className="cursor-default rounded-full border border-white/25 bg-white/10 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wide text-white transition-colors hover:border-gold-400/50 hover:bg-white/15"
+              >
+                {b}
+              </span>
             ))}
           </div>
         </motion.div>

@@ -16,24 +16,24 @@ import { ConsultCTASection } from '../components/sections/ConsultCTASection';
 import { BlogSection } from '../components/sections/BlogSection';
 
 export function HomePage() {
-  const { onBook } = useOutletContext<SiteOutletContext>();
+  const { onConnect } = useOutletContext<SiteOutletContext>();
 
   return (
     <>
       <ZodiacMarqueeSection />
-      <HeroSection onBook={onBook} />
+      <HeroSection />
       <FeaturedInBar />
-      <LifeAreasSection />
+      <LifeAreasSection onConnect={onConnect} />
       <WhatYouLearnSection />
-      <VedicSciencesSection />
+      <VedicSciencesSection onConnect={onConnect} />
       <KundliCalculatorSection />
       <ReframeSection />
       <MentorSection />
-      <ConsultCTASection onBook={onBook} />
+      <ConsultCTASection />
       <TestimonialsGallerySection />
-      <BlogSection />
+      <BlogSection onConnect={onConnect} />
       <BonusSection />
-      <FAQSection />
+      <FAQSection onConnect={onConnect} />
     </>
   );
 }

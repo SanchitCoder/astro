@@ -57,7 +57,15 @@ const AREAS = [
   },
 ];
 
-function AreaCard({ area, index }: { area: typeof AREAS[0]; index: number }) {
+function AreaCard({
+  area,
+  index,
+  onConnect,
+}: {
+  area: typeof AREAS[0];
+  index: number;
+  onConnect?: () => void;
+}) {
   const mx = useMotionValue(0);
   const my = useMotionValue(0);
   const rx = useSpring(useTransform(my, [-0.5, 0.5], [6, -6]), { stiffness: 280, damping: 28 });
@@ -79,7 +87,16 @@ function AreaCard({ area, index }: { area: typeof AREAS[0]; index: number }) {
       style={{ rotateX: rx, rotateY: ry, transformStyle: 'preserve-3d' }}
       onMouseMove={handleMove}
       onMouseLeave={handleLeave}
-      className="group relative rounded-3xl overflow-hidden cursor-default min-h-[340px] md:min-h-[380px] flex flex-col"
+      onClick={onConnect}
+      onKeyDown={(e) => {
+        if (onConnect && (e.key === 'Enter' || e.key === ' ')) {
+          e.preventDefault();
+          onConnect();
+        }
+      }}
+      role={onConnect ? 'button' : undefined}
+      tabIndex={onConnect ? 0 : undefined}
+      className="group relative rounded-3xl overflow-hidden cursor-pointer min-h-[340px] md:min-h-[380px] flex flex-col"
     >
       {/* Background */}
       <div
@@ -159,7 +176,7 @@ function AreaCard({ area, index }: { area: typeof AREAS[0]; index: number }) {
         <h3 className="font-serif text-xl md:text-2xl font-bold text-white mb-2 leading-tight">
           {area.title}
         </h3>
-        <p className="text-sm text-white/55 leading-relaxed mb-4">{area.body}</p>
+        <p className="mb-4 text-sm leading-relaxed text-white/90">{area.body}</p>
 
         <div
           className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wide transition-all duration-300 group-hover:gap-3"
@@ -178,7 +195,7 @@ function AreaCard({ area, index }: { area: typeof AREAS[0]; index: number }) {
   );
 }
 
-export function LifeAreasSection() {
+export function LifeAreasSection({ onConnect }: { onConnect?: () => void }) {
   return (
     <section className="relative py-20 md:py-28 overflow-hidden bg-warm-50">
       <div className="absolute inset-0 pointer-events-none">
@@ -208,7 +225,7 @@ export function LifeAreasSection() {
           style={{ perspective: '1400px' }}
         >
           {AREAS.map((area, i) => (
-            <AreaCard key={area.planet} area={area} index={i} />
+            <AreaCard key={area.planet} area={area} index={i} onConnect={onConnect} />
           ))}
         </div>
       </div>

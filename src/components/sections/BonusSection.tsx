@@ -105,7 +105,7 @@ export function BonusSection() {
               </span>
             </h2>
 
-            <p className="text-white/45 text-sm md:text-base leading-relaxed mb-8">
+            <p className="text-white/90 text-sm md:text-base leading-relaxed mb-8">
               Gurudev Anand shares the principles behind his practice — so you arrive at a session already oriented to the depth he offers.
             </p>
 
@@ -125,7 +125,7 @@ export function BonusSection() {
                   <div className="w-6 h-6 rounded-full bg-gold-400/15 border border-gold-400/25 flex items-center justify-center shrink-0 mt-0.5 group-hover:bg-gold-400/25 transition-colors">
                     <CheckCircle2 size={12} className="text-gold-400" />
                   </div>
-                  <span className="text-sm text-white/55 leading-relaxed">{t}</span>
+                  <span className="text-sm text-white/90 leading-relaxed">{t}</span>
                 </motion.li>
               ))}
             </motion.ul>

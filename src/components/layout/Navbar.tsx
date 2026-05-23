@@ -8,22 +8,21 @@ const LINKS = [
   { label: 'Home',     to: '/', hash: '#home' },
   { label: 'About',   to: '/', hash: '#about' },
   { label: 'Services', to: '/', hash: '#services' },
+  { label: 'Consultation', to: '/consultation' },
   { label: 'Articles', to: '/', hash: '#knowledge' },
   { label: 'Contact',  to: '/contact' },
 ];
 
-type Props = { onBook: () => void };
-
 function NavItem({ to, hash, label, onClick }: { to: string; hash?: string; label: string; onClick?: () => void }) {
   const location = useLocation();
   const href = hash ? `${to}${hash}` : to;
-  const isContact = to === '/contact';
-  const isActive = isContact
-    ? location.pathname === '/contact'
+  const isPageRoute = to === '/contact' || to === '/consultation';
+  const isActive = isPageRoute
+    ? location.pathname === to
     : location.pathname === '/' && hash && location.hash === hash;
 
   const cls = `relative text-[11px] font-bold uppercase tracking-[0.15em] transition-colors duration-200 py-1 group ${
-    isActive ? 'text-gold-300' : 'text-white/70 hover:text-gold-300'
+    isActive ? 'text-gold-300' : 'text-white/95 hover:text-gold-300'
   }`;
 
   const inner = (
@@ -33,13 +32,13 @@ function NavItem({ to, hash, label, onClick }: { to: string; hash?: string; labe
     </>
   );
 
-  if (isContact) {
+  if (isPageRoute) {
     return <Link to={to} className={cls} onClick={onClick}>{inner}</Link>;
   }
   return <a href={href} className={cls} onClick={onClick}>{inner}</a>;
 }
 
-export function Navbar({ onBook }: Props) {
+export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
@@ -50,7 +49,7 @@ export function Navbar({ onBook }: Props) {
       className="sticky top-0 z-[60] overflow-x-clip bg-nebula-600 shadow-[0_2px_20px_rgba(12,95,120,0.35)]"
     >
       {/* Top info bar */}
-      <div className="hidden md:flex items-center justify-between px-8 py-1.5 bg-nebula-700/60 border-b border-white/10 text-[10px] text-white/50">
+      <div className="hidden md:flex items-center justify-between border-b border-white/10 bg-nebula-700/60 px-8 py-1.5 text-[10px] text-white/90">
         <span className="uppercase tracking-widest font-bold">Vedic Astrology · Vastu · Medical Astrology</span>
         <a href={PHONE_TEL} className="flex items-center gap-1.5 hover:text-gold-300 transition-colors font-bold">
           <Phone size={10} />
@@ -58,13 +57,13 @@ export function Navbar({ onBook }: Props) {
         </a>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 lg:px-8 h-14 flex items-center justify-between gap-6">
+      <div className="mx-auto flex min-h-[4rem] max-w-7xl items-center justify-between gap-4 px-4 md:min-h-[4.5rem] lg:px-8">
         {/* Logo */}
-        <Link to="/" className="flex items-center gap-2.5 shrink-0 group">
-          <div className="relative w-8 h-8 rounded-full bg-gradient-to-br from-gold-300 to-gold-500 flex items-center justify-center shadow-gold-glow">
-            <Sparkles size={14} className="text-nebula-800" />
+        <Link to="/" className="group flex shrink-0 items-center gap-3">
+          <div className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-gold-300 to-gold-500 shadow-gold-glow md:h-11 md:w-11">
+            <Sparkles size={20} className="text-nebula-800" />
           </div>
-          <span className="font-cinzel text-xs font-bold tracking-wide text-gradient-gold sm:text-sm">
+          <span className="font-cinzel text-lg font-bold leading-none tracking-wide text-gradient-gold sm:text-xl md:text-2xl">
             Gurudev Anand
           </span>
         </Link>
@@ -77,18 +76,18 @@ export function Navbar({ onBook }: Props) {
         </nav>
 
         {/* Desktop CTA */}
-        <button
-          onClick={onBook}
+        <Link
+          to="/consultation"
           className="hidden md:inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-gold-400 to-gold-500 text-ink-900 text-xs font-bold uppercase tracking-wide btn-shimmer hover:shadow-gold-glow transition-shadow duration-300 shrink-0"
         >
           Consult Now
           <ArrowRight size={13} />
-        </button>
+        </Link>
 
         {/* Mobile toggle */}
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
-          className="md:hidden min-h-[44px] min-w-[44px] p-2 text-white/70 transition-colors hover:text-gold-400"
+          className="md:hidden min-h-[44px] min-w-[44px] p-2 text-white transition-colors hover:text-gold-400"
           aria-label="Toggle menu"
         >
           {mobileOpen ? <X size={20} /> : <Menu size={20} />}
@@ -112,19 +111,19 @@ export function Navbar({ onBook }: Props) {
             ))}
             <a
               href={PHONE_TEL}
-              className="mt-3 flex items-center gap-2 py-2.5 text-sm font-semibold text-white/70 transition-colors hover:text-gold-300"
+              className="mt-3 flex items-center gap-2 py-2.5 text-sm font-semibold text-white/95 transition-colors hover:text-gold-300"
               onClick={() => setMobileOpen(false)}
             >
               <Phone size={16} />
               {PHONE}
             </a>
-            <button
-              type="button"
-              onClick={() => { onBook(); setMobileOpen(false); }}
-              className="mt-4 w-full rounded-full bg-gradient-to-r from-gold-400 to-gold-500 py-3 text-sm font-bold uppercase tracking-wide text-ink-900"
+            <Link
+              to="/consultation"
+              onClick={() => setMobileOpen(false)}
+              className="mt-4 block w-full rounded-full bg-gradient-to-r from-gold-400 to-gold-500 py-3 text-center text-sm font-bold uppercase tracking-wide text-ink-900"
             >
               Book a Session
-            </button>
+            </Link>
           </motion.div>
         )}
       </AnimatePresence>

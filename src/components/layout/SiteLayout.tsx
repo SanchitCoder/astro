@@ -2,18 +2,21 @@
 import { useEffect } from 'react';
 import { Navbar } from './Navbar';
 import { FooterSection } from '../sections/FooterSection';
-import { BookingModal } from '../BookingModal';
+import { ConnectModal } from '../ConnectModal';
 import { ChatWidget } from '../ChatWidget';
 import { WhatsAppWidget } from '../WhatsAppWidget';
-import { useBooking } from '../../hooks/useBooking';
+import { useConnectModal } from '../../hooks/useConnectModal';
 import { PHONE, PHONE_TEL, WHATSAPP_URL } from '../../lib/constants';
 
 export type SiteOutletContext = {
+  onConnect: () => void;
+  /** @deprecated Use onConnect */
   onBook: () => void;
 };
 
 export function SiteLayout() {
-  const booking = useBooking();
+  const connect = useConnectModal();
+  const openConnect = connect.openConnect;
   const location = useLocation();
 
   useEffect(() => {
@@ -24,12 +27,17 @@ export function SiteLayout() {
 
   return (
     <div className="min-h-screen overflow-x-clip bg-warm-50 text-ink-900">
-      <Navbar onBook={() => booking.book('normal')} />
+      <Navbar />
       <main className="fab-safe-pb sm:pb-0">
-        <Outlet context={{ onBook: () => booking.book('normal') } satisfies SiteOutletContext} />
+        <Outlet
+          context={{
+            onConnect: openConnect,
+            onBook: openConnect,
+          } satisfies SiteOutletContext}
+        />
       </main>
       <FooterSection />
-      <BookingModal open={booking.open} onClose={booking.close} defaultType={booking.type} />
+      <ConnectModal open={connect.open} onClose={connect.closeConnect} />
       <WhatsAppWidget whatsappHref={WHATSAPP_URL} />
       <ChatWidget phone={PHONE} phoneTel={PHONE_TEL} />
     </div>

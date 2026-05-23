@@ -128,7 +128,7 @@ export function ChatWidget({ phone, phoneTel }: Props) {
                 <div id="chat-widget-title" className="font-sans text-base font-bold leading-tight sm:text-lg">
                   Gurudev Anand
                 </div>
-                <div className="text-xs text-white/75">We typically reply within a few hours</div>
+                <div className="text-xs text-white/95">We typically reply within a few hours</div>
               </div>
               <button
                 type="button"

@@ -3,15 +3,13 @@ import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import type { MouseEvent as ReactMouseEvent } from 'react';
 
 const ITEMS = [
-  { num: '01', icon: Compass,  title: 'General Consultation', desc: 'A full chart reading — career, relationships, finance, and life direction.', accent: '#e07210', glyph: '☉', bg: 'from-[#1a0a00] via-[#5c2800] to-[#0a0500]' },
-  { num: '02', icon: Clock,    title: 'Urgent Consultation',  desc: 'Priority session for decisions that cannot wait. Focused, direct, clear.',    accent: '#f59e0b', glyph: '♄', bg: 'from-[#0f0c00] via-[#4a3800] to-[#080600]' },
-  { num: '03', icon: Heart,    title: 'Couple Consultation',  desc: 'Compatibility, marriage timing, and harmony — both charts read together.',    accent: '#f43f5e', glyph: '♀', bg: 'from-[#1a0008] via-[#5c001a] to-[#0a0005]' },
-  { num: '04', icon: Activity, title: 'Medical Astrology',    desc: 'Health-related planetary patterns with classical Vedic preventive remedies.', accent: '#10b981', glyph: '♂', bg: 'from-[#001209] via-[#003820] to-[#000a05]' },
-  { num: '05', icon: HomeIcon, title: 'Vastu Consultation',   desc: 'Align your home or workspace with what your birth chart reveals.',           accent: '#4DC3E0', glyph: '✦', bg: 'from-[#00080f] via-[#002a3c] to-[#000508]' },
-  { num: '06', icon: Sparkles, title: 'Personalised Remedies', desc: 'Mantras, rituals, and gemstone guidance chosen for your kundali alone.',    accent: '#a78bfa', glyph: '♃', bg: 'from-[#0a0014] via-[#2e0050] to-[#060008]' },
+  { num: '01', icon: Compass,  title: 'General Consultation', desc: 'A full chart reading — career, relationships, finance, and life direction.', accent: '#e07210', glyph: '☉', tint: 'rgba(224,114,16,0.06)' },
+  { num: '02', icon: Clock,    title: 'Urgent Consultation',  desc: 'Priority session for decisions that cannot wait. Focused, direct, clear.',    accent: '#f59e0b', glyph: '♄', tint: 'rgba(245,158,11,0.06)' },
+  { num: '03', icon: Heart,    title: 'Couple Consultation',  desc: 'Compatibility, marriage timing, and harmony — both charts read together.',    accent: '#f43f5e', glyph: '♀', tint: 'rgba(244,63,94,0.06)' },
+  { num: '04', icon: Activity, title: 'Medical Astrology',    desc: 'Health-related planetary patterns with classical Vedic preventive remedies.', accent: '#10b981', glyph: '♂', tint: 'rgba(16,185,129,0.06)' },
+  { num: '05', icon: HomeIcon, title: 'Vastu Consultation',   desc: 'Align your home or workspace with what your birth chart reveals.',           accent: '#0C5F78', glyph: '✦', tint: 'rgba(12,95,120,0.06)' },
+  { num: '06', icon: Sparkles, title: 'Personalised Remedies', desc: 'Mantras, rituals, and gemstone guidance chosen for your kundali alone.',    accent: '#a78bfa', glyph: '♃', tint: 'rgba(167,139,250,0.06)' },
 ];
-
-const DARK_BG = 'linear-gradient(160deg, #031825 0%, #062E3C 40%, #084557 70%, #031018 100%)';
 
 function ServiceCard({ item, index }: { item: typeof ITEMS[0]; index: number }) {
   const mx = useMotionValue(0);
@@ -34,48 +32,52 @@ function ServiceCard({ item, index }: { item: typeof ITEMS[0]; index: number }) 
       style={{ rotateX: rx, rotateY: ry, transformStyle: 'preserve-3d' }}
       onMouseMove={handleMove}
       onMouseLeave={() => { mx.set(0); my.set(0); }}
-      className={`group relative rounded-2xl border border-white/[0.08] overflow-hidden cursor-default min-h-[200px] flex flex-col bg-gradient-to-br ${item.bg}`}
+      className="group relative flex min-h-[200px] cursor-default flex-col overflow-hidden rounded-2xl border border-warm-200 bg-white shadow-sm transition-shadow duration-300 hover:shadow-md"
     >
-      {/* Top accent */}
-      <div className="absolute inset-x-0 top-0 h-px" style={{ background: `linear-gradient(90deg,transparent,${item.accent}55,transparent)` }} />
-
-      {/* Large bg glyph */}
       <div
-        className="pointer-events-none absolute -right-3 top-0 select-none text-[4.5rem] leading-none opacity-[0.08] transition-opacity duration-500 group-hover:opacity-[0.14] sm:text-[6rem] lg:text-[8rem]"
+        className="pointer-events-none absolute inset-0 transition-opacity duration-500"
+        style={{ background: `linear-gradient(145deg, ${item.tint} 0%, transparent 55%)` }}
+      />
+
+      <div
+        className="absolute inset-x-0 top-0 h-px"
+        style={{ background: `linear-gradient(90deg,transparent,${item.accent}44,transparent)` }}
+      />
+
+      <div
+        className="pointer-events-none absolute -right-3 top-0 select-none text-[4.5rem] leading-none opacity-[0.06] transition-opacity duration-500 group-hover:opacity-[0.1] sm:text-[6rem] lg:text-[8rem]"
         style={{ color: item.accent, fontFamily: '"Cormorant Garamond","Apple Symbols","Segoe UI Symbol",serif' }}
       >
         {item.glyph}
       </div>
 
-      {/* Hover glow */}
       <div
-        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-        style={{ background: `radial-gradient(circle at 50% 100%, ${item.accent}18, transparent 60%)` }}
+        className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+        style={{ background: `radial-gradient(circle at 50% 100%, ${item.accent}12, transparent 60%)` }}
       />
 
-      {/* Border glow on hover */}
       <div
-        className="absolute inset-0 rounded-2xl border opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-        style={{ borderColor: `${item.accent}35` }}
+        className="pointer-events-none absolute inset-0 rounded-2xl border opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+        style={{ borderColor: `${item.accent}30` }}
       />
 
-      {/* Content */}
-      <div className="relative p-6 flex flex-col h-full">
-        <div className="flex items-center gap-3 mb-5">
+      <div className="relative flex h-full flex-col p-6">
+        <div className="mb-5 flex items-center gap-3">
           <div
-            className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
-            style={{ background: `${item.accent}18`, border: `1px solid ${item.accent}30` }}
+            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl"
+            style={{ background: `${item.accent}14`, border: `1px solid ${item.accent}28` }}
           >
             <item.icon size={16} style={{ color: item.accent }} />
           </div>
-          <span className="font-cinzel text-[10px] font-bold opacity-30 text-white">{item.num}</span>
+          <span className="font-cinzel text-[10px] font-bold text-ink-300">{item.num}</span>
         </div>
-        <h3 className="font-cinzel text-sm font-bold text-white/90 tracking-wide uppercase mb-2">{item.title}</h3>
-        <p className="text-sm text-white/45 leading-relaxed flex-1">{item.desc}</p>
+        <h3 className="mb-2 font-cinzel text-sm font-bold uppercase tracking-wide text-ink-900">{item.title}</h3>
+        <p className="flex-1 text-sm leading-relaxed text-ink-500">{item.desc}</p>
 
-        {/* Bottom line */}
-        <div className="absolute inset-x-0 bottom-0 h-px opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-          style={{ background: `linear-gradient(90deg,transparent,${item.accent}40,transparent)` }} />
+        <div
+          className="absolute inset-x-0 bottom-0 h-px opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+          style={{ background: `linear-gradient(90deg,transparent,${item.accent}35,transparent)` }}
+        />
       </div>
     </motion.div>
   );
@@ -85,37 +87,32 @@ export function WhatYouLearnSection() {
   return (
     <section
       id="services"
-      className="relative py-24 md:py-32 overflow-hidden"
-      style={{ background: DARK_BG }}
+      className="relative overflow-hidden bg-warm-50 py-24 md:py-32"
     >
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute -top-40 right-1/4 w-[500px] h-[500px] rounded-full bg-[radial-gradient(circle,rgba(232,118,28,0.1),transparent_65%)] blur-3xl" />
-        <div className="absolute -bottom-20 left-1/4 w-[400px] h-[400px] rounded-full bg-[radial-gradient(circle,rgba(11,120,150,0.14),transparent_65%)] blur-3xl" />
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute -top-40 right-1/4 h-[500px] w-[500px] rounded-full bg-[radial-gradient(circle,rgba(232,118,28,0.08),transparent_65%)] blur-3xl" />
+        <div className="absolute -bottom-20 left-1/4 h-[400px] w-[400px] rounded-full bg-[radial-gradient(circle,rgba(11,120,150,0.06),transparent_65%)] blur-3xl" />
       </div>
 
-      <div className="relative max-w-7xl mx-auto px-4 lg:px-8">
+      <div className="relative mx-auto max-w-7xl px-4 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 28 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-80px' }}
           transition={{ duration: 0.7 }}
-          className="text-center max-w-2xl mx-auto mb-14"
+          className="mx-auto mb-14 max-w-2xl text-center"
         >
-          <span className="inline-block mb-4 text-[10px] font-bold uppercase tracking-[0.25em]" style={{ color: '#ffb36a' }}>
-            Services
-          </span>
-          <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight">
+          <span className="section-eyebrow mb-4 block">Services</span>
+          <h2 className="section-heading">
             How Gurudev Anand{' '}
-            <span className="italic font-light" style={{ background: 'linear-gradient(135deg,#ffb36a,#e07210)', WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent' }}>
-              guides you
-            </span>
+            <span className="text-gradient-gold italic font-light">guides you</span>
           </h2>
-          <p className="mt-4 text-white/45 text-sm md:text-base leading-relaxed">
+          <p className="mt-4 text-sm leading-relaxed text-ink-500 md:text-base">
             Every session delivered personally — tailored to your birth details and the questions you bring.
           </p>
         </motion.div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4" style={{ perspective: '1400px' }}>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3" style={{ perspective: '1400px' }}>
           {ITEMS.map((it, i) => <ServiceCard key={it.title} item={it} index={i} />)}
         </div>
       </div>

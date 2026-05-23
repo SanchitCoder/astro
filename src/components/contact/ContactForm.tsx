@@ -47,7 +47,7 @@ export function ContactForm({ onBook }: Props) {
             onClick={onBook}
             className="mt-6 text-sm font-semibold text-gold-400 hover:text-gold-300 transition-colors"
           >
-            Prefer to book directly? Open booking form →
+            Prefer a quick enquiry? Let&apos;s connect →
           </button>
         )}
       </motion.div>
@@ -64,7 +64,7 @@ export function ContactForm({ onBook }: Props) {
           <Sparkles size={10} />
           Send a Message
         </div>
-        <h3 className="font-cinzel text-xl text-white">Request a consultation</h3>
+        <h3 className="font-cinzel text-xl text-ink-900">Request a consultation</h3>
         <p className="mt-2 text-sm text-ink-500 leading-relaxed">
           Share your birth details and concern. Gurudev Anand&apos;s team will reply with available
           slots — usually within 24–48 hours.
@@ -86,7 +86,7 @@ export function ContactForm({ onBook }: Props) {
             required
             value={form.phone}
             onChange={(e) => setForm({ ...form, phone: e.target.value })}
-            placeholder="+91 98765 43210"
+            placeholder="+91 98763 44400"
             className="contact-input"
           />
         </Field>

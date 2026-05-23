@@ -66,7 +66,7 @@ export function MentorSection() {
                 className="absolute top-5 right-2 rounded-2xl border border-white/[0.1] bg-white/[0.08] px-3 py-2 backdrop-blur-md text-center shadow-xl sm:-right-4 sm:px-4 sm:py-2.5"
               >
                 <div className="font-cinzel text-lg font-bold" style={{ background: 'linear-gradient(135deg,#ffb36a,#e07210)', WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent' }}>4.9 / 5</div>
-                <div className="text-[9px] text-white/40 uppercase tracking-wide">10,000+ reviews</div>
+                <div className="text-[9px] text-white/90 uppercase tracking-wide">10,000+ reviews</div>
               </motion.div>
             </div>
 
@@ -76,7 +76,7 @@ export function MentorSection() {
                 <div key={s.label} className="rounded-2xl border border-white/[0.08] bg-white/[0.05] p-4 text-center">
                   <div className="text-lg font-serif mb-0.5" style={{ color: '#ffb36a', fontFamily: '"Cormorant Garamond","Apple Symbols","Segoe UI Symbol",serif' }}>{s.glyph}</div>
                   <div className="font-cinzel text-base font-bold" style={{ background: 'linear-gradient(135deg,#ffb36a,#e07210)', WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent' }}>{s.value}</div>
-                  <div className="text-[10px] text-white/35 uppercase tracking-wide mt-0.5">{s.label}</div>
+                  <div className="text-[10px] text-white/90 uppercase tracking-wide mt-0.5">{s.label}</div>
                 </div>
               ))}
             </div>
@@ -102,14 +102,14 @@ export function MentorSection() {
               </h2>
             </div>
 
-            <p className="text-white/55 text-sm md:text-base leading-relaxed">
+            <p className="text-white/90 text-sm md:text-base leading-relaxed">
               Over twenty-five years and 1.2 lakh consultations — Gurudev Anand reads your chart with scholarly rigour and human warmth, walking you through your dashas and transits so you understand what is unfolding and why.
             </p>
 
             {/* Star rating */}
             <div className="flex items-center gap-2">
               {[1,2,3,4,5].map(i => <Star key={i} size={14} className="text-gold-400 fill-gold-400" />)}
-              <span className="text-xs text-white/35 ml-1">Trusted by clients across 50+ countries</span>
+              <span className="text-xs text-white/90 ml-1">Trusted by clients across 50+ countries</span>
             </div>
 
             {/* Bullets */}
@@ -123,7 +123,7 @@ export function MentorSection() {
                   className="flex items-start gap-3"
                 >
                   <CheckCircle2 size={15} className="text-gold-400 mt-0.5 shrink-0" />
-                  <span className="text-sm text-white/55 leading-relaxed">{b}</span>
+                  <span className="text-sm text-white/90 leading-relaxed">{b}</span>
                 </motion.li>
               ))}
             </ul>
@@ -132,13 +132,13 @@ export function MentorSection() {
             <div className="pt-5 border-t border-white/[0.07]">
               <div className="flex items-center gap-2 mb-3">
                 <Newspaper size={13} className="text-gold-400" />
-                <span className="text-[10px] uppercase tracking-[0.22em] text-white/30 font-bold">As featured in</span>
+                <span className="text-[10px] font-bold uppercase tracking-[0.22em] text-white">As featured in</span>
               </div>
               <div className="flex flex-wrap gap-2">
                 {PRESS.map((b) => (
                   <span
                     key={b}
-                    className="px-3 py-1.5 rounded-full border border-white/[0.08] bg-white/[0.04] text-[10px] font-bold text-white/35 uppercase tracking-wide hover:border-gold-400/25 hover:text-gold-300/70 transition-colors cursor-default"
+                    className="cursor-default rounded-full border border-white/25 bg-white/10 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wide text-white transition-colors hover:border-gold-400/50 hover:bg-white/15"
                   >
                     {b}
                   </span>

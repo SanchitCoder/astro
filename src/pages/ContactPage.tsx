@@ -53,7 +53,7 @@ export function ContactPage() {
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           >
             <span className="section-eyebrow mb-4 block">Contact</span>
-            <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold leading-tight max-w-3xl text-white">
+            <h1 className="max-w-3xl font-serif text-3xl font-bold leading-tight text-ink-900 sm:text-4xl md:text-5xl">
               Speak with{' '}
               <span className="text-gradient-gold">Gurudev Anand</span>
             </h1>
@@ -183,7 +183,7 @@ export function ContactPage() {
             viewport={{ once: true }}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           >
-            <h2 className="font-serif text-2xl md:text-3xl font-bold text-white">
+            <h2 className="font-serif text-2xl font-bold text-ink-900 md:text-3xl">
               What happens after you reach out?
             </h2>
             <p className="mt-4 text-ink-500 text-sm md:text-base leading-relaxed">
@@ -192,14 +192,13 @@ export function ContactPage() {
               prefer — from anywhere in the world.
             </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
-              <button
-                type="button"
-                onClick={onBook}
+              <Link
+                to="/consultation#book"
                 className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-gradient-to-r from-gold-300 via-gold-400 to-gold-600 text-cosmic-950 font-bold text-sm uppercase tracking-wide btn-shimmer hover:shadow-gold-glow transition-shadow duration-300"
               >
-                Book via quick form
+                Book a consultation
                 <ArrowRight size={15} />
-              </button>
+              </Link>
               <Link
                 to="/"
                 className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full glass-card border border-orange-200 text-ink-700 text-sm font-semibold hover:border-gold-400/30 hover:text-gold-300 transition-all duration-300"

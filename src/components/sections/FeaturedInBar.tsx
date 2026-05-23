@@ -14,7 +14,7 @@ export function FeaturedInBar() {
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_120%_at_50%_50%,rgba(224,114,16,0.06),transparent_70%)] pointer-events-none" />
 
       <div className="mb-4 flex flex-col gap-2 px-4 sm:flex-row sm:items-center sm:gap-8 sm:px-8">
-        <span className="shrink-0 text-[9px] font-bold uppercase tracking-[0.28em] text-white/25">
+        <span className="shrink-0 text-[9px] font-bold uppercase tracking-[0.28em] text-white">
           Featured In
         </span>
         <div className="flex-1 h-px bg-gradient-to-r from-white/10 to-transparent" />
@@ -28,7 +28,7 @@ export function FeaturedInBar() {
           {ITEMS.map((name, i) => (
             <span
               key={i}
-              className="shrink-0 px-4 py-2 rounded-full border border-white/[0.08] bg-white/[0.04] text-[11px] font-bold uppercase tracking-[0.18em] text-white/40 whitespace-nowrap hover:text-gold-300/70 hover:border-gold-400/20 transition-colors duration-300 cursor-default"
+              className="shrink-0 cursor-default whitespace-nowrap rounded-full border border-white/25 bg-white/10 px-4 py-2 text-[11px] font-bold uppercase tracking-[0.18em] text-white transition-colors duration-300 hover:border-gold-400/40 hover:bg-white/15"
             >
               {name}
             </span>

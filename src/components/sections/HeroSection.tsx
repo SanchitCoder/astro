@@ -1,4 +1,5 @@
 import { useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowRight, Star, ChevronDown } from 'lucide-react';
 import { GURU_IMG } from '../../lib/constants';
@@ -237,7 +238,7 @@ const itemVariants = {
 /* ─────────────────────────────────────────────────────────────
    HeroSection
 ───────────────────────────────────────────────────────────── */
-export function HeroSection({ onBook }: { onBook?: () => void }) {
+export function HeroSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start start', 'end start'] });
   const wheelY  = useTransform(scrollYProgress, [0, 1], [0, 60]);
@@ -326,13 +327,13 @@ export function HeroSection({ onBook }: { onBook?: () => void }) {
                   Your Life's Timing
                 </span>
                 <br />
-                <span className="text-white/80 font-light text-3xl sm:text-4xl lg:text-[2.5rem]">— Read Precisely</span>
+                <span className="font-light text-3xl text-white sm:text-4xl lg:text-[2.5rem]">— Read Precisely</span>
               </h1>
             </motion.div>
 
             {/* Body */}
             <motion.div variants={itemVariants}>
-              <p className="text-white/55 text-base md:text-lg leading-relaxed max-w-lg">
+              <p className="max-w-lg text-base leading-relaxed text-white/90 md:text-lg">
                 Over twenty-five years of kundali readings — career, marriage, health, and wealth decoded from your birth chart with classical Vedic precision.
               </p>
             </motion.div>
@@ -359,24 +360,24 @@ export function HeroSection({ onBook }: { onBook?: () => void }) {
                   >
                     {s.value}
                   </div>
-                  <div className="text-[10px] text-white/40 mt-1 uppercase tracking-wide font-semibold">{s.label}</div>
+                  <div className="mt-1 text-[10px] font-semibold uppercase tracking-wide text-white/90">{s.label}</div>
                 </div>
               ))}
             </motion.div>
 
             {/* CTAs */}
             <motion.div variants={itemVariants} className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:gap-4">
-              <button
-                onClick={onBook}
+              <Link
+                to="/consultation"
                 className="inline-flex w-full items-center justify-center gap-2.5 rounded-full px-7 py-3.5 text-sm font-bold uppercase tracking-wide btn-shimmer transition-all duration-300 animate-pulse-glow hover:shadow-gold-glow sm:w-auto"
                 style={{ background: 'linear-gradient(135deg, #ffb36a 0%, #e07210 50%, #c05e0d 100%)', color: '#062E3C' }}
               >
                 Book Consultation
                 <ArrowRight size={15} />
-              </button>
+              </Link>
               <a
                 href="#kundali"
-                className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-white/15 bg-white/[0.07] px-7 py-3.5 text-sm font-semibold text-white/80 backdrop-blur-sm transition-all duration-300 hover:border-gold-400/40 hover:text-gold-300 sm:w-auto"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-white/25 bg-white/10 px-7 py-3.5 text-sm font-semibold text-white backdrop-blur-sm transition-all duration-300 hover:border-gold-400/40 hover:text-gold-200 sm:w-auto"
               >
                 Free Kundali
               </a>
@@ -389,7 +390,7 @@ export function HeroSection({ onBook }: { onBook?: () => void }) {
                   <Star key={i} size={13} className="text-gold-400 fill-gold-400" />
                 ))}
               </div>
-              <span className="text-xs text-white/40 font-medium">4.9 / 5 &nbsp;·&nbsp; 10,000+ reviews</span>
+              <span className="text-xs font-medium text-white/90">4.9 / 5 &nbsp;·&nbsp; 10,000+ reviews</span>
             </motion.div>
           </motion.div>
 
@@ -460,12 +461,12 @@ export function HeroSection({ onBook }: { onBook?: () => void }) {
         transition={{ delay: 1.8, duration: 0.8 }}
         className="pointer-events-none absolute bottom-6 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 sm:bottom-8 sm:flex"
       >
-        <span className="text-[9px] text-white/25 uppercase tracking-[0.3em] font-bold">Scroll</span>
+        <span className="text-[9px] font-bold uppercase tracking-[0.3em] text-white/70">Scroll</span>
         <motion.div
           animate={{ y: [0, 6, 0] }}
           transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
         >
-          <ChevronDown size={16} className="text-white/20" />
+          <ChevronDown size={16} className="text-white/60" />
         </motion.div>
       </motion.div>
 

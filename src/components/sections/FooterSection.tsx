@@ -1,4 +1,5 @@
-﻿import { motion } from 'framer-motion';
+﻿import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { Sparkles, Phone, Mail, MapPin, Facebook, Instagram, Youtube, Twitter } from 'lucide-react';
 import { EMAIL, EMAIL_MAILTO, PHONE, PHONE_TEL } from '../../lib/constants';
 
@@ -22,7 +23,7 @@ export function FooterSection() {
               Gurudev Anand
             </span>
           </div>
-          <p className="text-sm text-white/50 max-w-xs leading-relaxed">
+          <p className="text-sm text-white/90 max-w-xs leading-relaxed">
             Vedic astrologer, Vastu consultant, and Medical astrology practitioner with over
             twenty-five years of one-to-one guidance for clients worldwide.
           </p>
@@ -33,7 +34,7 @@ export function FooterSection() {
                 href="#"
                 whileHover={{ scale: 1.1, y: -2 }}
                 transition={{ duration: 0.2 }}
-                className="w-9 h-9 rounded-full bg-white/[0.07] border border-white/10 flex items-center justify-center text-white/50 hover:text-gold-400 hover:border-gold-400/30 transition-colors duration-200"
+                className="w-9 h-9 rounded-full bg-white/[0.07] border border-white/10 flex items-center justify-center text-white/90 hover:text-gold-400 hover:border-gold-400/30 transition-colors duration-200"
               >
                 <Icon size={14} />
               </motion.a>
@@ -43,24 +44,33 @@ export function FooterSection() {
 
         {/* Explore */}
         <div>
-          <h4 className="font-cinzel text-xs font-bold text-white/40 uppercase tracking-widest mb-5">
+          <h4 className="font-cinzel text-xs font-bold text-white/95 uppercase tracking-widest mb-5">
             Explore
           </h4>
           <ul className="space-y-3 text-sm">
             {[
               { label: 'About Gurudev Anand', href: '/#about' },
               { label: 'Services', href: '/#services' },
-              { label: 'Consultations', href: '/#services' },
+              { label: 'Consultations', href: '/consultation', route: true },
               { label: 'Articles', href: '/#knowledge' },
-              { label: 'Contact', href: '/contact' },
+              { label: 'Contact', href: '/contact', route: true },
             ].map((l) => (
               <li key={l.label}>
-                <a
-                  href={l.href}
-                  className="text-white/50 hover:text-gold-300 transition-colors duration-200"
-                >
-                  {l.label}
-                </a>
+                {'route' in l && l.route ? (
+                  <Link
+                    to={l.href}
+                    className="text-white/90 hover:text-gold-300 transition-colors duration-200"
+                  >
+                    {l.label}
+                  </Link>
+                ) : (
+                  <a
+                    href={l.href}
+                    className="text-white/90 hover:text-gold-300 transition-colors duration-200"
+                  >
+                    {l.label}
+                  </a>
+                )}
               </li>
             ))}
           </ul>
@@ -68,13 +78,13 @@ export function FooterSection() {
 
         {/* Resources */}
         <div>
-          <h4 className="font-cinzel text-xs font-bold text-white/40 uppercase tracking-widest mb-5">
+          <h4 className="font-cinzel text-xs font-bold text-white/95 uppercase tracking-widest mb-5">
             Resources
           </h4>
           <ul className="space-y-3 text-sm">
             {['Timing of Money', 'Manglik Dosh', 'Shakti Rasa or Rasi', 'Dasvani'].map((r) => (
               <li key={r}>
-                <a href="#" className="text-white/50 hover:text-gold-300 transition-colors duration-200">
+                <a href="#" className="text-white/90 hover:text-gold-300 transition-colors duration-200">
                   {r}
                 </a>
               </li>
@@ -84,23 +94,23 @@ export function FooterSection() {
 
         {/* Contact */}
         <div>
-          <h4 className="font-cinzel text-xs font-bold text-white/40 uppercase tracking-widest mb-5">
+          <h4 className="font-cinzel text-xs font-bold text-white/95 uppercase tracking-widest mb-5">
             Contact
           </h4>
           <ul className="space-y-4 text-sm">
             <li className="flex items-start gap-3">
               <Phone size={14} className="text-gold-400 mt-0.5 flex-shrink-0" />
-              <a href={PHONE_TEL} className="text-white/50 hover:text-gold-300 transition-colors">{PHONE}</a>
+              <a href={PHONE_TEL} className="text-white/90 hover:text-gold-300 transition-colors">{PHONE}</a>
             </li>
             <li className="flex items-start gap-3">
               <Mail size={14} className="text-gold-400 mt-0.5 flex-shrink-0" />
-              <a href={EMAIL_MAILTO} className="text-white/50 hover:text-gold-300 transition-colors break-all">
+              <a href={EMAIL_MAILTO} className="text-white/90 hover:text-gold-300 transition-colors break-all">
                 {EMAIL}
               </a>
             </li>
             <li className="flex items-start gap-3">
               <MapPin size={14} className="text-gold-400 mt-0.5 flex-shrink-0" />
-              <span className="text-white/50">C/o Rahul Store, Sector 28-C, Chandigarh, India</span>
+              <span className="text-white/90">C/o Rahul Store, Sector 28-C, Chandigarh, India</span>
             </li>
           </ul>
         </div>
@@ -108,7 +118,7 @@ export function FooterSection() {
 
       {/* Bottom bar */}
       <div className="border-t border-white/10">
-        <div className="fab-safe-pb sm:pb-0 max-w-7xl mx-auto flex flex-col items-center justify-between gap-3 px-4 py-5 text-xs text-white/30 md:flex-row lg:px-8">
+        <div className="fab-safe-pb sm:pb-0 max-w-7xl mx-auto flex flex-col items-center justify-between gap-3 px-4 py-5 text-xs text-white/80 md:flex-row lg:px-8">
           <span>© {new Date().getFullYear()} Gurudev Anand. All rights reserved.</span>
           <div className="flex gap-6">
             <a href="#" className="hover:text-gold-400 transition-colors">Privacy Policy</a>

@@ -34,7 +34,7 @@ const ARTICLES = [
   },
 ];
 
-export function BlogSection() {
+export function BlogSection({ onConnect }: { onConnect?: () => void }) {
   return (
     <section className="relative py-24 md:py-32 overflow-hidden" style={{ background: DARK_BG }}>
       <div className="absolute inset-0 pointer-events-none">
@@ -59,10 +59,14 @@ export function BlogSection() {
               </span>
             </h2>
           </div>
-          <a href="#" className="inline-flex items-center gap-2 text-sm font-semibold text-white/40 hover:text-gold-300 transition-colors group">
+          <button
+            type="button"
+            onClick={onConnect}
+            className="group inline-flex items-center gap-2 text-sm font-semibold text-white transition-colors hover:text-gold-300"
+          >
             All Articles
             <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
-          </a>
+          </button>
         </motion.div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -74,6 +78,15 @@ export function BlogSection() {
               viewport={{ once: true, margin: '-60px' }}
               transition={{ duration: 0.65, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
               whileHover={{ y: -6, transition: { duration: 0.2 } }}
+              onClick={onConnect}
+              onKeyDown={(e) => {
+                if (onConnect && (e.key === 'Enter' || e.key === ' ')) {
+                  e.preventDefault();
+                  onConnect();
+                }
+              }}
+              role={onConnect ? 'button' : undefined}
+              tabIndex={onConnect ? 0 : undefined}
               className="group relative rounded-2xl overflow-hidden border border-white/[0.08] cursor-pointer bg-white/[0.03] hover:border-white/[0.15] transition-colors duration-300"
             >
               {/* Image */}
@@ -103,12 +116,12 @@ export function BlogSection() {
 
               {/* Content */}
               <div className="p-5">
-                <h3 className="font-cinzel text-sm font-bold text-white/85 tracking-wide leading-snug mb-2 group-hover:text-gold-300 transition-colors">
+                <h3 className="mb-2 font-cinzel text-sm font-bold leading-snug tracking-wide text-white group-hover:text-gold-300 transition-colors">
                   {a.title}
                 </h3>
-                <p className="text-xs text-white/40 leading-relaxed mb-4">{a.excerpt}</p>
+                <p className="text-xs text-white/90 leading-relaxed mb-4">{a.excerpt}</p>
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-1.5 text-[11px] text-white/30">
+                  <div className="flex items-center gap-1.5 text-[11px] text-white/90">
                     <Clock size={11} /><span>{a.read}</span>
                   </div>
                   <span className="text-[11px] font-semibold inline-flex items-center gap-1 group-hover:translate-x-0.5 transition-transform" style={{ color: a.accent }}>

@@ -38,7 +38,7 @@ function AccordionItem({ q, a, isOpen, onToggle, index }: { q: string; a: string
           {String(index + 1).padStart(2, '0')}
         </span>
 
-        <span className={`flex-1 font-semibold text-sm md:text-base transition-colors duration-200 ${isOpen ? 'text-white/90' : 'text-white/55'}`}>
+        <span className={`flex-1 text-sm font-semibold transition-colors duration-200 md:text-base ${isOpen ? 'text-white' : 'text-white/95'}`}>
           {q}
         </span>
 
@@ -47,7 +47,7 @@ function AccordionItem({ q, a, isOpen, onToggle, index }: { q: string; a: string
           transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
           className="shrink-0"
         >
-          <ChevronDown size={18} className={`transition-colors duration-200 ${isOpen ? 'text-gold-400' : 'text-white/25'}`} />
+          <ChevronDown size={18} className={`transition-colors duration-200 ${isOpen ? 'text-gold-400' : 'text-white/80'}`} />
         </motion.div>
       </button>
 
@@ -60,7 +60,7 @@ function AccordionItem({ q, a, isOpen, onToggle, index }: { q: string; a: string
             transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
             className="overflow-hidden"
           >
-            <div className="px-6 pb-6 pt-0 ml-11 text-white/45 text-sm leading-relaxed border-t border-white/[0.06] pt-4">
+            <div className="px-6 pb-6 pt-0 ml-11 text-white/90 text-sm leading-relaxed border-t border-white/[0.06] pt-4">
               {a}
             </div>
           </motion.div>
@@ -70,7 +70,7 @@ function AccordionItem({ q, a, isOpen, onToggle, index }: { q: string; a: string
   );
 }
 
-export function FAQSection() {
+export function FAQSection({ onConnect }: { onConnect?: () => void }) {
   const [open, setOpen] = useState<number | null>(0);
 
   return (
@@ -95,7 +95,7 @@ export function FAQSection() {
               questions
             </span>
           </h2>
-          <p className="mt-4 text-white/40 text-sm max-w-xl mx-auto leading-relaxed">
+          <p className="mt-4 text-white/90 text-sm max-w-xl mx-auto leading-relaxed">
             How consultations with Gurudev Anand are structured and what to expect.
           </p>
         </motion.div>
@@ -121,14 +121,15 @@ export function FAQSection() {
           transition={{ duration: 0.7, delay: 0.3 }}
           className="mt-14 text-center rounded-2xl border border-white/[0.08] bg-white/[0.04] p-8"
         >
-          <p className="text-white/50 text-sm mb-5">Still have questions? Reach out directly.</p>
-          <a
-            href="/contact"
+          <p className="text-white/90 text-sm mb-5">Still have questions? Reach out directly.</p>
+          <button
+            type="button"
+            onClick={onConnect}
             className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-bold uppercase tracking-wide btn-shimmer transition-all duration-300"
             style={{ background: 'linear-gradient(135deg, #ffb36a 0%, #e07210 50%, #c05e0d 100%)', color: '#062E3C' }}
           >
             Contact Gurudev Anand
-          </a>
+          </button>
         </motion.div>
       </div>
     </section>

@@ -39,7 +39,7 @@ export function ReframeSection() {
               a dimension of life
             </span>
           </h2>
-          <p className="mt-4 text-white/45 text-sm md:text-base leading-relaxed">
+          <p className="mt-4 text-white/90 text-sm md:text-base leading-relaxed">
             Vedic astrology reads the full orchestra of your chart — not just one planet, but every influence in concert.
           </p>
         </motion.div>
@@ -76,8 +76,8 @@ export function ReframeSection() {
                 </span>
               </div>
 
-              <h3 className="font-cinzel text-sm font-bold text-white/90 tracking-wide uppercase mb-2">{t.title}</h3>
-              <p className="text-sm text-white/45 leading-relaxed">{t.desc}</p>
+              <h3 className="mb-2 font-cinzel text-sm font-bold uppercase tracking-wide text-white">{t.title}</h3>
+              <p className="text-sm text-white/90 leading-relaxed">{t.desc}</p>
             </motion.div>
           ))}
         </div>

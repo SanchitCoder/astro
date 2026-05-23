@@ -30,25 +30,25 @@ export function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
             <Star key={s} size={11} className="text-gold-400 fill-gold-400" />
           ))}
         </div>
-        <Quote size={14} className="text-white/10" />
+        <Quote size={14} className="text-white/40" />
       </div>
 
       {/* Text */}
-      <p className="text-white/55 leading-relaxed text-sm">
+      <p className="text-sm leading-relaxed text-white/90">
         &ldquo;{testimonial.text}&rdquo;
       </p>
 
       {/* Author */}
       <div className="mt-4 flex items-center gap-3 pt-4 border-t border-white/[0.07]">
         <div
-          className="w-9 h-9 rounded-full flex items-center justify-center font-cinzel text-sm font-bold shrink-0 text-white/80"
+          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full font-cinzel text-sm font-bold text-white"
           style={{ background: 'linear-gradient(135deg, #062E3C, #0b7896)' }}
         >
           {testimonial.name[0]}
         </div>
         <div className="min-w-0">
-          <div className="font-semibold text-white/80 text-sm truncate">{testimonial.name}</div>
-          <div className="text-xs text-white/35 truncate">{testimonial.role}</div>
+          <div className="truncate text-sm font-semibold text-white">{testimonial.name}</div>
+          <div className="truncate text-xs text-white/90">{testimonial.role}</div>
         </div>
       </div>
     </motion.article>
