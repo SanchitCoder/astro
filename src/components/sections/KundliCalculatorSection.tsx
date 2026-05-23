@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { User, Calendar, Clock, MapPin, ChevronRight, Star } from 'lucide-react';
+import { User, Calendar, Clock, MapPin, ChevronRight, Star, Loader2 } from 'lucide-react';
+import { submitToN8nWebhook, WebhookSubmitError } from '../../lib/submitToWebhook';
 
 const REVEALS = [
   { glyph: '☉', label: 'Ascendant, moon sign & all planetary positions' },
@@ -73,12 +74,30 @@ function SpinningChart() {
 
 export function KundliCalculatorSection() {
   const [form, setForm] = useState({ name: '', dob: '', time: '', place: '' });
+  const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 3000);
+    setLoading(true);
+    setError(null);
+    try {
+      await submitToN8nWebhook({
+        source: 'kundli_calculator',
+        name: form.name.trim(),
+        date_of_birth: form.dob,
+        birth_time: form.time,
+        birth_place: form.place.trim(),
+      });
+      setSubmitted(true);
+      setForm({ name: '', dob: '', time: '', place: '' });
+      setTimeout(() => setSubmitted(false), 5000);
+    } catch (err) {
+      setError(err instanceof WebhookSubmitError ? err.message : 'Something went wrong. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -141,13 +160,25 @@ export function KundliCalculatorSection() {
 
               <motion.button
                 type="submit"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="btn-shimmer mt-1 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-gold-400 via-gold-500 to-gold-600 py-4 text-sm font-bold uppercase tracking-wide text-white shadow-[0_6px_24px_rgba(224,114,16,0.35)] transition-all duration-300 hover:shadow-[0_8px_28px_rgba(224,114,16,0.45)]"
+                disabled={loading}
+                whileHover={{ scale: loading ? 1 : 1.02 }}
+                whileTap={{ scale: loading ? 1 : 0.98 }}
+                className="btn-shimmer mt-1 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-gold-400 via-gold-500 to-gold-600 py-4 text-sm font-bold uppercase tracking-wide text-white shadow-[0_6px_24px_rgba(224,114,16,0.35)] transition-all duration-300 hover:shadow-[0_8px_28px_rgba(224,114,16,0.45)] disabled:opacity-60"
               >
-                {submitted ? '✦ Chart Sent!' : 'Generate Kundali'}
-                <ChevronRight size={15} />
+                {loading && <Loader2 className="animate-spin" size={16} />}
+                {loading ? 'Sending…' : submitted ? '✦ Chart Sent!' : 'Generate Kundali'}
+                {!loading && !submitted && <ChevronRight size={15} />}
               </motion.button>
+              {error && (
+                <p className="text-center text-sm text-red-600" role="alert">
+                  {error}
+                </p>
+              )}
+              {submitted && !error && (
+                <p className="text-center text-sm text-emerald-600" role="status">
+                  Your kundali request was received. We will contact you shortly.
+                </p>
+              )}
             </form>
           </motion.div>
 

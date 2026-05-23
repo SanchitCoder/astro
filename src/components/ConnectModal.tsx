@@ -1,6 +1,7 @@
 import { useEffect, useState, FormEvent } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Loader2, CheckCircle2, Sparkles } from 'lucide-react';
+import { submitToN8nWebhook, WebhookSubmitError } from '../lib/submitToWebhook';
 import { PHONE } from '../lib/constants';
 
 type Props = {
@@ -11,12 +12,14 @@ type Props = {
 export function ConnectModal({ open, onClose }: Props) {
   const [loading, setLoading] = useState(false);
   const [done, setDone] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [form, setForm] = useState({ name: '', email: '', phone: '' });
 
   useEffect(() => {
     if (open) return;
     const t = window.setTimeout(() => {
       setDone(false);
+      setError(null);
       setForm({ name: '', email: '', phone: '' });
     }, 300);
     return () => window.clearTimeout(t);
@@ -25,9 +28,20 @@ export function ConnectModal({ open, onClose }: Props) {
   const submit = async (e: FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    await new Promise((r) => setTimeout(r, 700));
-    setLoading(false);
-    setDone(true);
+    setError(null);
+    try {
+      await submitToN8nWebhook({
+        source: 'connect_modal',
+        name: form.name.trim(),
+        email: form.email.trim(),
+        phone: form.phone.trim(),
+      });
+      setDone(true);
+    } catch (err) {
+      setError(err instanceof WebhookSubmitError ? err.message : 'Something went wrong. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const close = () => {
@@ -141,6 +155,11 @@ export function ConnectModal({ open, onClose }: Props) {
                   {loading && <Loader2 className="animate-spin" size={16} />}
                   {loading ? 'Sending…' : 'Submit'}
                 </button>
+                {error && (
+                  <p className="mt-3 text-center text-sm text-red-600" role="alert">
+                    {error}
+                  </p>
+                )}
                 <p className="mt-3 text-center text-[11px] text-ink-400">
                   Your details are confidential and used only to respond to your enquiry.
                 </p>

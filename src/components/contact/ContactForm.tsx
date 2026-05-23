@@ -1,14 +1,18 @@
 ﻿import { useState, FormEvent } from 'react';
 import { motion } from 'framer-motion';
 import { Loader2, CheckCircle2, Send, Sparkles } from 'lucide-react';
+import { submitToN8nWebhook, WebhookSubmitError } from '../../lib/submitToWebhook';
+import type { FormSource } from '../../lib/submitToWebhook';
 
 type Props = {
   onBook?: () => void;
+  source?: FormSource;
 };
 
-export function ContactForm({ onBook }: Props) {
+export function ContactForm({ onBook, source = 'contact_form' }: Props) {
   const [loading, setLoading] = useState(false);
   const [done, setDone] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [form, setForm] = useState({
     name: '',
     email: '',
@@ -21,9 +25,23 @@ export function ContactForm({ onBook }: Props) {
   const submit = async (e: FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    await new Promise((r) => setTimeout(r, 700));
-    setLoading(false);
-    setDone(true);
+    setError(null);
+    try {
+      await submitToN8nWebhook({
+        source,
+        name: form.name.trim(),
+        email: form.email.trim(),
+        phone: form.phone.trim(),
+        consultation_type: form.consultation_type,
+        format: form.format,
+        message: form.message.trim(),
+      });
+      setDone(true);
+    } catch (err) {
+      setError(err instanceof WebhookSubmitError ? err.message : 'Something went wrong. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (done) {
@@ -142,6 +160,11 @@ export function ContactForm({ onBook }: Props) {
         {loading ? <Loader2 className="animate-spin" size={16} /> : <Send size={16} />}
         {loading ? 'Sending…' : 'Send Message'}
       </button>
+      {error && (
+        <p className="mt-3 text-center text-sm text-red-600" role="alert">
+          {error}
+        </p>
+      )}
       <p className="text-center text-[11px] text-ink-300 mt-3">
         Your details are confidential and used only to schedule your consultation.
       </p>

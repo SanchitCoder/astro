@@ -28,3 +28,13 @@ export const SCIENCE_IMG_MEDICAL = '/science-medical.jpeg';
 /** Normal consultation — sticky bar compares audio vs video from pricing */
 export const PRICE_AUDIO_INR = 11_000;
 export const PRICE_VIDEO_INR = 15_000;
+
+/** n8n webhook — all site form submissions POST here as JSON */
+export const N8N_WEBHOOK_URL =
+  import.meta.env.VITE_N8N_WEBHOOK_URL ??
+  'https://n8n.srv981435.hstgr.cloud/webhook/7a8cc40f-1c4a-4de0-8f76-019b04b2d3d1';
+
+/** n8n webhook — chatbot questions in, assistant reply out */
+export const N8N_CHAT_WEBHOOK_URL =
+  import.meta.env.VITE_N8N_CHAT_WEBHOOK_URL ??
+  'https://n8n.srv981435.hstgr.cloud/webhook/b4335600-531b-497e-a649-96359f84e2cd';

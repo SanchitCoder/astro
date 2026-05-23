@@ -1,7 +1,8 @@
 ﻿import { useEffect, useRef, useState } from 'react';
+import { MessageCircle, X, Send, Sparkles, Loader2 } from 'lucide-react';
+import { sendChatToN8nWebhook, ChatWebhookError } from '../lib/chatWebhook';
 
 const MOBILE_CHAT_MQ = '(max-width: 639px)';
-import { MessageCircle, X, Send, Sparkles } from 'lucide-react';
 
 export type ChatMessage = {
   id: string;
@@ -17,6 +18,8 @@ type Props = {
 export function ChatWidget({ phone, phoneTel }: Props) {
   const [open, setOpen] = useState(false);
   const [draft, setDraft] = useState('');
+  const [loading, setLoading] = useState(false);
+  const sessionIdRef = useRef(crypto.randomUUID());
   const [messages, setMessages] = useState<ChatMessage[]>(() => [
     {
       id: 'welcome',
@@ -45,7 +48,7 @@ export function ChatWidget({ phone, phoneTel }: Props) {
   useEffect(() => {
     if (!open) return;
     listRef.current?.scrollTo({ top: listRef.current.scrollHeight, behavior: 'smooth' });
-  }, [messages, open]);
+  }, [messages, open, loading]);
 
   useEffect(() => {
     if (!open) return;
@@ -62,29 +65,52 @@ export function ChatWidget({ phone, phoneTel }: Props) {
     };
   }, [open]);
 
-  const send = () => {
+  const send = async () => {
     const text = draft.trim();
-    if (!text) return;
+    if (!text || loading) return;
+
     setDraft('');
     const userMsg: ChatMessage = { id: crypto.randomUUID(), role: 'user', text };
-    setMessages((m) => [...m, userMsg]);
+    const historyForWebhook = messages
+      .filter((m) => m.id !== 'welcome')
+      .map((m) => ({ role: m.role, text: m.text }));
 
-    window.setTimeout(() => {
+    setMessages((m) => [...m, userMsg]);
+    setLoading(true);
+
+    try {
+      const reply = await sendChatToN8nWebhook({
+        message: text,
+        sessionId: sessionIdRef.current,
+        history: historyForWebhook,
+      });
+
+      setMessages((m) => [
+        ...m,
+        { id: crypto.randomUUID(), role: 'assistant', text: reply },
+      ]);
+    } catch (err) {
+      const fallback =
+        err instanceof ChatWebhookError
+          ? err.message
+          : 'Something went wrong. Please try again or call us directly.';
       setMessages((m) => [
         ...m,
         {
           id: crypto.randomUUID(),
           role: 'assistant',
-          text: `Thank you — we’ve received your message and will reply as soon as we can. For urgent help, phone ${phone}.`,
+          text: `${fallback} You can also call ${phone}.`,
         },
       ]);
-    }, 650);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const onKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
-      send();
+      void send();
     }
   };
 
@@ -143,7 +169,7 @@ export function ChatWidget({ phone, phoneTel }: Props) {
             <div
               ref={listRef}
               className="min-h-[min(40dvh,220px)] flex-1 space-y-3 overflow-y-auto overscroll-contain px-4 py-4 sm:min-h-[200px]"
-                style={{
+              style={{
                 scrollbarGutter: 'stable',
                 background: 'linear-gradient(180deg, #f4f4f4 0%, #ffffff 45%)',
                 WebkitOverflowScrolling: 'touch',
@@ -165,6 +191,14 @@ export function ChatWidget({ phone, phoneTel }: Props) {
                   </div>
                 </div>
               ))}
+              {loading && (
+                <div className="flex justify-start">
+                  <div className="flex items-center gap-2 rounded-2xl rounded-bl-md border border-slate-100 bg-white px-3.5 py-2.5 text-sm text-slate-500 shadow-sm">
+                    <Loader2 size={14} className="animate-spin" />
+                    Thinking…
+                  </div>
+                </div>
+              )}
             </div>
 
             <div className="flex-shrink-0 space-y-2 border-t border-slate-100 bg-white p-3 pb-[max(0.75rem,env(safe-area-inset-bottom,0px))] sm:pb-3">
@@ -185,16 +219,17 @@ export function ChatWidget({ phone, phoneTel }: Props) {
                   onKeyDown={onKeyDown}
                   placeholder="Type your message..."
                   enterKeyHint="send"
-                  className="min-h-[44px] flex-1 resize-none rounded-2xl border border-slate-200 px-3.5 py-3 text-base text-charcoal placeholder:text-slate-400 transition focus:border-cta-500 focus:outline-none focus:ring-2 focus:ring-cta-500/25 sm:min-h-0 sm:py-2.5 sm:text-sm"
+                  disabled={loading}
+                  className="min-h-[44px] flex-1 resize-none rounded-2xl border border-slate-200 px-3.5 py-3 text-base text-charcoal placeholder:text-slate-400 transition focus:border-cta-500 focus:outline-none focus:ring-2 focus:ring-cta-500/25 disabled:opacity-60 sm:min-h-0 sm:py-2.5 sm:text-sm"
                 />
                 <button
                   type="button"
-                  onClick={send}
-                  disabled={!draft.trim()}
+                  onClick={() => void send()}
+                  disabled={!draft.trim() || loading}
                   className="flex h-12 w-12 flex-shrink-0 touch-manipulation items-center justify-center rounded-md bg-cta-500 text-ink-900 shadow-md transition hover:bg-cta-600 hover:-translate-y-0.5 hover:shadow-lg disabled:translate-y-0 disabled:opacity-45 disabled:shadow-none sm:h-11 sm:w-11"
                   aria-label="Send message"
                 >
-                  <Send size={18} className="ml-px" />
+                  {loading ? <Loader2 size={18} className="animate-spin" /> : <Send size={18} className="ml-px" />}
                 </button>
               </div>
             </div>
