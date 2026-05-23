@@ -1165,7 +1165,7 @@ function StickyBar({ onBook }: { onBook?: () => void }) {
           className="fixed bottom-0 left-0 right-0 z-50 border-t border-gold-400/20"
           style={{ background: 'rgba(3,16,24,0.97)', backdropFilter: 'blur(16px)' }}
         >
-          <div className="mx-auto max-w-7xl px-4 py-3 flex items-center justify-between gap-4 sm:px-8">
+          <div className="mx-auto max-w-7xl px-4 py-3 flex items-center justify-center sm:justify-between gap-4 sm:px-8">
             <div className="hidden sm:flex flex-col">
               <div className="flex items-baseline gap-2">
                 <span className="font-cinzel text-xl font-bold" style={{ background: GOLD_GRD, WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent' }}>
@@ -1175,7 +1175,7 @@ function StickyBar({ onBook }: { onBook?: () => void }) {
               </div>
               <span className="text-[10px] text-white/35 uppercase tracking-wide">1-on-1 session · limited slots this week</span>
             </div>
-            <div className="flex items-center gap-3 ml-auto">
+            <div className="flex w-full items-center justify-center gap-3 sm:w-auto sm:ml-auto sm:justify-end">
               <a
                 href={PHONE_TEL}
                 className="hidden md:inline-flex items-center gap-1.5 text-xs text-white/50 hover:text-white transition-colors"
