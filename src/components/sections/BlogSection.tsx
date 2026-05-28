@@ -1,8 +1,8 @@
 import { motion } from 'framer-motion';
+import { TextReveal } from '../ui/TextReveal';
 import { ArrowRight, Clock } from 'lucide-react';
-import { GURU_IMG, GURU_IMG_ABOUT, GURU_IMG_RESOURCE } from '../../lib/constants';
 
-const DARK_BG = 'linear-gradient(160deg, #031825 0%, #062E3C 40%, #084557 70%, #031018 100%)';
+const DARK_BG = 'linear-gradient(160deg, #001D48 0%, #002D60 40%, #003D78 70%, #001530 100%)';
 
 const ARTICLES = [
   {
@@ -10,8 +10,8 @@ const ARTICLES = [
     title: 'Understanding Your Dasha Periods',
     excerpt: 'How planetary ruling periods shape the decades of your life — and how to work with them intelligently.',
     read: '5 min read',
-    accent: '#e07210',
-    img: GURU_IMG_RESOURCE,
+    accent: '#D88A22',
+    img: 'https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?w=800&q=80&auto=format&fit=crop',
     glyph: '♄',
   },
   {
@@ -20,7 +20,7 @@ const ARTICLES = [
     excerpt: 'Classical Vedic tradition has long mapped bodily tendencies to planetary positions. What your chart shows.',
     read: '6 min read',
     accent: '#34d399',
-    img: GURU_IMG_ABOUT,
+    img: 'https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?w=800&q=80&auto=format&fit=crop',
     glyph: '♂',
   },
   {
@@ -28,8 +28,8 @@ const ARTICLES = [
     title: 'Aligning Your Home With Your Chart',
     excerpt: 'Vastu is not superstition — it is spatial awareness. Gurudev Anand explains the underlying principles.',
     read: '4 min read',
-    accent: '#4DC3E0',
-    img: GURU_IMG,
+    accent: '#3387D3',
+    img: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80&auto=format&fit=crop',
     glyph: '✦',
   },
 ];
@@ -38,8 +38,8 @@ export function BlogSection({ onConnect }: { onConnect?: () => void }) {
   return (
     <section className="relative py-24 md:py-32 overflow-hidden" style={{ background: DARK_BG }}>
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 left-1/4 w-[500px] h-[300px] rounded-full bg-[radial-gradient(ellipse,rgba(11,120,150,0.1),transparent_70%)] blur-3xl" />
-        <div className="absolute bottom-0 right-1/4 w-[400px] h-[300px] rounded-full bg-[radial-gradient(ellipse,rgba(232,118,28,0.07),transparent_70%)] blur-3xl" />
+        <div className="absolute top-0 left-1/4 w-[500px] h-[300px] rounded-full bg-[radial-gradient(ellipse,rgba(0,94,168,0.1),transparent_70%)] blur-3xl" />
+        <div className="absolute bottom-0 right-1/4 w-[400px] h-[300px] rounded-full bg-[radial-gradient(ellipse,rgba(216,138,34,0.07),transparent_70%)] blur-3xl" />
       </div>
 
       <div className="relative max-w-7xl mx-auto px-4 lg:px-8">
@@ -51,13 +51,13 @@ export function BlogSection({ onConnect }: { onConnect?: () => void }) {
           className="flex items-end justify-between mb-14 gap-6 flex-wrap"
         >
           <div>
-            <span className="inline-block mb-3 text-[10px] font-bold uppercase tracking-[0.25em]" style={{ color: '#ffb36a' }}>Resources</span>
-            <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight">
+            <span className="inline-block mb-3 text-[10px] font-bold uppercase tracking-[0.25em]" style={{ color: '#F3B757' }}>Resources</span>
+            <TextReveal as="h2" className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight">
               Explore the{' '}
-              <span className="italic font-light" style={{ background: 'linear-gradient(135deg,#ffb36a,#e07210)', WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent' }}>
+              <span className="italic font-light" style={{ background: 'linear-gradient(135deg,#F3B757,#D88A22)', WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent' }}>
                 tradition
               </span>
-            </h2>
+            </TextReveal>
           </div>
           <button
             type="button"
@@ -94,10 +94,10 @@ export function BlogSection({ onConnect }: { onConnect?: () => void }) {
                 <img
                   src={a.img}
                   alt={a.title}
-                  className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700"
+                  className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
                   loading="lazy"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#031018] via-[#031018]/60 to-[#031018]/10" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#001530] via-[#001530]/60 to-[#001530]/10" />
                 {/* Planet glyph overlay */}
                 <div
                   className="absolute top-3 right-3 text-4xl opacity-20 group-hover:opacity-35 transition-opacity duration-500"

@@ -1,9 +1,10 @@
 import { motion } from 'framer-motion';
+import { TextReveal } from '../ui/TextReveal';
 
-const DARK_BG = 'linear-gradient(160deg, #031825 0%, #062E3C 40%, #084557 70%, #031018 100%)';
+const DARK_BG = 'linear-gradient(160deg, #001D48 0%, #002D60 40%, #003D78 70%, #001530 100%)';
 
 const TILES = [
-  { glyph: '☉', planet: 'Sun',    title: 'Personality & Soul', desc: 'Your core identity, purpose, and the strengths that define your path.', accent: '#ffb36a' },
+  { glyph: '☉', planet: 'Sun',    title: 'Personality & Soul', desc: 'Your core identity, purpose, and the strengths that define your path.', accent: '#F3B757' },
   { glyph: '☽', planet: 'Moon',   title: 'Mind & Emotions',   desc: 'Emotional patterns, instincts, and how you process the world within.', accent: '#c7d2fe' },
   { glyph: '♂', planet: 'Mars',   title: 'Health & Energy',   desc: 'Vitality cycles, physical tendencies, and optimal timing for action.', accent: '#fca5a5' },
   { glyph: '♀', planet: 'Venus',  title: 'Love & Harmony',    desc: 'Relationship patterns, compatibility, and the timing of union.', accent: '#f9a8d4' },
@@ -18,8 +19,8 @@ export function ReframeSection() {
       style={{ background: DARK_BG }}
     >
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full bg-[radial-gradient(circle,rgba(232,118,28,0.06),transparent_65%)] blur-3xl" />
-        <div className="absolute top-0 right-0 w-[400px] h-[400px] rounded-full bg-[radial-gradient(circle,rgba(11,120,150,0.12),transparent_65%)] blur-3xl" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full bg-[radial-gradient(circle,rgba(216,138,34,0.06),transparent_65%)] blur-3xl" />
+        <div className="absolute top-0 right-0 w-[400px] h-[400px] rounded-full bg-[radial-gradient(circle,rgba(0,94,168,0.12),transparent_65%)] blur-3xl" />
       </div>
 
       <div className="relative max-w-7xl mx-auto px-4 lg:px-8">
@@ -30,15 +31,15 @@ export function ReframeSection() {
           transition={{ duration: 0.7 }}
           className="text-center max-w-2xl mx-auto mb-16"
         >
-          <span className="inline-block mb-4 text-[10px] font-bold uppercase tracking-[0.25em]" style={{ color: '#ffb36a' }}>
+          <span className="inline-block mb-4 text-[10px] font-bold uppercase tracking-[0.25em]" style={{ color: '#F3B757' }}>
             Planetary Wisdom
           </span>
-          <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight">
+          <TextReveal as="h2" className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight">
             Each planet governs{' '}
-            <span className="italic font-light" style={{ background: 'linear-gradient(135deg,#ffb36a,#e07210)', WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent' }}>
+            <span className="italic font-light" style={{ background: 'linear-gradient(135deg,#F3B757,#D88A22)', WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent' }}>
               a dimension of life
             </span>
-          </h2>
+          </TextReveal>
           <p className="mt-4 text-white/90 text-sm md:text-base leading-relaxed">
             Vedic astrology reads the full orchestra of your chart — not just one planet, but every influence in concert.
           </p>

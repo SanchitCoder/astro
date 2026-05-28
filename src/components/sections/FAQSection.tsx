@@ -1,8 +1,9 @@
 import { useState } from 'react';
+import { TextReveal } from '../ui/TextReveal';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
 
-const DARK_BG = 'linear-gradient(160deg, #031825 0%, #062E3C 40%, #084557 70%, #031018 100%)';
+const DARK_BG = 'linear-gradient(160deg, #001D48 0%, #002D60 40%, #003D78 70%, #001530 100%)';
 
 const ITEMS = [
   { q: 'How does a consultation work?',    a: 'Share your birth details in advance. Gurudev Anand reads your kundali, then meets you on a private audio or video call — explaining what the chart shows and outlining remedies tailored to you.' },
@@ -30,9 +31,9 @@ function AccordionItem({ q, a, isOpen, onToggle, index }: { q: string; a: string
         <span
           className="shrink-0 w-7 h-7 rounded-full flex items-center justify-center font-cinzel text-xs font-bold transition-colors duration-300"
           style={{
-            background: isOpen ? 'rgba(224,114,16,0.18)' : 'rgba(255,255,255,0.06)',
-            color: isOpen ? '#ffb36a' : 'rgba(255,255,255,0.3)',
-            border: isOpen ? '1px solid rgba(224,114,16,0.35)' : '1px solid rgba(255,255,255,0.09)',
+            background: isOpen ? 'rgba(216,138,34,0.18)' : 'rgba(255,255,255,0.06)',
+            color: isOpen ? '#F3B757' : 'rgba(255,255,255,0.3)',
+            border: isOpen ? '1px solid rgba(216,138,34,0.35)' : '1px solid rgba(255,255,255,0.09)',
           }}
         >
           {String(index + 1).padStart(2, '0')}
@@ -76,8 +77,8 @@ export function FAQSection({ onConnect }: { onConnect?: () => void }) {
   return (
     <section className="relative py-24 md:py-32 overflow-hidden" style={{ background: DARK_BG }}>
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] rounded-full bg-[radial-gradient(ellipse,rgba(11,120,150,0.1),transparent_70%)] blur-3xl" />
-        <div className="absolute top-0 right-0 w-[300px] h-[300px] rounded-full bg-[radial-gradient(circle,rgba(232,118,28,0.07),transparent_65%)] blur-3xl" />
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] rounded-full bg-[radial-gradient(ellipse,rgba(0,94,168,0.1),transparent_70%)] blur-3xl" />
+        <div className="absolute top-0 right-0 w-[300px] h-[300px] rounded-full bg-[radial-gradient(circle,rgba(216,138,34,0.07),transparent_65%)] blur-3xl" />
       </div>
 
       <div className="relative max-w-3xl mx-auto px-4 lg:px-8">
@@ -88,13 +89,13 @@ export function FAQSection({ onConnect }: { onConnect?: () => void }) {
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           className="text-center mb-14"
         >
-          <span className="inline-block mb-4 text-[10px] font-bold uppercase tracking-[0.25em]" style={{ color: '#ffb36a' }}>FAQs</span>
-          <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight">
+          <span className="inline-block mb-4 text-[10px] font-bold uppercase tracking-[0.25em]" style={{ color: '#F3B757' }}>FAQs</span>
+          <TextReveal as="h2" className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight">
             Common{' '}
-            <span className="italic font-light" style={{ background: 'linear-gradient(135deg,#ffb36a,#e07210)', WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent' }}>
+            <span className="italic font-light" style={{ background: 'linear-gradient(135deg,#F3B757,#D88A22)', WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent' }}>
               questions
             </span>
-          </h2>
+          </TextReveal>
           <p className="mt-4 text-white/90 text-sm max-w-xl mx-auto leading-relaxed">
             How consultations with Gurudev Anand are structured and what to expect.
           </p>
@@ -126,7 +127,7 @@ export function FAQSection({ onConnect }: { onConnect?: () => void }) {
             type="button"
             onClick={onConnect}
             className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-bold uppercase tracking-wide btn-shimmer transition-all duration-300"
-            style={{ background: 'linear-gradient(135deg, #ffb36a 0%, #e07210 50%, #c05e0d 100%)', color: '#062E3C' }}
+            style={{ background: 'linear-gradient(135deg, #F3B757 0%, #D88A22 50%, #9A5E14 100%)', color: '#002D60' }}
           >
             Contact Gurudev Anand
           </button>

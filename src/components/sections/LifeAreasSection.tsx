@@ -1,4 +1,5 @@
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { TextReveal } from '../ui/TextReveal';
 import { ArrowRight } from 'lucide-react';
 import type { MouseEvent as ReactMouseEvent } from 'react';
 
@@ -8,13 +9,13 @@ const AREAS = [
     planet: 'Saturn',
     title: 'Career & Purpose',
     body: 'Your 10th house and Saturn cycles govern ambition, recognition, and the precise window for your professional breakthrough.',
-    bg: 'linear-gradient(145deg, #020d1c 0%, #062e3c 45%, #0b5878 100%)',
-    glow: 'rgba(11,120,150,0.65)',
-    glowHover: 'rgba(77,195,224,0.55)',
-    accent: '#4DC3E0',
+    bg: 'linear-gradient(145deg, #001020 0%, #002D60 45%, #004E90 100%)',
+    glow: 'rgba(0,94,168,0.65)',
+    glowHover: 'rgba(51,135,211,0.55)',
+    accent: '#3387D3',
     tag: 'Career · Finance · Status',
-    ringColor: 'rgba(77,195,224,0.12)',
-    ringColor2: 'rgba(77,195,224,0.06)',
+    ringColor: 'rgba(51,135,211,0.12)',
+    ringColor2: 'rgba(51,135,211,0.06)',
   },
   {
     glyph: '♀',
@@ -50,10 +51,10 @@ const AREAS = [
     bg: 'linear-gradient(145deg, #160b00 0%, #5c3200 45%, #b85c0e 100%)',
     glow: 'rgba(255,179,106,0.55)',
     glowHover: 'rgba(255,179,106,0.7)',
-    accent: '#ffb36a',
+    accent: '#F3B757',
     tag: 'Wealth · Timing',
-    ringColor: 'rgba(255,179,106,0.12)',
-    ringColor2: 'rgba(255,179,106,0.06)',
+    ringColor: 'rgba(243,183,87,0.12)',
+    ringColor2: 'rgba(243,183,87,0.06)',
   },
 ];
 
@@ -199,7 +200,7 @@ export function LifeAreasSection({ onConnect }: { onConnect?: () => void }) {
   return (
     <section className="relative py-20 md:py-28 overflow-hidden bg-warm-50">
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_50%,rgba(232,118,28,0.05),transparent_65%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_50%,rgba(216,138,34,0.05),transparent_65%)]" />
       </div>
 
       <div className="relative max-w-7xl mx-auto px-4 lg:px-8">
@@ -211,10 +212,10 @@ export function LifeAreasSection({ onConnect }: { onConnect?: () => void }) {
           className="text-center max-w-2xl mx-auto mb-14"
         >
           <span className="section-eyebrow mb-4 block">What the Stars Govern</span>
-          <h2 className="section-heading">
+          <TextReveal as="h2" className="section-heading">
             Every life area has a{' '}
             <span className="text-gradient-gold italic font-light">planetary signature</span>
-          </h2>
+          </TextReveal>
           <p className="mt-4 text-ink-500 text-sm md:text-base leading-relaxed">
             Vedic astrology maps each dimension of human life to a planet and a house. Understanding yours changes everything.
           </p>

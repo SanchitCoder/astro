@@ -1,4 +1,5 @@
 ﻿import { motion } from 'framer-motion';
+import { TextReveal } from '../ui/TextReveal';
 import { Zap } from 'lucide-react';
 
 const PROBLEMS = [
@@ -38,7 +39,7 @@ export function PainPointsSection() {
   return (
     <section className="relative py-20 md:py-28 overflow-hidden bg-warm-100">
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_50%_100%,rgba(11,120,150,0.09),transparent_60%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_50%_100%,rgba(0,94,168,0.09),transparent_60%)]" />
       </div>
 
       <div className="relative max-w-7xl mx-auto px-4 lg:px-8">
@@ -50,10 +51,10 @@ export function PainPointsSection() {
           className="text-center max-w-2xl mx-auto mb-12"
         >
           <span className="section-eyebrow mb-4 block">Why Life Feels Stuck</span>
-          <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-ink-900 leading-tight">
+          <TextReveal as="h2" className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-ink-900 leading-tight">
             Patterns repeat until they are{' '}
             <span className="text-gradient-gold italic font-light">understood</span>
-          </h2>
+          </TextReveal>
           <p className="mt-4 text-ink-500 text-sm md:text-base leading-relaxed">
             Gurudev Anand names what your chart shows, why it has felt stuck, and what can shift.
           </p>

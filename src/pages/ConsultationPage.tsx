@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, type RefObject } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import {
@@ -8,6 +8,7 @@ import {
   Shield, Award, Play,
 } from 'lucide-react';
 import type { SiteOutletContext } from '../components/layout/SiteLayout';
+import { useStickyAfterHero } from '../hooks/useStickyAfterHero';
 import {
   GURU_IMG, GURU_IMG_ABOUT, GURU_IMG_RESOURCE, GURU_IMG_GALLERY,
   SCIENCE_IMG_JYOTISH, SCIENCE_IMG_VASTU, SCIENCE_IMG_MEDICAL,
@@ -16,8 +17,8 @@ import {
 } from '../lib/constants';
 
 /* ─── shared ─────────────────────────────────────────────────── */
-const DARK_BG  = 'linear-gradient(160deg, #031825 0%, #062E3C 40%, #084557 70%, #031018 100%)';
-const GOLD_GRD = 'linear-gradient(135deg, #ffb36a 0%, #e07210 50%, #c05e0d 100%)';
+const DARK_BG  = 'linear-gradient(160deg, #001D48 0%, #002D60 40%, #003D78 70%, #001530 100%)';
+const GOLD_GRD = 'linear-gradient(135deg, #F3B757 0%, #D88A22 50%, #9A5E14 100%)';
 
 const fmtInr = (n: number) =>
   new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(n);
@@ -32,7 +33,7 @@ function GoldCTA({ children, onClick, size = 'lg', className = '' }: {
       type="button"
       onClick={onClick}
       className={`inline-flex items-center justify-center gap-2 rounded-full font-bold uppercase tracking-wide btn-shimmer transition-all duration-300 animate-pulse-glow hover:shadow-gold-glow ${pad} ${className}`}
-      style={{ background: GOLD_GRD, color: '#062E3C' }}
+      style={{ background: GOLD_GRD, color: '#002D60' }}
     >
       {children}
     </button>
@@ -47,17 +48,17 @@ function AnnouncementBar({ onBook }: { onBook?: () => void }) {
   return (
     <div
       className="relative flex items-center justify-center gap-4 py-2.5 text-center text-[11px] font-bold"
-      style={{ background: GOLD_GRD, color: '#062E3C' }}
+      style={{ background: GOLD_GRD, color: '#002D60' }}
     >
       <span className="flex items-center gap-1.5">
-        <span className="w-1.5 h-1.5 rounded-full bg-[#062E3C] animate-pulse" />
+        <span className="w-1.5 h-1.5 rounded-full bg-[#002D60] animate-pulse" />
         Only <strong>{slots} slots</strong> remaining this week
       </span>
       <span className="hidden sm:inline">·</span>
       <button
         type="button"
         onClick={onBook}
-        className="hidden sm:inline-flex items-center gap-1 rounded-full bg-[#062E3C] px-3 py-1 text-[10px] text-white font-bold uppercase tracking-wide"
+        className="hidden sm:inline-flex items-center gap-1 rounded-full bg-[#002D60] px-3 py-1 text-[10px] text-white font-bold uppercase tracking-wide"
       >
         Reserve yours <ArrowRight size={10} />
       </button>
@@ -75,8 +76,15 @@ const HERO_STATS = [
   { value: '4.9★',  label: '10k Reviews',   glyph: '♀' },
 ];
 
-function HeroSection({ onBook }: { onBook?: () => void }) {
-  const ref = useRef<HTMLElement>(null);
+function HeroSection({
+  onBook,
+  heroRef,
+}: {
+  onBook?: () => void;
+  heroRef?: RefObject<HTMLElement | null>;
+}) {
+  const localRef = useRef<HTMLElement>(null);
+  const ref = heroRef ?? localRef;
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
   const imgY = useTransform(scrollYProgress, [0, 1], [0, 80]);
 
@@ -92,17 +100,17 @@ function HeroSection({ onBook }: { onBook?: () => void }) {
         />
         {/* Multi-stop gradient overlay */}
         <div className="absolute inset-0" style={{
-          background: 'linear-gradient(to top, #031018 0%, rgba(3,16,24,0.85) 30%, rgba(3,16,24,0.45) 60%, rgba(3,16,24,0.2) 100%)',
+          background: 'linear-gradient(to top, #001530 0%, rgba(0,21,48,0.85) 30%, rgba(0,21,48,0.45) 60%, rgba(0,21,48,0.2) 100%)',
         }} />
         <div className="absolute inset-0" style={{
-          background: 'linear-gradient(to right, rgba(3,16,24,0.9) 0%, rgba(3,16,24,0.4) 55%, transparent 100%)',
+          background: 'linear-gradient(to right, rgba(0,21,48,0.9) 0%, rgba(0,21,48,0.4) 55%, transparent 100%)',
         }} />
       </motion.div>
 
       {/* Ambient orbs */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/4 left-1/2 w-[600px] h-[600px] rounded-full bg-[radial-gradient(circle,rgba(224,114,16,0.08),transparent_60%)] blur-3xl" />
-        <div className="absolute top-0 right-0 w-[400px] h-[400px] rounded-full bg-[radial-gradient(circle,rgba(11,120,150,0.12),transparent_65%)] blur-3xl" />
+        <div className="absolute top-1/4 left-1/2 w-[600px] h-[600px] rounded-full bg-[radial-gradient(circle,rgba(216,138,34,0.08),transparent_60%)] blur-3xl" />
+        <div className="absolute top-0 right-0 w-[400px] h-[400px] rounded-full bg-[radial-gradient(circle,rgba(0,94,168,0.12),transparent_65%)] blur-3xl" />
       </div>
 
       {/* Right: large portrait card (desktop) */}
@@ -121,11 +129,11 @@ function HeroSection({ onBook }: { onBook?: () => void }) {
               alt="Gurudev Anand"
               className="w-full aspect-[3/4] object-cover object-top"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#031018]/70 via-transparent to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#001530]/70 via-transparent to-transparent" />
 
             {/* Name plate */}
             <div className="absolute bottom-5 left-5 right-5">
-              <div className="font-cinzel text-base font-bold tracking-widest uppercase" style={{ color: '#ffb36a' }}>
+              <div className="font-cinzel text-base font-bold tracking-widest uppercase" style={{ color: '#F3B757' }}>
                 Gurudev Anand
               </div>
               <div className="text-xs text-white/60 mt-0.5">Vedic Astrologer · Vastu · Medical Astrology</div>
@@ -136,13 +144,13 @@ function HeroSection({ onBook }: { onBook?: () => void }) {
             </div>
 
             {/* Active badge */}
-            <div className="absolute top-4 left-4 flex items-center gap-1.5 rounded-full border border-emerald-400/30 bg-[#031018]/70 px-3 py-1.5 backdrop-blur-sm">
+            <div className="absolute top-4 left-4 flex items-center gap-1.5 rounded-full border border-emerald-400/30 bg-[#001530]/70 px-3 py-1.5 backdrop-blur-sm">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
               <span className="text-[10px] text-emerald-400 font-bold uppercase tracking-wide">Accepting Clients</span>
             </div>
 
             {/* Rating badge */}
-            <div className="absolute top-4 right-4 rounded-2xl border border-white/10 bg-[#031018]/80 px-3 py-2 backdrop-blur-sm text-center">
+            <div className="absolute top-4 right-4 rounded-2xl border border-white/10 bg-[#001530]/80 px-3 py-2 backdrop-blur-sm text-center">
               <div className="font-cinzel text-xl font-bold" style={{ background: GOLD_GRD, WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent' }}>
                 4.9/5
               </div>
@@ -154,17 +162,17 @@ function HeroSection({ onBook }: { onBook?: () => void }) {
           <motion.div
             initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.8 }}
-            className="absolute -left-10 top-1/3 rounded-2xl border border-white/10 bg-[#031018]/90 px-4 py-3 backdrop-blur-md shadow-xl"
+            className="absolute -left-10 top-1/3 rounded-2xl border border-white/10 bg-[#001530]/90 px-4 py-3 backdrop-blur-md shadow-xl"
           >
-            <div className="font-cinzel text-base font-bold" style={{ color: '#ffb36a' }}>1.2 Lakh+</div>
+            <div className="font-cinzel text-base font-bold" style={{ color: '#F3B757' }}>1.2 Lakh+</div>
             <div className="text-[10px] text-white/50 uppercase tracking-wide">Consultations</div>
           </motion.div>
           <motion.div
             initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1 }}
-            className="absolute -right-6 bottom-1/3 rounded-2xl border border-white/10 bg-[#031018]/90 px-4 py-3 backdrop-blur-md shadow-xl"
+            className="absolute -right-6 bottom-1/3 rounded-2xl border border-white/10 bg-[#001530]/90 px-4 py-3 backdrop-blur-md shadow-xl"
           >
-            <div className="font-cinzel text-base font-bold" style={{ color: '#ffb36a' }}>50+</div>
+            <div className="font-cinzel text-base font-bold" style={{ color: '#F3B757' }}>50+</div>
             <div className="text-[10px] text-white/50 uppercase tracking-wide">Countries</div>
           </motion.div>
         </motion.div>
@@ -243,7 +251,7 @@ function HeroSection({ onBook }: { onBook?: () => void }) {
               key={s.label}
               className="rounded-2xl border border-white/[0.08] bg-white/[0.06] px-4 py-3 text-center backdrop-blur-sm"
             >
-              <div className="font-serif text-sm mb-0.5" style={{ color: '#ffb36a', fontFamily: '"Cormorant Garamond","Apple Symbols","Segoe UI Symbol",serif' }}>
+              <div className="font-serif text-sm mb-0.5" style={{ color: '#F3B757', fontFamily: '"Cormorant Garamond","Apple Symbols","Segoe UI Symbol",serif' }}>
                 {s.glyph}
               </div>
               <div className="font-cinzel text-lg font-bold" style={{ background: GOLD_GRD, WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent' }}>
@@ -256,7 +264,7 @@ function HeroSection({ onBook }: { onBook?: () => void }) {
       </div>
 
       {/* Bottom fade */}
-      <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-[#031018] to-transparent pointer-events-none" />
+      <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-[#001530] to-transparent pointer-events-none" />
     </section>
   );
 }
@@ -269,14 +277,14 @@ const PRESS2 = [...PRESS, ...PRESS];
 
 function FeaturedInBar() {
   return (
-    <div className="relative overflow-hidden border-y border-white/[0.06] py-5" style={{ background: 'linear-gradient(90deg,#031018,#062E3C,#031018)' }}>
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_120%_at_50%_50%,rgba(224,114,16,0.05),transparent_70%)] pointer-events-none" />
+    <div className="relative overflow-hidden border-y border-white/[0.06] py-5" style={{ background: 'linear-gradient(90deg,#001530,#002D60,#001530)' }}>
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_120%_at_50%_50%,rgba(216,138,34,0.05),transparent_70%)] pointer-events-none" />
       <div className="mb-4 flex items-center gap-6 px-6 sm:px-10">
         <span className="shrink-0 text-[9px] font-bold uppercase tracking-[0.3em] text-white/50">Featured In</span>
         <div className="flex-1 h-px bg-gradient-to-r from-white/10 to-transparent" />
       </div>
       <div className="relative overflow-hidden [mask-image:linear-gradient(90deg,transparent,black_8%,black_92%,transparent)]">
-        <div className="flex gap-3 w-max" style={{ animation: 'press-marquee 40s linear infinite' }}>
+        <div className="press-marquee-track flex w-max gap-3" style={{ animationDuration: '40s' }}>
           {PRESS2.map((n, i) => (
             <span key={i} className="shrink-0 whitespace-nowrap rounded-full border border-white/20 bg-white/[0.06] px-4 py-2 text-[11px] font-bold uppercase tracking-[0.18em] text-white/70 hover:border-gold-400/40 hover:text-white transition-colors">
               {n}
@@ -302,10 +310,10 @@ const PAINS = [
 
 function PainPointsSection({ onBook }: { onBook?: () => void }) {
   return (
-    <section className="relative overflow-hidden py-20 md:py-28" style={{ background: '#FFF8F2' }}>
+    <section className="relative overflow-hidden py-20 md:py-28" style={{ background: '#F8F9FB' }}>
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute -right-20 top-0 h-[500px] w-[500px] rounded-full bg-[radial-gradient(circle,rgba(224,114,16,0.06),transparent_65%)] blur-3xl" />
-        <div className="absolute -left-20 bottom-0 h-[400px] w-[400px] rounded-full bg-[radial-gradient(circle,rgba(12,95,120,0.05),transparent_65%)] blur-3xl" />
+        <div className="absolute -right-20 top-0 h-[500px] w-[500px] rounded-full bg-[radial-gradient(circle,rgba(216,138,34,0.06),transparent_65%)] blur-3xl" />
+        <div className="absolute -left-20 bottom-0 h-[400px] w-[400px] rounded-full bg-[radial-gradient(circle,rgba(0,94,168,0.05),transparent_65%)] blur-3xl" />
       </div>
 
       <div className="relative mx-auto max-w-6xl px-4 lg:px-8">
@@ -336,7 +344,7 @@ function PainPointsSection({ onBook }: { onBook?: () => void }) {
                   transition={{ delay: i * 0.07 }}
                   className="flex items-center gap-3 rounded-xl border border-gold-400/12 bg-white px-4 py-3 shadow-sm"
                 >
-                  <span className="shrink-0 flex items-center justify-center w-8 h-8 rounded-full" style={{ background: 'rgba(224,114,16,0.1)', color: '#e07210' }}>
+                  <span className="shrink-0 flex items-center justify-center w-8 h-8 rounded-full" style={{ background: 'rgba(216,138,34,0.1)', color: '#D88A22' }}>
                     {p.icon}
                   </span>
                   <p className="text-sm text-ink-700 leading-snug">{p.text}</p>
@@ -360,12 +368,12 @@ function PainPointsSection({ onBook }: { onBook?: () => void }) {
             {/* Kundali chart illustration */}
             <div className="relative rounded-3xl overflow-hidden border border-gold-400/15 shadow-xl">
               <img src={GURU_IMG_GALLERY} alt="Kundali Reading" className="w-full aspect-square object-cover" />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#031018]/80 via-[#031018]/20 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#001530]/80 via-[#001530]/20 to-transparent" />
 
               {/* Answer overlay */}
               <div className="absolute bottom-0 left-0 right-0 p-6">
-                <div className="rounded-2xl border border-gold-400/30 bg-[#031018]/85 p-5 backdrop-blur-sm">
-                  <p className="text-[11px] font-bold uppercase tracking-[0.2em] mb-2" style={{ color: '#ffb36a' }}>
+                <div className="rounded-2xl border border-gold-400/30 bg-[#001530]/85 p-5 backdrop-blur-sm">
+                  <p className="text-[11px] font-bold uppercase tracking-[0.2em] mb-2" style={{ color: '#F3B757' }}>
                     The answer lies in your Kundali ♈
                   </p>
                   <p className="text-white/85 text-sm leading-relaxed">
@@ -375,7 +383,7 @@ function PainPointsSection({ onBook }: { onBook?: () => void }) {
                     type="button"
                     onClick={onBook}
                     className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-full py-3 text-sm font-bold uppercase tracking-wide btn-shimmer"
-                    style={{ background: GOLD_GRD, color: '#062E3C' }}
+                    style={{ background: GOLD_GRD, color: '#002D60' }}
                   >
                     Uncover Life's Secrets – Book Now <ArrowRight size={13} />
                   </button>
@@ -402,7 +410,7 @@ const AREAS = [
 
 function PatternsSection({ onBook }: { onBook?: () => void }) {
   return (
-    <section className="relative overflow-hidden py-20 md:py-28" style={{ background: '#FFF2E8' }}>
+    <section className="relative overflow-hidden py-20 md:py-28" style={{ background: '#EFF1F5' }}>
       <div className="relative mx-auto max-w-7xl px-4 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
@@ -440,13 +448,13 @@ function PatternsSection({ onBook }: { onBook?: () => void }) {
               {a.img ? (
                 <>
                   <img src={a.img} alt={a.title} className="w-full h-full object-cover absolute inset-0 transition-transform duration-700 group-hover:scale-105" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#031018]/85 via-[#031018]/30 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#001530]/85 via-[#001530]/30 to-transparent" />
                 </>
               ) : (
-                <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg,#062E3C,#084557)' }} />
+                <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg,#002D60,#003D78)' }} />
               )}
               <div className="relative p-6 flex flex-col justify-end h-full" style={{ minHeight: 220 }}>
-                <div className="font-serif text-3xl mb-3" style={{ color: '#ffb36a', fontFamily: '"Cormorant Garamond","Apple Symbols","Segoe UI Symbol",serif' }}>
+                <div className="font-serif text-3xl mb-3" style={{ color: '#F3B757', fontFamily: '"Cormorant Garamond","Apple Symbols","Segoe UI Symbol",serif' }}>
                   {a.glyph}
                 </div>
                 <h3 className="font-semibold text-white text-base leading-snug mb-1">{a.title}</h3>
@@ -466,9 +474,9 @@ function PatternsSection({ onBook }: { onBook?: () => void }) {
               className="relative rounded-2xl overflow-hidden border border-gold-400/15 shadow-card card-lift"
               style={{ minHeight: 160 }}
             >
-              <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg,#062E3C,#084557)' }} />
+              <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg,#002D60,#003D78)' }} />
               <div className="relative p-6 flex flex-col justify-end h-full" style={{ minHeight: 160 }}>
-                <div className="font-serif text-3xl mb-2" style={{ color: '#ffb36a', fontFamily: '"Cormorant Garamond","Apple Symbols","Segoe UI Symbol",serif' }}>
+                <div className="font-serif text-3xl mb-2" style={{ color: '#F3B757', fontFamily: '"Cormorant Garamond","Apple Symbols","Segoe UI Symbol",serif' }}>
                   {a.glyph}
                 </div>
                 <h3 className="font-semibold text-white text-sm leading-snug mb-1">{a.title}</h3>
@@ -497,21 +505,21 @@ const STEPS = [
     icon: <Phone size={22} />,
     title: 'Book Your Slot',
     desc: 'Fill the form or WhatsApp us. We confirm your session within 24 hours.',
-    color: '#e07210',
+    color: '#D88A22',
   },
   {
     n: '02',
     icon: <Play size={22} />,
     title: 'Share Birth Details',
     desc: 'Send your name, date, time & place of birth. Gurudev prepares your chart personally.',
-    color: '#1A8FB0',
+    color: '#1A7FD0',
   },
   {
     n: '03',
     icon: <Award size={22} />,
     title: 'Receive Your Reading',
     desc: 'A private 1-on-1 session — your chart decoded, your questions answered, remedies delivered.',
-    color: '#e07210',
+    color: '#D88A22',
   },
 ];
 
@@ -519,7 +527,7 @@ function HowItWorksSection() {
   return (
     <section className="relative overflow-hidden py-20 md:py-28" style={{ background: DARK_BG }}>
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute left-1/2 top-0 h-[400px] w-[600px] -translate-x-1/2 rounded-full bg-[radial-gradient(ellipse,rgba(11,120,150,0.1),transparent_65%)] blur-3xl" />
+        <div className="absolute left-1/2 top-0 h-[400px] w-[600px] -translate-x-1/2 rounded-full bg-[radial-gradient(ellipse,rgba(0,94,168,0.1),transparent_65%)] blur-3xl" />
       </div>
 
       <div className="relative mx-auto max-w-6xl px-4 lg:px-8">
@@ -529,7 +537,7 @@ function HowItWorksSection() {
           viewport={{ once: true }}
           className="text-center mb-14"
         >
-          <span className="inline-block mb-4 text-[10px] font-bold uppercase tracking-[0.25em]" style={{ color: '#ffb36a' }}>Simple Process</span>
+          <span className="inline-block mb-4 text-[10px] font-bold uppercase tracking-[0.25em]" style={{ color: '#F3B757' }}>Simple Process</span>
           <h2 className="font-serif text-3xl md:text-4xl font-bold text-white leading-tight">
             How your{' '}
             <span className="italic font-light" style={{ background: GOLD_GRD, WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent' }}>
@@ -562,7 +570,7 @@ function HowItWorksSection() {
                 {/* Step number badge */}
                 <span
                   className="absolute -top-1 -right-1 w-6 h-6 rounded-full flex items-center justify-center font-cinzel text-[10px] font-bold"
-                  style={{ background: s.color, color: '#062E3C' }}
+                  style={{ background: s.color, color: '#002D60' }}
                 >
                   {i + 1}
                 </span>
@@ -591,7 +599,7 @@ const GAINS = [
 
 function WhatYouGainSection({ onBook }: { onBook?: () => void }) {
   return (
-    <section className="relative overflow-hidden py-20 md:py-28" style={{ background: '#FFF8F2' }}>
+    <section className="relative overflow-hidden py-20 md:py-28" style={{ background: '#F8F9FB' }}>
       <div className="relative mx-auto max-w-7xl px-4 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
@@ -599,7 +607,7 @@ function WhatYouGainSection({ onBook }: { onBook?: () => void }) {
           viewport={{ once: true }}
           className="text-center mb-14"
         >
-          <span className="inline-block mb-4 text-[10px] font-bold uppercase tracking-[0.25em]" style={{ color: '#e07210' }}>
+          <span className="inline-block mb-4 text-[10px] font-bold uppercase tracking-[0.25em]" style={{ color: '#D88A22' }}>
             What You Will Gain
           </span>
           <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-ink-900 leading-tight">
@@ -625,7 +633,7 @@ function WhatYouGainSection({ onBook }: { onBook?: () => void }) {
             >
               <div
                 className="w-11 h-11 rounded-xl flex items-center justify-center mb-4"
-                style={{ background: 'rgba(224,114,16,0.1)', color: '#e07210', border: '1px solid rgba(224,114,16,0.2)' }}
+                style={{ background: 'rgba(216,138,34,0.1)', color: '#D88A22', border: '1px solid rgba(216,138,34,0.2)' }}
               >
                 {g.icon}
               </div>
@@ -667,8 +675,8 @@ function MentorSection({ onBook }: { onBook?: () => void }) {
   return (
     <section className="relative overflow-hidden py-20 md:py-28" style={{ background: DARK_BG }}>
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute -top-20 -right-20 h-[400px] w-[400px] rounded-full bg-[radial-gradient(circle,rgba(232,118,28,0.09),transparent_65%)] blur-3xl" />
-        <div className="absolute -bottom-20 -left-20 h-[400px] w-[400px] rounded-full bg-[radial-gradient(circle,rgba(11,120,150,0.12),transparent_65%)] blur-3xl" />
+        <div className="absolute -top-20 -right-20 h-[400px] w-[400px] rounded-full bg-[radial-gradient(circle,rgba(216,138,34,0.09),transparent_65%)] blur-3xl" />
+        <div className="absolute -bottom-20 -left-20 h-[400px] w-[400px] rounded-full bg-[radial-gradient(circle,rgba(0,94,168,0.12),transparent_65%)] blur-3xl" />
       </div>
 
       <div className="relative mx-auto max-w-7xl px-4 lg:px-8">
@@ -686,12 +694,12 @@ function MentorSection({ onBook }: { onBook?: () => void }) {
             <div className="absolute -inset-8 rounded-full border border-gold-400/[0.07] animate-[spin_45s_linear_infinite] pointer-events-none" />
             <div className="relative rounded-[2.5rem] overflow-hidden border border-gold-400/15 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.85)] max-w-md mx-auto lg:max-w-none">
               <img src={GURU_IMG_ABOUT} alt="Gurudev Anand" className="w-full aspect-[4/5] object-cover" />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#031018]/80 via-transparent to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#001530]/80 via-transparent to-transparent" />
 
               {/* Floating rating */}
               <motion.div
                 initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0.5 }}
-                className="absolute top-5 right-2 rounded-2xl border border-white/10 bg-[#031018]/80 px-4 py-2.5 backdrop-blur-md text-center sm:-right-4"
+                className="absolute top-5 right-2 rounded-2xl border border-white/10 bg-[#001530]/80 px-4 py-2.5 backdrop-blur-md text-center sm:-right-4"
               >
                 <div className="font-cinzel text-xl font-bold" style={{ background: GOLD_GRD, WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent' }}>4.9 / 5</div>
                 <div className="text-[9px] text-white/60 uppercase tracking-wide">10,000+ reviews</div>
@@ -706,7 +714,7 @@ function MentorSection({ onBook }: { onBook?: () => void }) {
                 { val: '50+', lab: 'Countries', g: '♃' },
               ].map((s) => (
                 <div key={s.lab} className="rounded-2xl border border-white/[0.08] bg-white/[0.04] p-4 text-center">
-                  <div className="font-serif text-lg mb-0.5" style={{ color: '#ffb36a', fontFamily: '"Cormorant Garamond","Apple Symbols","Segoe UI Symbol",serif' }}>{s.g}</div>
+                  <div className="font-serif text-lg mb-0.5" style={{ color: '#F3B757', fontFamily: '"Cormorant Garamond","Apple Symbols","Segoe UI Symbol",serif' }}>{s.g}</div>
                   <div className="font-cinzel text-base font-bold" style={{ background: GOLD_GRD, WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent' }}>{s.val}</div>
                   <div className="text-[10px] text-white/50 uppercase tracking-wide mt-0.5">{s.lab}</div>
                 </div>
@@ -723,7 +731,7 @@ function MentorSection({ onBook }: { onBook?: () => void }) {
             className="order-1 lg:order-2 space-y-6"
           >
             <div>
-              <span className="inline-block mb-4 text-[10px] font-bold uppercase tracking-[0.25em]" style={{ color: '#ffb36a' }}>Meet Your Mentor</span>
+              <span className="inline-block mb-4 text-[10px] font-bold uppercase tracking-[0.25em]" style={{ color: '#F3B757' }}>Meet Your Mentor</span>
               <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight">
                 Gurudev{' '}
                 <span className="italic font-light" style={{ background: GOLD_GRD, WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent' }}>Anand</span>
@@ -774,7 +782,7 @@ function MentorSection({ onBook }: { onBook?: () => void }) {
 ══════════════════════════════════════════════════════════════ */
 function BonusSection({ onBook }: { onBook?: () => void }) {
   return (
-    <section className="relative overflow-hidden py-16 md:py-20" style={{ background: '#FFF2E8' }}>
+    <section className="relative overflow-hidden py-16 md:py-20" style={{ background: '#EFF1F5' }}>
       <div className="relative mx-auto max-w-5xl px-4 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
@@ -785,7 +793,7 @@ function BonusSection({ onBook }: { onBook?: () => void }) {
           <div className="grid md:grid-cols-[240px_1fr]">
             {/* Book visual */}
             <div className="relative" style={{ background: DARK_BG }}>
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(224,114,16,0.2),transparent_60%)]" />
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(216,138,34,0.2),transparent_60%)]" />
               <div className="relative flex h-full items-center justify-center p-8">
                 <div className="relative w-36">
                   <div className="rounded-xl overflow-hidden border-2 border-gold-400/40 shadow-2xl aspect-[3/4]">
@@ -793,7 +801,7 @@ function BonusSection({ onBook }: { onBook?: () => void }) {
                   </div>
                   <div
                     className="absolute -top-3 -right-3 w-10 h-10 rounded-full flex items-center justify-center text-[10px] font-bold shadow-lg"
-                    style={{ background: GOLD_GRD, color: '#062E3C' }}
+                    style={{ background: GOLD_GRD, color: '#002D60' }}
                   >
                     FREE
                   </div>
@@ -805,7 +813,7 @@ function BonusSection({ onBook }: { onBook?: () => void }) {
 
             {/* Content */}
             <div className="p-8 md:p-10 flex flex-col justify-center">
-              <span className="inline-block mb-3 text-[10px] font-bold uppercase tracking-[0.25em]" style={{ color: '#e07210' }}>
+              <span className="inline-block mb-3 text-[10px] font-bold uppercase tracking-[0.25em]" style={{ color: '#D88A22' }}>
                 Exclusive Bonus — Yours When You Book
               </span>
               <h2 className="font-serif text-2xl md:text-3xl font-bold text-ink-900 mb-3 leading-tight">
@@ -853,7 +861,7 @@ function TestimonialsSection() {
   return (
     <section className="relative overflow-hidden py-20 md:py-28" style={{ background: DARK_BG }}>
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_40%_at_50%_50%,rgba(11,120,150,0.08),transparent_60%)] blur-3xl" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_40%_at_50%_50%,rgba(0,94,168,0.08),transparent_60%)] blur-3xl" />
       </div>
 
       <div className="relative mx-auto max-w-7xl px-4 lg:px-8">
@@ -863,7 +871,7 @@ function TestimonialsSection() {
           viewport={{ once: true }}
           className="text-center mb-12"
         >
-          <span className="inline-block mb-4 text-[10px] font-bold uppercase tracking-[0.25em]" style={{ color: '#ffb36a' }}>Client Stories</span>
+          <span className="inline-block mb-4 text-[10px] font-bold uppercase tracking-[0.25em]" style={{ color: '#F3B757' }}>Client Stories</span>
           <h2 className="font-serif text-3xl md:text-4xl font-bold text-white leading-tight">
             What clients say about{' '}
             <span className="italic font-light" style={{ background: GOLD_GRD, WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent' }}>
@@ -897,7 +905,7 @@ function TestimonialsSection() {
               <div className="flex items-center gap-3 pt-3 border-t border-white/[0.06]">
                 <div
                   className="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold shrink-0"
-                  style={{ background: 'rgba(224,114,16,0.15)', color: '#ffb36a' }}
+                  style={{ background: 'rgba(216,138,34,0.15)', color: '#F3B757' }}
                 >
                   {r.name[0]}
                 </div>
@@ -928,7 +936,7 @@ const PRICE_FEATURES = [
 
 function PricingSection({ onBook }: { onBook?: () => void }) {
   return (
-    <section className="relative overflow-hidden py-20 md:py-28" style={{ background: '#FFF8F2' }}>
+    <section className="relative overflow-hidden py-20 md:py-28" style={{ background: '#F8F9FB' }}>
       <div className="relative mx-auto max-w-5xl px-4 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
@@ -936,7 +944,7 @@ function PricingSection({ onBook }: { onBook?: () => void }) {
           viewport={{ once: true }}
           className="text-center mb-14"
         >
-          <span className="inline-block mb-4 text-[10px] font-bold uppercase tracking-[0.25em]" style={{ color: '#e07210' }}>Transparent Pricing</span>
+          <span className="inline-block mb-4 text-[10px] font-bold uppercase tracking-[0.25em]" style={{ color: '#D88A22' }}>Transparent Pricing</span>
           <h2 className="font-serif text-3xl md:text-4xl font-bold text-ink-900 leading-tight">
             Choose your{' '}
             <span className="italic font-light" style={{ background: GOLD_GRD, WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent' }}>
@@ -995,7 +1003,7 @@ function PricingSection({ onBook }: { onBook?: () => void }) {
             {/* Popular badge */}
             <div
               className="absolute -top-3.5 left-1/2 -translate-x-1/2 rounded-full px-5 py-1.5 text-[10px] font-bold uppercase tracking-wide whitespace-nowrap"
-              style={{ background: GOLD_GRD, color: '#062E3C' }}
+              style={{ background: GOLD_GRD, color: '#002D60' }}
             >
               ★ Most Popular
             </div>
@@ -1061,7 +1069,7 @@ function FAQSection({ onBook }: { onBook?: () => void }) {
   return (
     <section className="relative overflow-hidden py-20 md:py-28" style={{ background: DARK_BG }}>
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 h-[400px] w-[600px] rounded-full bg-[radial-gradient(ellipse,rgba(11,120,150,0.1),transparent_70%)] blur-3xl" />
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 h-[400px] w-[600px] rounded-full bg-[radial-gradient(ellipse,rgba(0,94,168,0.1),transparent_70%)] blur-3xl" />
       </div>
 
       <div className="relative mx-auto max-w-3xl px-4 lg:px-8">
@@ -1071,7 +1079,7 @@ function FAQSection({ onBook }: { onBook?: () => void }) {
           viewport={{ once: true }}
           className="text-center mb-12"
         >
-          <span className="inline-block mb-4 text-[10px] font-bold uppercase tracking-[0.25em]" style={{ color: '#ffb36a' }}>FAQs</span>
+          <span className="inline-block mb-4 text-[10px] font-bold uppercase tracking-[0.25em]" style={{ color: '#F3B757' }}>FAQs</span>
           <h2 className="font-serif text-3xl md:text-4xl font-bold text-white leading-tight">
             Here's everything you{' '}
             <span className="italic font-light" style={{ background: GOLD_GRD, WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent' }}>
@@ -1098,9 +1106,9 @@ function FAQSection({ onBook }: { onBook?: () => void }) {
                 <span
                   className="shrink-0 w-7 h-7 rounded-full flex items-center justify-center font-cinzel text-xs font-bold transition-colors"
                   style={{
-                    background: open === i ? 'rgba(224,114,16,0.18)' : 'rgba(255,255,255,0.06)',
-                    color: open === i ? '#ffb36a' : 'rgba(255,255,255,0.3)',
-                    border: open === i ? '1px solid rgba(224,114,16,0.35)' : '1px solid rgba(255,255,255,0.09)',
+                    background: open === i ? 'rgba(216,138,34,0.18)' : 'rgba(255,255,255,0.06)',
+                    color: open === i ? '#F3B757' : 'rgba(255,255,255,0.3)',
+                    border: open === i ? '1px solid rgba(216,138,34,0.35)' : '1px solid rgba(255,255,255,0.09)',
                   }}
                 >
                   {String(i + 1).padStart(2, '0')}
@@ -1146,13 +1154,36 @@ function FAQSection({ onBook }: { onBook?: () => void }) {
 /* ══════════════════════════════════════════════════════════════
    13. STICKY BOTTOM BAR
 ══════════════════════════════════════════════════════════════ */
-function StickyBar({ onBook }: { onBook?: () => void }) {
-  const [visible, setVisible] = useState(false);
+function StickyBar({
+  onBook,
+  heroRef,
+}: {
+  onBook?: () => void;
+  heroRef: RefObject<HTMLElement | null>;
+}) {
+  const mobileVisible = useStickyAfterHero(heroRef);
+  const [desktopVisible, setDesktopVisible] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
   useEffect(() => {
-    const fn = () => setVisible(window.scrollY > 600);
+    const mobileMq = window.matchMedia('(max-width: 639px)');
+    const updateMobile = () => setIsMobile(mobileMq.matches);
+    updateMobile();
+    mobileMq.addEventListener('change', updateMobile);
+    return () => mobileMq.removeEventListener('change', updateMobile);
+  }, []);
+
+  useEffect(() => {
+    const fn = () => {
+      if (window.matchMedia('(max-width: 639px)').matches) return;
+      setDesktopVisible(window.scrollY > 600);
+    };
+    fn();
     window.addEventListener('scroll', fn, { passive: true });
     return () => window.removeEventListener('scroll', fn);
   }, []);
+
+  const visible = isMobile ? mobileVisible : desktopVisible;
 
   return (
     <AnimatePresence>
@@ -1162,35 +1193,27 @@ function StickyBar({ onBook }: { onBook?: () => void }) {
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: 80, opacity: 0 }}
           transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-          className="fixed bottom-0 left-0 right-0 z-50 border-t border-gold-400/20"
-          style={{ background: 'rgba(3,16,24,0.97)', backdropFilter: 'blur(16px)' }}
+          className="webinar-sticky-offset sticky-cta-shell fixed inset-x-0 z-[70] pointer-events-none"
         >
-          <div className="mx-auto max-w-7xl px-4 py-3 flex items-center justify-center sm:justify-between gap-4 sm:px-8">
-            <div className="hidden sm:flex flex-col">
-              <div className="flex items-baseline gap-2">
-                <span className="font-cinzel text-xl font-bold" style={{ background: GOLD_GRD, WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent' }}>
-                  From {fmtInr(PRICE_AUDIO_INR)}
-                </span>
-                <span className="text-[11px] text-white/35 uppercase tracking-wide">· Video {fmtInr(PRICE_VIDEO_INR)}</span>
-              </div>
-              <span className="text-[10px] text-white/35 uppercase tracking-wide">1-on-1 session · limited slots this week</span>
+          <div className="sticky-cta-bar pointer-events-auto">
+            <div className="min-w-0 flex-1">
+              <p className="truncate text-[11px] font-semibold leading-tight text-white sm:text-xs">
+                <span className="sm:hidden">Book your session</span>
+                <span className="hidden sm:inline font-cinzel">From {fmtInr(PRICE_AUDIO_INR)}</span>
+              </p>
+              <p className="truncate text-[9px] text-white/45 sm:text-[10px]">
+                <span className="sm:hidden">Limited slots · Gurudev Anand</span>
+                <span className="hidden sm:inline">1-on-1 · Video {fmtInr(PRICE_VIDEO_INR)}</span>
+              </p>
             </div>
-            <div className="flex w-full items-center justify-center gap-3 sm:w-auto sm:ml-auto sm:justify-end">
-              <a
-                href={PHONE_TEL}
-                className="hidden md:inline-flex items-center gap-1.5 text-xs text-white/50 hover:text-white transition-colors"
-              >
-                <Phone size={12} /> {PHONE_NUM}
-              </a>
-              <button
-                type="button"
-                onClick={onBook}
-                className="rounded-full px-6 py-2.5 text-sm font-bold uppercase tracking-wide btn-shimmer whitespace-nowrap"
-                style={{ background: GOLD_GRD, color: '#062E3C' }}
-              >
-                Register Now →
-              </button>
-            </div>
+            <button
+              type="button"
+              onClick={onBook}
+              className="sticky-cta-btn btn-shimmer min-h-[36px] sm:min-h-[38px]"
+              style={{ background: GOLD_GRD, color: '#002D60' }}
+            >
+              Register Now
+            </button>
           </div>
         </motion.div>
       )}
@@ -1203,11 +1226,12 @@ function StickyBar({ onBook }: { onBook?: () => void }) {
 ══════════════════════════════════════════════════════════════ */
 export function ConsultationPage() {
   const { onConnect } = useOutletContext<SiteOutletContext>();
+  const heroRef = useRef<HTMLElement>(null);
 
   return (
-    <div className="pb-16 sm:pb-0">
+    <div className="pb-[calc(9.5rem+env(safe-area-inset-bottom,0px))] sm:pb-0">
       <AnnouncementBar onBook={onConnect} />
-      <HeroSection onBook={onConnect} />
+      <HeroSection onBook={onConnect} heroRef={heroRef} />
       <FeaturedInBar />
       <PainPointsSection onBook={onConnect} />
       <PatternsSection onBook={onConnect} />
@@ -1218,7 +1242,7 @@ export function ConsultationPage() {
       <TestimonialsSection />
       <PricingSection onBook={onConnect} />
       <FAQSection onBook={onConnect} />
-      <StickyBar onBook={onConnect} />
+      <StickyBar onBook={onConnect} heroRef={heroRef} />
     </div>
   );
 }

@@ -1,13 +1,14 @@
 import { Compass, Clock, Heart, Activity, Home as HomeIcon, Sparkles } from 'lucide-react';
+import { TextReveal } from '../ui/TextReveal';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import type { MouseEvent as ReactMouseEvent } from 'react';
 
 const ITEMS = [
-  { num: '01', icon: Compass,  title: 'General Consultation', desc: 'A full chart reading — career, relationships, finance, and life direction.', accent: '#e07210', glyph: '☉', tint: 'rgba(224,114,16,0.06)' },
+  { num: '01', icon: Compass,  title: 'General Consultation', desc: 'A full chart reading — career, relationships, finance, and life direction.', accent: '#D88A22', glyph: '☉', tint: 'rgba(216,138,34,0.06)' },
   { num: '02', icon: Clock,    title: 'Urgent Consultation',  desc: 'Priority session for decisions that cannot wait. Focused, direct, clear.',    accent: '#f59e0b', glyph: '♄', tint: 'rgba(245,158,11,0.06)' },
-  { num: '03', icon: Heart,    title: 'Couple Consultation',  desc: 'Compatibility, marriage timing, and harmony — both charts read together.',    accent: '#f43f5e', glyph: '♀', tint: 'rgba(244,63,94,0.06)' },
+  { num: '03', icon: Heart,    title: 'Couple Consultation',  desc: 'Compatibility, marriage timing, and harmony — both charts read together.',    accent: '#C62828', glyph: '♀', tint: 'rgba(198,40,40,0.06)' },
   { num: '04', icon: Activity, title: 'Medical Astrology',    desc: 'Health-related planetary patterns with classical Vedic preventive remedies.', accent: '#10b981', glyph: '♂', tint: 'rgba(16,185,129,0.06)' },
-  { num: '05', icon: HomeIcon, title: 'Vastu Consultation',   desc: 'Align your home or workspace with what your birth chart reveals.',           accent: '#0C5F78', glyph: '✦', tint: 'rgba(12,95,120,0.06)' },
+  { num: '05', icon: HomeIcon, title: 'Vastu Consultation',   desc: 'Align your home or workspace with what your birth chart reveals.',           accent: '#005EA8', glyph: '✦', tint: 'rgba(0,94,168,0.06)' },
   { num: '06', icon: Sparkles, title: 'Personalised Remedies', desc: 'Mantras, rituals, and gemstone guidance chosen for your kundali alone.',    accent: '#a78bfa', glyph: '♃', tint: 'rgba(167,139,250,0.06)' },
 ];
 
@@ -90,8 +91,8 @@ export function WhatYouLearnSection() {
       className="relative overflow-hidden bg-warm-50 py-24 md:py-32"
     >
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute -top-40 right-1/4 h-[500px] w-[500px] rounded-full bg-[radial-gradient(circle,rgba(232,118,28,0.08),transparent_65%)] blur-3xl" />
-        <div className="absolute -bottom-20 left-1/4 h-[400px] w-[400px] rounded-full bg-[radial-gradient(circle,rgba(11,120,150,0.06),transparent_65%)] blur-3xl" />
+        <div className="absolute -top-40 right-1/4 h-[500px] w-[500px] rounded-full bg-[radial-gradient(circle,rgba(216,138,34,0.08),transparent_65%)] blur-3xl" />
+        <div className="absolute -bottom-20 left-1/4 h-[400px] w-[400px] rounded-full bg-[radial-gradient(circle,rgba(0,94,168,0.06),transparent_65%)] blur-3xl" />
       </div>
 
       <div className="relative mx-auto max-w-7xl px-4 lg:px-8">
@@ -103,10 +104,10 @@ export function WhatYouLearnSection() {
           className="mx-auto mb-14 max-w-2xl text-center"
         >
           <span className="section-eyebrow mb-4 block">Services</span>
-          <h2 className="section-heading">
+          <TextReveal as="h2" className="section-heading">
             How Gurudev Anand{' '}
             <span className="text-gradient-gold italic font-light">guides you</span>
-          </h2>
+          </TextReveal>
           <p className="mt-4 text-sm leading-relaxed text-ink-500 md:text-base">
             Every session delivered personally — tailored to your birth details and the questions you bring.
           </p>

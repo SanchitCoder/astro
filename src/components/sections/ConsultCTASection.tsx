@@ -1,4 +1,5 @@
 ﻿import { Link } from 'react-router-dom';
+import { TextReveal } from '../ui/TextReveal';
 import { motion } from 'framer-motion';
 import { Phone, Video, ArrowRight, Star } from 'lucide-react';
 import { WHATSAPP_URL } from '../../lib/constants';
@@ -19,9 +20,9 @@ export function ConsultCTASection() {
     <section className="relative overflow-hidden bg-warm-100 py-24 md:py-32">
       {/* Background */}
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_70%_at_50%_50%,rgba(232,118,28,0.12),transparent_65%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_40%_at_0%_50%,rgba(12,95,120,0.08),transparent_55%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_40%_at_100%_50%,rgba(12,95,120,0.08),transparent_55%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_70%_at_50%_50%,rgba(216,138,34,0.12),transparent_65%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_40%_at_0%_50%,rgba(0,94,168,0.08),transparent_55%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_40%_at_100%_50%,rgba(0,94,168,0.08),transparent_55%)]" />
         <div className="pointer-events-none absolute top-1/2 left-1/2 h-[900px] w-[900px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-gold-400/10 animate-[spin_80s_linear_infinite]" />
         <div className="pointer-events-none absolute top-1/2 left-1/2 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-nebula-400/15 animate-[spin_50s_linear_infinite_reverse]" />
       </div>
@@ -49,10 +50,10 @@ export function ConsultCTASection() {
           transition={{ duration: 0.7 }}
         >
           <span className="section-eyebrow mb-4 block">Book a Session</span>
-          <h2 className="section-heading mx-auto max-w-3xl">
+          <TextReveal as="h2" className="section-heading mx-auto max-w-3xl">
             One call can{' '}
             <span className="text-gradient-gold italic font-light">change everything</span>
-          </h2>
+          </TextReveal>
           <p className="mx-auto mt-5 max-w-xl text-sm leading-relaxed text-ink-500 md:text-base">
             Gurudev Anand reads your chart personally — no assistants, no templates. Clarity you can act on.
           </p>
@@ -91,8 +92,8 @@ export function ConsultCTASection() {
           className="mx-auto mt-8 flex w-full max-w-sm flex-col gap-3 sm:max-w-none sm:flex-row sm:flex-wrap sm:justify-center sm:gap-4"
         >
           <Link
-            to="/consultation"
-            className="btn-shimmer inline-flex w-full animate-pulse-glow items-center justify-center gap-2.5 rounded-full bg-gradient-to-r from-gold-300 via-gold-400 to-gold-600 px-8 py-4 text-sm font-bold uppercase tracking-wide text-white shadow-[0_4px_24px_rgba(224,114,16,0.35)] transition-all duration-300 hover:shadow-gold-glow sm:w-auto"
+            to="/webinar"
+            className="btn-shimmer inline-flex w-full animate-pulse-glow items-center justify-center gap-2.5 rounded-full bg-gradient-to-r from-gold-300 via-gold-400 to-gold-600 px-8 py-4 text-sm font-bold uppercase tracking-wide text-white shadow-[0_4px_24px_rgba(216,138,34,0.35)] transition-all duration-300 hover:shadow-gold-glow sm:w-auto"
           >
             Book Consultation
             <ArrowRight size={15} />

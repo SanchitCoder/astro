@@ -9,9 +9,9 @@ export function FeaturedInBar() {
   return (
     <section
       className="relative py-5 overflow-hidden border-y border-white/[0.06]"
-      style={{ background: 'linear-gradient(90deg, #031018 0%, #062E3C 50%, #031018 100%)' }}
+      style={{ background: 'linear-gradient(90deg, #001530 0%, #002D60 50%, #001530 100%)' }}
     >
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_120%_at_50%_50%,rgba(224,114,16,0.06),transparent_70%)] pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_120%_at_50%_50%,rgba(216,138,34,0.06),transparent_70%)] pointer-events-none" />
 
       <div className="mb-4 flex flex-col gap-2 px-4 sm:flex-row sm:items-center sm:gap-8 sm:px-8">
         <span className="shrink-0 text-[9px] font-bold uppercase tracking-[0.28em] text-white">
@@ -21,10 +21,7 @@ export function FeaturedInBar() {
       </div>
 
       <div className="relative overflow-hidden [mask-image:linear-gradient(90deg,transparent_0%,black_6%,black_94%,transparent_100%)]">
-        <div
-          className="flex gap-3 w-max"
-          style={{ animation: 'press-marquee 38s linear infinite' }}
-        >
+        <div className="press-marquee-track flex w-max gap-3">
           {ITEMS.map((name, i) => (
             <span
               key={i}

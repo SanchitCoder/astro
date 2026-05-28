@@ -10,7 +10,7 @@ export function FooterSection() {
     <footer id="contact" className="relative bg-nebula-700 overflow-hidden">
       {/* Top gradient separator */}
       <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-gold-400/40 to-transparent" />
-      <div className="absolute top-0 inset-x-0 h-[200px] bg-[radial-gradient(ellipse_70%_100%_at_50%_0%,rgba(232,118,28,0.08),transparent_80%)] pointer-events-none" />
+      <div className="absolute top-0 inset-x-0 h-[200px] bg-[radial-gradient(ellipse_70%_100%_at_50%_0%,rgba(216,138,34,0.08),transparent_80%)] pointer-events-none" />
 
       <div className="relative max-w-7xl mx-auto px-4 lg:px-8 pt-16 pb-10 grid gap-10 md:grid-cols-4">
         {/* Brand */}
@@ -51,7 +51,7 @@ export function FooterSection() {
             {[
               { label: 'About Gurudev Anand', href: '/#about' },
               { label: 'Services', href: '/#services' },
-              { label: 'Consultations', href: '/consultation', route: true },
+              { label: 'Webinar', href: '/webinar', route: true },
               { label: 'Articles', href: '/#knowledge' },
               { label: 'Contact', href: '/contact', route: true },
             ].map((l) => (

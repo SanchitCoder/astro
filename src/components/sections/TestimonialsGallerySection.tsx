@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
+import { TextReveal } from '../ui/TextReveal';
 import { motion } from 'framer-motion';
 import { TestimonialCard, type Testimonial } from '../ui/TestimonialCard';
 import { ThreeDScrollTriggerContainer, ThreeDScrollTriggerRow } from '../ui/ThreeDScrollTrigger';
 import { GURU_IMG, GURU_IMG_GALLERY, GURU_IMG_RESOURCE } from '../../lib/constants';
 
-const DARK_BG = 'linear-gradient(160deg, #031825 0%, #062E3C 40%, #084557 70%, #031018 100%)';
+const DARK_BG = 'linear-gradient(160deg, #001D48 0%, #002D60 40%, #003D78 70%, #001530 100%)';
 const ROTATE_MS = 4500;
 
 const TESTIMONIALS: Testimonial[] = [
@@ -51,7 +52,7 @@ export function TestimonialsGallerySection() {
   return (
     <section className="relative py-24 md:py-32 overflow-hidden" style={{ background: DARK_BG }}>
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[300px] rounded-full bg-[radial-gradient(ellipse,rgba(232,118,28,0.07),transparent_70%)] blur-3xl" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[300px] rounded-full bg-[radial-gradient(ellipse,rgba(216,138,34,0.07),transparent_70%)] blur-3xl" />
       </div>
 
       <div className="relative max-w-7xl mx-auto px-4 lg:px-8">
@@ -62,15 +63,15 @@ export function TestimonialsGallerySection() {
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           className="text-center max-w-2xl mx-auto mb-14"
         >
-          <span className="inline-block mb-4 text-[10px] font-bold uppercase tracking-[0.25em]" style={{ color: '#ffb36a' }}>
+          <span className="inline-block mb-4 text-[10px] font-bold uppercase tracking-[0.25em]" style={{ color: '#F3B757' }}>
             Client Stories
           </span>
-          <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight">
+          <TextReveal as="h2" className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight">
             What clients say about{' '}
-            <span className="italic font-light" style={{ background: 'linear-gradient(135deg,#ffb36a,#e07210)', WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent' }}>
+            <span className="italic font-light" style={{ background: 'linear-gradient(135deg,#F3B757,#D88A22)', WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent' }}>
               Gurudev Anand
             </span>
-          </h2>
+          </TextReveal>
           <p className="mt-4 text-white/90 text-sm leading-relaxed">
             From Mumbai to Dubai — career turns, marriage decisions, health, and family matters.
           </p>
@@ -97,7 +98,7 @@ export function TestimonialsGallerySection() {
           className="mt-20"
         >
           <div className="text-center mb-8">
-            <span className="inline-block text-[10px] font-bold uppercase tracking-[0.25em]" style={{ color: '#ffb36a' }}>Gallery</span>
+            <span className="inline-block text-[10px] font-bold uppercase tracking-[0.25em]" style={{ color: '#F3B757' }}>Gallery</span>
           </div>
           <div className="md:hidden"><MobileRotator items={GALLERY} /></div>
           <div className="hidden md:grid grid-cols-3 gap-5 max-w-5xl mx-auto">

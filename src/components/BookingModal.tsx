@@ -55,7 +55,7 @@ export function BookingModal({ open, onClose, defaultType = 'normal' }: Props) {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className="relative max-h-[min(92dvh,100svh)] w-full max-w-lg overflow-y-auto overscroll-contain rounded-3xl border border-warm-200 bg-gradient-to-b from-white to-warm-50 shadow-[0_32px_64px_-16px_rgba(12,95,120,0.18),0_12px_32px_-8px_rgba(0,0,0,0.08)] sm:max-h-none"
+            className="relative max-h-[min(92dvh,100svh)] w-full max-w-lg overflow-y-auto overscroll-contain rounded-3xl border border-warm-200 bg-gradient-to-b from-white to-warm-50 shadow-[0_32px_64px_-16px_rgba(0,94,168,0.18),0_12px_32px_-8px_rgba(0,0,0,0.08)] sm:max-h-none"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Gold gradient top border */}
@@ -169,7 +169,7 @@ export function BookingModal({ open, onClose, defaultType = 'normal' }: Props) {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="btn-shimmer mt-6 flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-gold-300 via-gold-400 to-gold-600 py-3.5 text-sm font-bold uppercase tracking-wide text-white shadow-[0_4px_20px_rgba(224,114,16,0.3)] transition-shadow duration-300 hover:shadow-gold-glow disabled:opacity-60"
+                  className="btn-shimmer mt-6 flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-gold-300 via-gold-400 to-gold-600 py-3.5 text-sm font-bold uppercase tracking-wide text-white shadow-[0_4px_20px_rgba(216,138,34,0.3)] transition-shadow duration-300 hover:shadow-gold-glow disabled:opacity-60"
                 >
                   {loading && <Loader2 className="animate-spin" size={16} />}
                   {loading ? 'Submitting…' : 'Confirm Booking Request'}

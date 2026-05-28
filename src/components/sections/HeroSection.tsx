@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform } from 'framer-motion';
+import { TextReveal } from '../ui/TextReveal';
 import { ArrowRight, Star, ChevronDown } from 'lucide-react';
 import { GURU_IMG } from '../../lib/constants';
 
@@ -24,7 +25,7 @@ const ZODIAC_SIGNS = [
 ];
 
 const PLANETS = [
-  { glyph: '☉', angle: 22,  r: 185, color: '#ffb36a', size: 5 },
+  { glyph: '☉', angle: 22,  r: 185, color: '#F3B757', size: 5 },
   { glyph: '☽', angle: 65,  r: 192, color: '#c7d2fe', size: 4 },
   { glyph: '♂', angle: 120, r: 188, color: '#fca5a5', size: 4 },
   { glyph: '♃', angle: 190, r: 183, color: '#86efac', size: 5 },
@@ -64,12 +65,12 @@ function ZodiacWheel({ className }: { className?: string }) {
     >
       <defs>
         <radialGradient id="wheelGlow" cx="50%" cy="50%" r="50%">
-          <stop offset="0%"   stopColor="#e07210" stopOpacity="0.18" />
-          <stop offset="60%"  stopColor="#0b7896" stopOpacity="0.08" />
+          <stop offset="0%"   stopColor="#D88A22" stopOpacity="0.18" />
+          <stop offset="60%"  stopColor="#005EA8" stopOpacity="0.08" />
           <stop offset="100%" stopColor="transparent" stopOpacity="0" />
         </radialGradient>
         <radialGradient id="centerGlow" cx="50%" cy="50%" r="50%">
-          <stop offset="0%"   stopColor="#e07210" stopOpacity="0.25" />
+          <stop offset="0%"   stopColor="#D88A22" stopOpacity="0.25" />
           <stop offset="100%" stopColor="transparent" stopOpacity="0" />
         </radialGradient>
         <clipPath id="portraitClip">
@@ -85,11 +86,11 @@ function ZodiacWheel({ className }: { className?: string }) {
       <circle cx={cx} cy={cy} r={outerR} fill="url(#wheelGlow)" />
 
       {/* Outermost ring */}
-      <circle cx={cx} cy={cy} r={outerR}     fill="none" stroke="#e07210" strokeWidth="0.6" opacity="0.3" />
-      <circle cx={cx} cy={cy} r={signR}      fill="none" stroke="#e07210" strokeWidth="0.4" opacity="0.2" strokeDasharray="4 8" />
-      <circle cx={cx} cy={cy} r={midR}       fill="none" stroke="#4DC3E0" strokeWidth="0.4" opacity="0.18" />
-      <circle cx={cx} cy={cy} r={innerR}     fill="none" stroke="#e07210" strokeWidth="0.6" opacity="0.25" />
-      <circle cx={cx} cy={cy} r={portraitR}  fill="none" stroke="#e07210" strokeWidth="1"   opacity="0.4" />
+      <circle cx={cx} cy={cy} r={outerR}     fill="none" stroke="#D88A22" strokeWidth="0.6" opacity="0.3" />
+      <circle cx={cx} cy={cy} r={signR}      fill="none" stroke="#D88A22" strokeWidth="0.4" opacity="0.2" strokeDasharray="4 8" />
+      <circle cx={cx} cy={cy} r={midR}       fill="none" stroke="#3387D3" strokeWidth="0.4" opacity="0.18" />
+      <circle cx={cx} cy={cy} r={innerR}     fill="none" stroke="#D88A22" strokeWidth="0.6" opacity="0.25" />
+      <circle cx={cx} cy={cy} r={portraitR}  fill="none" stroke="#D88A22" strokeWidth="1"   opacity="0.4" />
 
       {/* 12 sector dividers */}
       {ZODIAC_SIGNS.map((_, i) => {
@@ -101,7 +102,7 @@ function ZodiacWheel({ className }: { className?: string }) {
             y1={cy + innerR  * Math.sin(angle)}
             x2={cx + outerR  * Math.cos(angle)}
             y2={cy + outerR  * Math.sin(angle)}
-            stroke="#e07210"
+            stroke="#D88A22"
             strokeWidth="0.4"
             opacity="0.2"
           />
@@ -120,7 +121,7 @@ function ZodiacWheel({ className }: { className?: string }) {
             y1={cy + r1       * Math.sin(angle)}
             x2={cx + outerR   * Math.cos(angle)}
             y2={cy + outerR   * Math.sin(angle)}
-            stroke="#e07210"
+            stroke="#D88A22"
             strokeWidth={isMajor ? 0.8 : 0.4}
             opacity={isMajor ? 0.35 : 0.15}
           />
@@ -139,7 +140,7 @@ function ZodiacWheel({ className }: { className?: string }) {
             textAnchor="middle"
             dominantBaseline="central"
             fontSize="18"
-            fill="#ffb36a"
+            fill="#F3B757"
             opacity="0.7"
             fontFamily='"Cormorant Garamond","Apple Symbols","Segoe UI Symbol",serif'
           >
@@ -158,7 +159,7 @@ function ZodiacWheel({ className }: { className?: string }) {
             key={i}
             x1={pa.px} y1={pa.py}
             x2={pb.px} y2={pb.py}
-            stroke="#4DC3E0"
+            stroke="#3387D3"
             strokeWidth="0.5"
             opacity="0.18"
             strokeDasharray="3 5"
@@ -199,7 +200,7 @@ function ZodiacWheel({ className }: { className?: string }) {
             cx={cx + (portraitR + 14) * Math.cos(angle)}
             cy={cy + (portraitR + 14) * Math.sin(angle)}
             r="3"
-            fill="#e07210"
+            fill="#D88A22"
             opacity="0.35"
           />
         );
@@ -249,13 +250,13 @@ export function HeroSection() {
       ref={sectionRef}
       id="home"
       className="relative flex min-h-[100dvh] flex-col justify-center overflow-hidden lg:min-h-screen"
-      style={{ background: 'linear-gradient(160deg, #031825 0%, #062E3C 40%, #084557 70%, #031018 100%)' }}
+      style={{ background: 'linear-gradient(160deg, #001D48 0%, #002D60 40%, #003D78 70%, #001530 100%)' }}
     >
       {/* ── Ambient light blobs ── */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute -top-40 -left-40 w-[600px] h-[600px] rounded-full bg-[radial-gradient(circle,rgba(11,120,150,0.25),transparent_65%)] blur-3xl" />
-        <div className="absolute -bottom-40 -right-20 w-[500px] h-[500px] rounded-full bg-[radial-gradient(circle,rgba(232,118,28,0.15),transparent_65%)] blur-3xl" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-[radial-gradient(circle,rgba(12,95,120,0.1),transparent_60%)] blur-3xl" />
+        <div className="absolute -top-40 -left-40 w-[600px] h-[600px] rounded-full bg-[radial-gradient(circle,rgba(0,94,168,0.25),transparent_65%)] blur-3xl" />
+        <div className="absolute -bottom-40 -right-20 w-[500px] h-[500px] rounded-full bg-[radial-gradient(circle,rgba(216,138,34,0.15),transparent_65%)] blur-3xl" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-[radial-gradient(circle,rgba(0,94,168,0.1),transparent_60%)] blur-3xl" />
       </div>
 
       {/* ── Star field ── */}
@@ -279,7 +280,7 @@ export function HeroSection() {
             className="absolute font-serif text-2xl select-none"
             style={{
               left: g.x, top: g.y,
-              color: '#e07210',
+              color: '#D88A22',
               fontFamily: '"Cormorant Garamond","Apple Symbols","Segoe UI Symbol",serif',
             }}
             animate={{ y: [0, -14, 0], opacity: [0.1, 0.25, 0.1] }}
@@ -312,13 +313,17 @@ export function HeroSection() {
 
             {/* Headline */}
             <motion.div variants={itemVariants}>
-              <h1 className="font-serif text-4xl sm:text-5xl lg:text-[3.1rem] xl:text-[3.6rem] font-bold leading-[1.08] tracking-tight text-white">
+              <TextReveal
+                as="h1"
+                className="font-serif text-4xl sm:text-5xl lg:text-[3.1rem] xl:text-[3.6rem] font-bold leading-[1.08] tracking-tight text-white"
+                stagger={0.07}
+              >
                 The Stars Map
                 <br />
                 <span
                   className="italic font-light"
                   style={{
-                    background: 'linear-gradient(130deg, #ffb36a 0%, #e07210 50%, #ffb36a 100%)',
+                    background: 'linear-gradient(130deg, #F3B757 0%, #D88A22 50%, #F3B757 100%)',
                     WebkitBackgroundClip: 'text',
                     backgroundClip: 'text',
                     color: 'transparent',
@@ -328,7 +333,7 @@ export function HeroSection() {
                 </span>
                 <br />
                 <span className="font-light text-3xl text-white sm:text-4xl lg:text-[2.5rem]">— Read Precisely</span>
-              </h1>
+              </TextReveal>
             </motion.div>
 
             {/* Body */}
@@ -352,7 +357,7 @@ export function HeroSection() {
                   <div
                     className="font-cinzel text-lg font-bold sm:text-xl md:text-2xl"
                     style={{
-                      background: 'linear-gradient(135deg, #ffb36a 0%, #e07210 100%)',
+                      background: 'linear-gradient(135deg, #F3B757 0%, #D88A22 100%)',
                       WebkitBackgroundClip: 'text',
                       backgroundClip: 'text',
                       color: 'transparent',
@@ -368,9 +373,9 @@ export function HeroSection() {
             {/* CTAs */}
             <motion.div variants={itemVariants} className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:gap-4">
               <Link
-                to="/consultation"
+                to="/webinar"
                 className="inline-flex w-full items-center justify-center gap-2.5 rounded-full px-7 py-3.5 text-sm font-bold uppercase tracking-wide btn-shimmer transition-all duration-300 animate-pulse-glow hover:shadow-gold-glow sm:w-auto"
-                style={{ background: 'linear-gradient(135deg, #ffb36a 0%, #e07210 50%, #c05e0d 100%)', color: '#062E3C' }}
+                style={{ background: 'linear-gradient(135deg, #F3B757 0%, #D88A22 50%, #9A5E14 100%)', color: '#002D60' }}
               >
                 Book Consultation
                 <ArrowRight size={15} />
@@ -424,10 +429,10 @@ export function HeroSection() {
               {/* Glow pulse */}
               <div
                 className="absolute -inset-6 rounded-full pointer-events-none animate-pulse-glow"
-                style={{ background: 'radial-gradient(circle, rgba(224,114,16,0.3) 0%, transparent 70%)' }}
+                style={{ background: 'radial-gradient(circle, rgba(216,138,34,0.3) 0%, transparent 70%)' }}
               />
               {/* Portrait */}
-              <div className="w-full h-full rounded-full overflow-hidden border-2 border-gold-400/40 shadow-[0_0_60px_rgba(224,114,16,0.35),0_0_120px_rgba(224,114,16,0.12)]">
+              <div className="w-full h-full rounded-full overflow-hidden border-2 border-gold-400/40 shadow-[0_0_60px_rgba(216,138,34,0.35),0_0_120px_rgba(216,138,34,0.12)]">
                 <img
                   src={GURU_IMG}
                   alt="Gurudev Anand"
@@ -437,7 +442,7 @@ export function HeroSection() {
               {/* Name badge */}
               <div
                 className="absolute -bottom-8 left-1/2 max-w-[calc(100vw-2rem)] -translate-x-1/2 rounded-full border border-gold-400/30 px-3 py-1.5 text-center backdrop-blur-md sm:max-w-none sm:whitespace-nowrap sm:px-4"
-                style={{ background: 'rgba(6,46,60,0.85)' }}
+                style={{ background: 'rgba(0,45,96,0.85)' }}
               >
                 <span className="font-cinzel text-[10px] font-bold text-gold-300 tracking-widest uppercase">
                   Gurudev Anand

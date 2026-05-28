@@ -116,7 +116,7 @@ function ZodiacCell({
       style={{ ['--z-float-delay' as string]: `${floatDelay}s` }}
     >
       <div
-        className="relative z-10 flex h-[4.25rem] w-[4.25rem] items-center justify-center md:h-[5.25rem] md:w-[5.25rem] rounded-full border border-warm-300 bg-gradient-to-b from-white/[0.07] to-white/[0.02] shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_0_0_1px_rgba(0,0,0,0.35)] outline-none transition-[transform,box-shadow,filter,border-color] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform focus-visible:ring-2 focus-visible:ring-cta-400/60 group-hover:z-20 group-hover:scale-[1.12] group-hover:border-cta-400/35 group-hover:shadow-[0_0_0_1px_rgba(21,152,188,0.25),0_18px_50px_-12px_rgba(0,0,0,0.65),0_0_40px_rgba(21,152,188,0.22)] motion-reduce:transition-none"
+        className="relative z-10 flex h-[4.25rem] w-[4.25rem] items-center justify-center md:h-[5.25rem] md:w-[5.25rem] rounded-full border border-warm-300 bg-gradient-to-b from-white/[0.07] to-white/[0.02] shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_0_0_1px_rgba(0,0,0,0.35)] outline-none transition-[transform,box-shadow,filter,border-color] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform focus-visible:ring-2 focus-visible:ring-cta-400/60 group-hover:z-20 group-hover:scale-[1.12] group-hover:border-cta-400/35 group-hover:shadow-[0_0_0_1px_rgba(0,94,168,0.25),0_18px_50px_-12px_rgba(0,0,0,0.65),0_0_40px_rgba(0,94,168,0.22)] motion-reduce:transition-none"
         tabIndex={interactive ? 0 : -1}
         role={interactive ? 'img' : undefined}
         aria-labelledby={interactive ? tipId : undefined}
@@ -127,10 +127,10 @@ function ZodiacCell({
         />
         <span
           aria-hidden
-          className="pointer-events-none absolute -inset-6 rounded-full bg-[radial-gradient(circle_at_50%_40%,rgba(21,152,188,0.35),transparent_62%)] opacity-0 blur-xl transition-opacity duration-500 group-hover:opacity-100"
+          className="pointer-events-none absolute -inset-6 rounded-full bg-[radial-gradient(circle_at_50%_40%,rgba(0,94,168,0.35),transparent_62%)] opacity-0 blur-xl transition-opacity duration-500 group-hover:opacity-100"
         />
         <span
-          className="relative zodiac-icon-float inline-flex select-none bg-gradient-to-b from-[#ffe4bc] from-25% via-[#e8761c] to-[#a84c0e] bg-clip-text font-serif text-[2.1rem] leading-none text-transparent drop-shadow-[0_0_14px_rgba(232,118,28,0.5)] transition-[transform,filter] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] md:text-[2.65rem] group-hover:scale-[1.06] group-hover:drop-shadow-[0_0_22px_rgba(21,152,188,0.55),0_0_36px_rgba(232,118,28,0.4)] motion-reduce:group-hover:scale-100"
+          className="relative zodiac-icon-float inline-flex select-none bg-gradient-to-b from-[#FBE7C7] from-25% via-[#D88A22] to-[#9A5E14] bg-clip-text font-serif text-[2.1rem] leading-none text-transparent drop-shadow-[0_0_14px_rgba(216,138,34,0.5)] transition-[transform,filter] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] md:text-[2.65rem] group-hover:scale-[1.06] group-hover:drop-shadow-[0_0_22px_rgba(0,94,168,0.55),0_0_36px_rgba(216,138,34,0.4)] motion-reduce:group-hover:scale-100"
           style={{ fontFamily: '"Cormorant Garamond", "Apple Symbols", "Segoe UI Symbol", serif' }}
         >
           {sign.glyph}
@@ -177,18 +177,27 @@ function MarqueeStrip({ stripId }: { stripId: number }) {
 export function ZodiacMarqueeSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const [fineMotion, setFineMotion] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const update = () => setFineMotion(!mq.matches);
+    const reducedMq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const mobileMq = window.matchMedia('(max-width: 639px)');
+    const update = () => {
+      setFineMotion(!reducedMq.matches);
+      setIsMobile(mobileMq.matches);
+    };
     update();
-    mq.addEventListener('change', update);
-    return () => mq.removeEventListener('change', update);
+    reducedMq.addEventListener('change', update);
+    mobileMq.addEventListener('change', update);
+    return () => {
+      reducedMq.removeEventListener('change', update);
+      mobileMq.removeEventListener('change', update);
+    };
   }, []);
 
   useEffect(() => {
     const el = sectionRef.current;
-    if (!el || !fineMotion) return;
+    if (!el || !fineMotion || isMobile) return;
 
     let raf = 0;
     const onMove = (e: PointerEvent) => {
@@ -214,7 +223,7 @@ export function ZodiacMarqueeSection() {
       el.removeEventListener('pointermove', onMove);
       el.removeEventListener('pointerleave', reset);
     };
-  }, [fineMotion]);
+  }, [fineMotion, isMobile]);
 
   return (
     <section
@@ -239,13 +248,13 @@ export function ZodiacMarqueeSection() {
             : undefined,
         }}
       >
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_120%_80%_at_50%_-10%,rgba(11,120,150,0.16),transparent_55%),radial-gradient(ellipse_90%_60%_at_100%_50%,rgba(232,118,28,0.09),transparent_45%),radial-gradient(ellipse_80%_50%_at_0%_60%,rgba(6,74,94,0.22),transparent_50%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_120%_80%_at_50%_-10%,rgba(0,94,168,0.16),transparent_55%),radial-gradient(ellipse_90%_60%_at_100%_50%,rgba(216,138,34,0.09),transparent_45%),radial-gradient(ellipse_80%_50%_at_0%_60%,rgba(0,45,96,0.22),transparent_50%)]" />
         <div
-          className="absolute -left-1/4 top-1/2 h-[120%] w-[80%] -translate-y-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(21,152,188,0.12),transparent)] blur-3xl motion-safe:animate-zodiac-nebula-drift"
+          className="absolute -left-1/4 top-1/2 h-[120%] w-[80%] -translate-y-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(0,94,168,0.12),transparent)] blur-3xl motion-safe:animate-zodiac-nebula-drift"
           aria-hidden
         />
         <div
-          className="absolute -right-1/4 top-0 h-[85%] w-[70%] rounded-full bg-[radial-gradient(closest-side,rgba(232,118,28,0.1),transparent)] blur-3xl motion-safe:animate-zodiac-nebula-drift-reverse"
+          className="absolute -right-1/4 top-0 h-[85%] w-[70%] rounded-full bg-[radial-gradient(closest-side,rgba(216,138,34,0.1),transparent)] blur-3xl motion-safe:animate-zodiac-nebula-drift-reverse"
           aria-hidden
         />
         <div
@@ -267,11 +276,15 @@ export function ZodiacMarqueeSection() {
       />
 
       <div
-        className="relative z-[2] w-full [mask-image:linear-gradient(90deg,transparent,black_3%,black_97%,transparent)] [-webkit-mask-image:linear-gradient(90deg,transparent,black_3%,black_97%,transparent)]"
-        style={{ perspective: '1400px' }}
+        className="relative z-[2] w-full overflow-hidden [mask-image:linear-gradient(90deg,transparent,black_4%,black_96%,transparent)] [-webkit-mask-image:linear-gradient(90deg,transparent,black_4%,black_96%,transparent)]"
+        style={isMobile ? undefined : { perspective: '1400px' }}
       >
         <div
-          className={`flex flex-nowrap px-2 sm:px-3 md:px-4 ${fineMotion ? 'w-max min-w-full zodiac-marquee-track' : 'mx-auto w-max justify-center'}`}
+          className={`flex flex-nowrap px-2 sm:px-3 md:px-4 ${
+            fineMotion
+              ? `w-max zodiac-marquee-track${isMobile ? ' zodiac-marquee-track--mobile' : ''}`
+              : 'mx-auto w-max justify-center'
+          }`}
         >
           <MarqueeStrip stripId={0} />
           {fineMotion ? <MarqueeStrip stripId={1} /> : null}

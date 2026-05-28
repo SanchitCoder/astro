@@ -4,7 +4,8 @@ export type FormSource =
   | 'connect_modal'
   | 'contact_form'
   | 'consultation_form'
-  | 'kundli_calculator';
+  | 'kundli_calculator'
+  | 'webinar_registration';
 
 export type WebhookPayload = {
   source: FormSource;

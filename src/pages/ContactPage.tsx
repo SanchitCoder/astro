@@ -43,8 +43,8 @@ export function ContactPage() {
       {/* Hero */}
       <section className="relative overflow-hidden bg-warm-50 pt-14 pb-16 md:pt-20 md:pb-24">
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_60%_at_60%_20%,rgba(11,120,150,0.18),transparent_60%)]" />
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_50%_40%_at_10%_80%,rgba(6,74,94,0.2),transparent_55%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_60%_at_60%_20%,rgba(0,94,168,0.18),transparent_60%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_50%_40%_at_10%_80%,rgba(0,45,96,0.2),transparent_55%)]" />
         </div>
         <div className="relative max-w-7xl mx-auto px-4 lg:px-8">
           <motion.div
@@ -193,7 +193,7 @@ export function ContactPage() {
             </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
               <Link
-                to="/consultation#book"
+                to="/webinar"
                 className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-gradient-to-r from-gold-300 via-gold-400 to-gold-600 text-cosmic-950 font-bold text-sm uppercase tracking-wide btn-shimmer hover:shadow-gold-glow transition-shadow duration-300"
               >
                 Book a consultation

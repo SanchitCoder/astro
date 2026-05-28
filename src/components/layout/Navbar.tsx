@@ -1,5 +1,5 @@
-﻿import { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+﻿import { useEffect, useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Sparkles, ArrowRight, Menu, X, Phone } from 'lucide-react';
 import { PHONE, PHONE_TEL } from '../../lib/constants';
@@ -8,20 +8,19 @@ const LINKS = [
   { label: 'Home',     to: '/', hash: '#home' },
   { label: 'About',   to: '/', hash: '#about' },
   { label: 'Services', to: '/', hash: '#services' },
-  { label: 'Consultation', to: '/consultation' },
   { label: 'Articles', to: '/', hash: '#knowledge' },
   { label: 'Contact',  to: '/contact' },
 ];
 
 function NavItem({ to, hash, label, onClick }: { to: string; hash?: string; label: string; onClick?: () => void }) {
   const location = useLocation();
-  const href = hash ? `${to}${hash}` : to;
-  const isPageRoute = to === '/contact' || to === '/consultation';
+  const navigate = useNavigate();
+  const isPageRoute = to === '/contact';
   const isActive = isPageRoute
     ? location.pathname === to
     : location.pathname === '/' && hash && location.hash === hash;
 
-  const cls = `relative text-[11px] font-bold uppercase tracking-[0.15em] transition-colors duration-200 py-1 group ${
+  const cls = `relative block w-full text-left text-[11px] font-bold uppercase tracking-[0.15em] transition-colors duration-200 py-1 group md:inline md:w-auto ${
     isActive ? 'text-gold-300' : 'text-white/95 hover:text-gold-300'
   }`;
 
@@ -32,21 +31,50 @@ function NavItem({ to, hash, label, onClick }: { to: string; hash?: string; labe
     </>
   );
 
+  const handleHashNav = (e: React.MouseEvent) => {
+    if (!hash) return;
+    e.preventDefault();
+    onClick?.();
+    const id = hash.replace('#', '');
+    if (location.pathname !== '/') {
+      navigate({ pathname: '/', hash: id });
+      return;
+    }
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+    window.history.replaceState(null, '', hash);
+  };
+
   if (isPageRoute) {
     return <Link to={to} className={cls} onClick={onClick}>{inner}</Link>;
   }
-  return <a href={href} className={cls} onClick={onClick}>{inner}</a>;
+  if (hash) {
+    return (
+      <a href={hash ? `${to}${hash}` : to} className={cls} onClick={handleHashNav}>
+        {inner}
+      </a>
+    );
+  }
+  return <Link to={to} className={cls} onClick={onClick}>{inner}</Link>;
 }
 
 export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
+
+  useEffect(() => {
+    if (!mobileOpen) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [mobileOpen]);
 
   return (
     <motion.header
       initial={{ y: -8, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.5 }}
-      className="sticky top-0 z-[60] overflow-x-clip bg-nebula-600 shadow-[0_2px_20px_rgba(12,95,120,0.35)]"
+      className="sticky top-0 z-[60] overflow-visible bg-nebula-600 shadow-[0_2px_20px_rgba(0,94,168,0.35)] font-montserrat"
     >
       {/* Top info bar */}
       <div className="hidden md:flex items-center justify-between border-b border-white/10 bg-nebula-700/60 px-8 py-1.5 text-[10px] text-white/90">
@@ -77,7 +105,7 @@ export function Navbar() {
 
         {/* Desktop CTA */}
         <Link
-          to="/consultation"
+          to="/contact"
           className="hidden md:inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-gold-400 to-gold-500 text-ink-900 text-xs font-bold uppercase tracking-wide btn-shimmer hover:shadow-gold-glow transition-shadow duration-300 shrink-0"
         >
           Consult Now
@@ -98,11 +126,11 @@ export function Navbar() {
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.25 }}
-            className="md:hidden overflow-hidden bg-nebula-700 border-t border-white/10 px-4 pt-4 pb-5 space-y-1"
+            initial={{ opacity: 0, y: -12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -12 }}
+            transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+            className="md:hidden max-h-[min(70dvh,100svh)] overflow-y-auto overscroll-contain bg-nebula-700 border-t border-white/10 px-4 pt-4 pb-5 space-y-1 shadow-lg"
           >
             {LINKS.map((l) => (
               <div key={l.label} className="border-b border-white/10 py-2.5 last:border-0">
@@ -118,7 +146,7 @@ export function Navbar() {
               {PHONE}
             </a>
             <Link
-              to="/consultation"
+              to="/contact"
               onClick={() => setMobileOpen(false)}
               className="mt-4 block w-full rounded-full bg-gradient-to-r from-gold-400 to-gold-500 py-3 text-center text-sm font-bold uppercase tracking-wide text-ink-900"
             >

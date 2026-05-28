@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { TextReveal } from '../ui/TextReveal';
 import { ArrowRight } from 'lucide-react';
 
 const IMG_JYOTISH = new URL('../../assets/sciences/jyotish.jpeg', import.meta.url).href;
@@ -12,9 +13,9 @@ const SCIENCES = [
     title: 'Vedic Astrology',
     subtitle: 'The Science of Planetary Time',
     body: 'Over five thousand years of observational astronomy distilled into a system that maps planetary cycles to human experience — career, relationships, health, and fate. Gurudev Anand uses this framework to read what is unfolding and why.',
-    accent: '#e07210',
+    accent: '#D88A22',
     border: 'border-gold-400/20',
-    bg: 'from-[#FFF8F2] to-[#FFF0E0]',
+    bg: 'from-[#F8F9FB] to-[#EFF1F5]',
     image: IMG_JYOTISH,
     imageAlt: 'Zodiac wheel with twelve signs and planetary positions',
     keywords: ['Kundali Reading', 'Dasha Analysis', 'Transits & Timing'],
@@ -26,9 +27,9 @@ const SCIENCES = [
     title: 'Sacred Space Design',
     subtitle: 'The Science of Living Spaces',
     body: 'Vastu aligns the geometry of your living and working space with the cardinal directions and elemental forces. When space is in order, energy flows. Gurudev Anand applies Vastu principles tailored to your personal chart.',
-    accent: '#0b7896',
+    accent: '#005EA8',
     border: 'border-nebula-500/20',
-    bg: 'from-[#F2FAFF] to-[#E8F6FF]',
+    bg: 'from-[#F0F4FB] to-[#E6EEF8]',
     image: IMG_VASTU,
     imageAlt: 'Vastu Shastra nine-zone directional chart',
     keywords: ['Home Vastu', 'Office Vastu', 'Remedial Corrections'],
@@ -116,7 +117,7 @@ export function VedicSciencesSection({ onConnect }: { onConnect?: () => void }) 
   return (
     <section id="sciences" className="relative overflow-hidden bg-warm-100 py-20 md:py-28">
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_0%,rgba(12,95,120,0.05),transparent_60%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_0%,rgba(0,94,168,0.05),transparent_60%)]" />
       </div>
 
       <div className="relative mx-auto max-w-7xl px-4 lg:px-8">
@@ -128,10 +129,10 @@ export function VedicSciencesSection({ onConnect }: { onConnect?: () => void }) 
           className="mx-auto mb-16 max-w-2xl text-center"
         >
           <span className="section-eyebrow mb-4 block">Three Ancient Sciences</span>
-          <h2 className="section-heading">
+          <TextReveal as="h2" className="section-heading">
             The wisdom{' '}
             <span className="text-gradient-gold italic font-light">behind the consultation</span>
-          </h2>
+          </TextReveal>
           <p className="mt-4 text-sm leading-relaxed text-ink-500 md:text-base">
             Gurudev Anand draws from three interlocking Vedic disciplines — each complete, each powerful, most
             transformative together.

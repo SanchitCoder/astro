@@ -42,7 +42,7 @@ export function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
       <div className="mt-4 flex items-center gap-3 pt-4 border-t border-white/[0.07]">
         <div
           className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full font-cinzel text-sm font-bold text-white"
-          style={{ background: 'linear-gradient(135deg, #062E3C, #0b7896)' }}
+          style={{ background: 'linear-gradient(135deg, #002D60, #005EA8)' }}
         >
           {testimonial.name[0]}
         </div>

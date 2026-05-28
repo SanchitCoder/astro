@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { TextReveal } from '../ui/TextReveal';
 import { motion } from 'framer-motion';
 import { User, Calendar, Clock, MapPin, ChevronRight, Star, Loader2 } from 'lucide-react';
 import { submitToN8nWebhook, WebhookSubmitError } from '../../lib/submitToWebhook';
@@ -19,13 +20,13 @@ function SpinningChart() {
     <svg viewBox="0 0 320 320" className="h-full w-full" fill="none" aria-hidden>
       <defs>
         <radialGradient id="kcGlow" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stopColor="#e07210" stopOpacity="0.2" />
+          <stop offset="0%" stopColor="#D88A22" stopOpacity="0.2" />
           <stop offset="100%" stopColor="transparent" stopOpacity="0" />
         </radialGradient>
       </defs>
-      <circle cx={cx} cy={cy} r={R} fill="url(#kcGlow)" stroke="#e07210" strokeWidth="0.6" opacity="0.3" />
-      <circle cx={cx} cy={cy} r={r} fill="none" stroke="#4DC3E0" strokeWidth="0.5" opacity="0.25" />
-      <circle cx={cx} cy={cy} r={48} fill="none" stroke="#e07210" strokeWidth="0.8" opacity="0.2" strokeDasharray="3 5" />
+      <circle cx={cx} cy={cy} r={R} fill="url(#kcGlow)" stroke="#D88A22" strokeWidth="0.6" opacity="0.3" />
+      <circle cx={cx} cy={cy} r={r} fill="none" stroke="#3387D3" strokeWidth="0.5" opacity="0.25" />
+      <circle cx={cx} cy={cy} r={48} fill="none" stroke="#D88A22" strokeWidth="0.8" opacity="0.2" strokeDasharray="3 5" />
       {houses.map((i) => {
         const a = (i * 30 * Math.PI) / 180;
         return (
@@ -35,14 +36,14 @@ function SpinningChart() {
             y1={cy + r * Math.sin(a)}
             x2={cx + R * Math.cos(a)}
             y2={cy + R * Math.sin(a)}
-            stroke="#e07210"
+            stroke="#D88A22"
             strokeWidth="0.4"
             opacity="0.2"
           />
         );
       })}
       {[
-        { angle: 20, g: '☉', c: '#ffb36a' },
+        { angle: 20, g: '☉', c: '#F3B757' },
         { angle: 80, g: '☽', c: '#c7d2fe' },
         { angle: 140, g: '♂', c: '#fca5a5' },
         { angle: 200, g: '♃', c: '#86efac' },
@@ -63,11 +64,11 @@ function SpinningChart() {
       })}
       {Array.from({ length: 8 }, (_, i) => {
         const a = (i * 45 * Math.PI) / 180;
-        return <circle key={i} cx={cx + 56 * Math.cos(a)} cy={cy + 56 * Math.sin(a)} r="2.5" fill="#e07210" opacity="0.3" />;
+        return <circle key={i} cx={cx + 56 * Math.cos(a)} cy={cy + 56 * Math.sin(a)} r="2.5" fill="#D88A22" opacity="0.3" />;
       })}
-      <circle cx={cx} cy={cy} r="20" fill="#e07210" opacity="0.08" />
-      <circle cx={cx} cy={cy} r="8" fill="#e07210" opacity="0.2" />
-      <circle cx={cx} cy={cy} r="3" fill="#ffb36a" opacity="0.9" />
+      <circle cx={cx} cy={cy} r="20" fill="#D88A22" opacity="0.08" />
+      <circle cx={cx} cy={cy} r="8" fill="#D88A22" opacity="0.2" />
+      <circle cx={cx} cy={cy} r="3" fill="#F3B757" opacity="0.9" />
     </svg>
   );
 }
@@ -106,8 +107,8 @@ export function KundliCalculatorSection() {
       className="relative overflow-hidden bg-gradient-to-b from-white via-warm-50 to-warm-100 py-16 md:py-28"
     >
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute top-0 right-0 h-[420px] w-[420px] rounded-full bg-[radial-gradient(circle,rgba(224,114,16,0.08),transparent_70%)] blur-3xl" />
-        <div className="absolute bottom-0 left-0 h-[360px] w-[360px] rounded-full bg-[radial-gradient(circle,rgba(12,95,120,0.06),transparent_70%)] blur-3xl" />
+        <div className="absolute top-0 right-0 h-[420px] w-[420px] rounded-full bg-[radial-gradient(circle,rgba(216,138,34,0.08),transparent_70%)] blur-3xl" />
+        <div className="absolute bottom-0 left-0 h-[360px] w-[360px] rounded-full bg-[radial-gradient(circle,rgba(0,94,168,0.06),transparent_70%)] blur-3xl" />
       </div>
 
       <div className="relative mx-auto max-w-7xl px-4 lg:px-8">
@@ -122,7 +123,7 @@ export function KundliCalculatorSection() {
           >
             <form
               onSubmit={handleSubmit}
-              className="space-y-4 rounded-3xl border border-warm-200 bg-white p-6 shadow-[0_20px_50px_-12px_rgba(12,95,120,0.12),0_4px_16px_rgba(0,0,0,0.04)] ring-1 ring-warm-100 md:p-9"
+              className="space-y-4 rounded-3xl border border-warm-200 bg-white p-6 shadow-[0_20px_50px_-12px_rgba(0,94,168,0.12),0_4px_16px_rgba(0,0,0,0.04)] ring-1 ring-warm-100 md:p-9"
             >
               <div className="mb-5 border-b border-warm-100 pb-5">
                 <div className="mb-1 flex items-center gap-2">
@@ -163,7 +164,7 @@ export function KundliCalculatorSection() {
                 disabled={loading}
                 whileHover={{ scale: loading ? 1 : 1.02 }}
                 whileTap={{ scale: loading ? 1 : 0.98 }}
-                className="btn-shimmer mt-1 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-gold-400 via-gold-500 to-gold-600 py-4 text-sm font-bold uppercase tracking-wide text-white shadow-[0_6px_24px_rgba(224,114,16,0.35)] transition-all duration-300 hover:shadow-[0_8px_28px_rgba(224,114,16,0.45)] disabled:opacity-60"
+                className="btn-shimmer mt-1 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-gold-400 via-gold-500 to-gold-600 py-4 text-sm font-bold uppercase tracking-wide text-white shadow-[0_6px_24px_rgba(216,138,34,0.35)] transition-all duration-300 hover:shadow-[0_8px_28px_rgba(216,138,34,0.45)] disabled:opacity-60"
               >
                 {loading && <Loader2 className="animate-spin" size={16} />}
                 {loading ? 'Sending…' : submitted ? '✦ Chart Sent!' : 'Generate Kundali'}
@@ -191,7 +192,7 @@ export function KundliCalculatorSection() {
             className="order-2 lg:order-1"
           >
             <div className="relative mx-auto mb-8 aspect-square w-full max-w-[220px] sm:max-w-[260px] lg:mx-0 lg:mb-10 lg:max-w-[280px]">
-              <div className="absolute inset-0 rounded-full bg-[radial-gradient(circle,rgba(224,114,16,0.12),transparent_65%)] blur-2xl" />
+              <div className="absolute inset-0 rounded-full bg-[radial-gradient(circle,rgba(216,138,34,0.12),transparent_65%)] blur-2xl" />
               <motion.div
                 animate={{ rotate: 360 }}
                 transition={{ duration: 90, repeat: Infinity, ease: 'linear' }}
@@ -202,9 +203,9 @@ export function KundliCalculatorSection() {
             </div>
 
             <span className="section-eyebrow mb-3 block">Free Kundali</span>
-            <h2 className="section-heading mb-3">
+            <TextReveal as="h2" className="section-heading mb-3">
               Know what your <span className="text-gradient-gold italic font-light">birth chart</span> reveals
-            </h2>
+            </TextReveal>
             <p className="mb-6 text-sm leading-relaxed text-ink-600 md:text-base">
               Enter your birth details and receive a personalised Vedic chart — the same foundation Gurudev Anand uses in every consultation.
             </p>
