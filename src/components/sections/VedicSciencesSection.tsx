@@ -87,7 +87,7 @@ function ScienceContent({ s, onConnect }: { s: (typeof SCIENCES)[number]; onConn
       <p className="mb-4 text-sm font-semibold uppercase tracking-wide" style={{ color: s.accent }}>
         {s.subtitle}
       </p>
-      <p className="mb-6 text-sm leading-relaxed text-ink-600 md:text-base">{s.body}</p>
+      <p className="mb-6 text-sm leading-relaxed text-ink-700 md:text-base">{s.body}</p>
 
       <div className="mb-7 flex flex-wrap gap-2">
         {s.keywords.map((k) => (
@@ -133,7 +133,7 @@ export function VedicSciencesSection({ onConnect }: { onConnect?: () => void }) 
             The wisdom{' '}
             <span className="text-gradient-gold italic font-light">behind the consultation</span>
           </TextReveal>
-          <p className="mt-4 text-sm leading-relaxed text-ink-500 md:text-base">
+          <p className="mt-4 text-sm leading-relaxed text-ink-700 md:text-base">
             Gurudev Anand draws from three interlocking Vedic disciplines — each complete, each powerful, most
             transformative together.
           </p>

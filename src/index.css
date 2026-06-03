@@ -11,25 +11,29 @@
   body {
     @apply font-sans antialiased;
     background-color: #F8F9FB;
-    color: #1F2937;
+    color: #2D3748;
     overflow-x: clip;
     -webkit-text-size-adjust: 100%;
+    font-weight: 400;
+    letter-spacing: 0.012em;
   }
 
   h1, h2, h3, h4 {
-    @apply font-serif font-bold;
-    color: #1F2937;
-    line-height: 1.15;
+    @apply font-serif font-semibold;
+    color: #1A202C;
+    line-height: 1.12;
+    letter-spacing: 0.018em;
   }
 
   p {
-    line-height: 1.7;
-    color: #4B5563;
+    line-height: 1.78;
+    color: #4A5568;
+    letter-spacing: 0.008em;
   }
 
   input, textarea, select {
     background-color: #FFFFFF;
-    color: #1F2937;
+    color: #1A202C;
   }
 
   input::placeholder, textarea::placeholder {
@@ -51,7 +55,7 @@
   }
   .contact-input option {
     background: #FFFFFF;
-    color: #1F2937;
+    color: #1A202C;
   }
 }
 
@@ -174,12 +178,12 @@
 
   /* ── Section headings ── */
   .section-heading {
-    @apply font-serif text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight;
-    color: #1F2937;
+    @apply font-serif text-3xl md:text-4xl lg:text-5xl font-semibold tracking-[0.018em];
+    color: #1A202C;
   }
 
   .section-eyebrow {
-    @apply inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em];
+    @apply inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.22em];
     color: #D88A22;
   }
 

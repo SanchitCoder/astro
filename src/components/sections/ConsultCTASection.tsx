@@ -54,7 +54,7 @@ export function ConsultCTASection() {
             One call can{' '}
             <span className="text-gradient-gold italic font-light">change everything</span>
           </TextReveal>
-          <p className="mx-auto mt-5 max-w-xl text-sm leading-relaxed text-ink-500 md:text-base">
+          <p className="mx-auto mt-5 max-w-xl text-sm leading-relaxed text-ink-700 md:text-base">
             Gurudev Anand reads your chart personally — no assistants, no templates. Clarity you can act on.
           </p>
         </motion.div>
@@ -119,7 +119,7 @@ export function ConsultCTASection() {
           {TRUST.map((t) => (
             <div key={t.label} className="text-center">
               <div className="font-cinzel text-2xl font-bold text-gradient-gold">{t.value}</div>
-              <div className="mt-1 text-[10px] font-bold uppercase tracking-wide text-ink-500">{t.label}</div>
+              <div className="mt-1 text-[10px] font-bold uppercase tracking-wide text-ink-600">{t.label}</div>
             </div>
           ))}
         </motion.div>

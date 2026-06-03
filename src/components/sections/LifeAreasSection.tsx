@@ -216,7 +216,7 @@ export function LifeAreasSection({ onConnect }: { onConnect?: () => void }) {
             Every life area has a{' '}
             <span className="text-gradient-gold italic font-light">planetary signature</span>
           </TextReveal>
-          <p className="mt-4 text-ink-500 text-sm md:text-base leading-relaxed">
+          <p className="mt-4 text-ink-700 text-sm md:text-base leading-relaxed">
             Vedic astrology maps each dimension of human life to a planet and a house. Understanding yours changes everything.
           </p>
         </motion.div>

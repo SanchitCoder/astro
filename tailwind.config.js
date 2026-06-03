@@ -4,7 +4,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Poppins', 'system-ui', 'sans-serif'],
+        sans: ['Raleway', 'system-ui', 'sans-serif'],
         serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
         montserrat: ['Montserrat', 'system-ui', 'sans-serif'],
         cinzel: ['Cinzel', 'serif'],
@@ -62,13 +62,13 @@ export default {
         },
         /* Dark text scale */
         ink: {
-          900: '#1F2937',   /* DARK TEXT */
-          800: '#374151',
-          700: '#4B5563',
-          600: '#6B7280',
-          500: '#9CA3AF',
-          400: '#D1D5DB',
-          300: '#E5E7EB',
+          900: '#1A202C',   /* DARK TEXT — deeper, more authority */
+          800: '#2D3748',
+          700: '#4A5568',
+          600: '#5A6475',   /* medium secondary text */
+          500: '#6B7280',   /* subtext — shifted darker for readability */
+          400: '#9CA3AF',   /* subtle labels / placeholders */
+          300: '#D1D5DB',
           200: '#F3F4F6',
         },
         /* Red accent */

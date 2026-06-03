@@ -73,7 +73,7 @@ function ServiceCard({ item, index }: { item: typeof ITEMS[0]; index: number }) 
           <span className="font-cinzel text-[10px] font-bold text-ink-300">{item.num}</span>
         </div>
         <h3 className="mb-2 font-cinzel text-sm font-bold uppercase tracking-wide text-ink-900">{item.title}</h3>
-        <p className="flex-1 text-sm leading-relaxed text-ink-500">{item.desc}</p>
+        <p className="flex-1 text-sm leading-relaxed text-ink-600">{item.desc}</p>
 
         <div
           className="absolute inset-x-0 bottom-0 h-px opacity-0 transition-opacity duration-500 group-hover:opacity-100"
@@ -108,7 +108,7 @@ export function WhatYouLearnSection() {
             How Gurudev Anand{' '}
             <span className="text-gradient-gold italic font-light">guides you</span>
           </TextReveal>
-          <p className="mt-4 text-sm leading-relaxed text-ink-500 md:text-base">
+          <p className="mt-4 text-sm leading-relaxed text-ink-700 md:text-base">
             Every session delivered personally — tailored to your birth details and the questions you bring.
           </p>
         </motion.div>
