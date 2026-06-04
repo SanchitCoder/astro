@@ -8,6 +8,14 @@ export const EMAIL = 'info@gurudev-anand.com';
 export const EMAIL_MAILTO = `mailto:${EMAIL}`;
 export const WHATSAPP_URL = 'https://wa.me/919876344400';
 
+/** Site-wide section backgrounds & CTA gradients */
+export const THEME_DARK_BG =
+  'linear-gradient(160deg, #001D48 0%, #002D60 40%, #003D78 70%, #001530 100%)';
+export const THEME_GOLD_GRD =
+  'linear-gradient(135deg, #F3B757 0%, #D88A22 50%, #9A5E14 100%)';
+export const THEME_DARK_STRIP_BG =
+  'linear-gradient(90deg, #001530 0%, #002D60 50%, #001530 100%)';
+
 /** Hero / primary speaker — from project `image.png` */
 export const GURU_IMG = '/guru-hero.png';
 

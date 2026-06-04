@@ -4,12 +4,20 @@ import { ScrollToTop } from './components/layout/ScrollToTop';
 import { HomePage } from './pages/HomePage';
 import { ContactPage } from './pages/ContactPage';
 import { WebinarPage } from './pages/WebinarPage';
+import { MegaWebinarPage } from './pages/MegaWebinarPage';
+import { MasterclassPage } from './pages/MasterclassPage';
+import { ConsultationLandingPage } from './pages/ConsultationLandingPage';
 
 function App() {
   return (
     <BrowserRouter>
       <ScrollToTop />
       <Routes>
+        {/* Standalone landing pages — no site navbar/footer */}
+        <Route path="mega-webinar"       element={<MegaWebinarPage />} />
+        <Route path="masterclass"        element={<MasterclassPage />} />
+        <Route path="book-consultation"  element={<ConsultationLandingPage />} />
+
         <Route element={<SiteLayout />}>
           <Route index element={<HomePage />} />
           <Route path="contact" element={<ContactPage />} />

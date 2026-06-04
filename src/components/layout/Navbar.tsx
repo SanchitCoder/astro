@@ -5,17 +5,18 @@ import { Sparkles, ArrowRight, Menu, X, Phone } from 'lucide-react';
 import { PHONE, PHONE_TEL } from '../../lib/constants';
 
 const LINKS = [
-  { label: 'Home',     to: '/', hash: '#home' },
-  { label: 'About',   to: '/', hash: '#about' },
-  { label: 'Services', to: '/', hash: '#services' },
-  { label: 'Articles', to: '/', hash: '#knowledge' },
-  { label: 'Contact',  to: '/contact' },
+  { label: 'Home',         to: '/',                 hash: '#home'      },
+  { label: 'About',        to: '/',                 hash: '#about'     },
+  { label: 'Services',     to: '/',                 hash: '#services'  },
+  { label: 'Consultation', to: '/book-consultation'                    },
+  { label: 'Articles',     to: '/',                 hash: '#knowledge' },
+  { label: 'Contact',      to: '/contact'                              },
 ];
 
 function NavItem({ to, hash, label, onClick }: { to: string; hash?: string; label: string; onClick?: () => void }) {
   const location = useLocation();
   const navigate = useNavigate();
-  const isPageRoute = to === '/contact';
+  const isPageRoute = to === '/contact' || to === '/book-consultation';
   const isActive = isPageRoute
     ? location.pathname === to
     : location.pathname === '/' && hash && location.hash === hash;
