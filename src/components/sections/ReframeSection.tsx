@@ -3,13 +3,15 @@ import { TextReveal } from '../ui/TextReveal';
 
 const DARK_BG = 'linear-gradient(160deg, #001D48 0%, #002D60 40%, #003D78 70%, #001530 100%)';
 
+/* ︎ = Variation Selector-15: forces text (not emoji) rendering on Android/iOS */
+const T = '︎';
 const TILES = [
-  { glyph: '☉', planet: 'Sun',    title: 'Personality & Soul', desc: 'Your core identity, purpose, and the strengths that define your path.', accent: '#F3B757' },
-  { glyph: '☽', planet: 'Moon',   title: 'Mind & Emotions',   desc: 'Emotional patterns, instincts, and how you process the world within.', accent: '#c7d2fe' },
-  { glyph: '♂', planet: 'Mars',   title: 'Health & Energy',   desc: 'Vitality cycles, physical tendencies, and optimal timing for action.', accent: '#fca5a5' },
-  { glyph: '♀', planet: 'Venus',  title: 'Love & Harmony',    desc: 'Relationship patterns, compatibility, and the timing of union.', accent: '#f9a8d4' },
-  { glyph: '♃', planet: 'Jupiter','title': 'Wealth & Growth', desc: 'Expansion cycles, financial periods, and where fortune favours you.', accent: '#86efac' },
-  { glyph: '♄', planet: 'Saturn', title: 'Career & Karma',    desc: 'Discipline, timing of recognition, and the life lessons you carry.', accent: '#93c5fd' },
+  { glyph: '☉' + T, planet: 'Sun',     title: 'Personality & Soul', desc: 'Your core identity, purpose, and the strengths that define your path.', accent: '#F3B757' },
+  { glyph: '☽' + T, planet: 'Moon',    title: 'Mind & Emotions',    desc: 'Emotional patterns, instincts, and how you process the world within.', accent: '#c7d2fe' },
+  { glyph: '♂' + T, planet: 'Mars',    title: 'Health & Energy',    desc: 'Vitality cycles, physical tendencies, and optimal timing for action.', accent: '#fca5a5' },
+  { glyph: '♀' + T, planet: 'Venus',   title: 'Love & Harmony',     desc: 'Relationship patterns, compatibility, and the timing of union.', accent: '#f9a8d4' },
+  { glyph: '♃' + T, planet: 'Jupiter', title: 'Wealth & Growth',    desc: 'Expansion cycles, financial periods, and where fortune favours you.', accent: '#86efac' },
+  { glyph: '♄' + T, planet: 'Saturn',  title: 'Career & Karma',     desc: 'Discipline, timing of recognition, and the life lessons you carry.', accent: '#93c5fd' },
 ];
 
 export function ReframeSection() {

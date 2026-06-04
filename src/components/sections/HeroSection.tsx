@@ -9,29 +9,31 @@ import { GURU_IMG } from '../../lib/constants';
    Zodiac Wheel — the hero's primary visual element
 ───────────────────────────────────────────────────────────── */
 
+/* ︎ = Variation Selector-15: forces text (not emoji) rendering on Android/iOS */
+const T = '︎';
 const ZODIAC_SIGNS = [
-  { glyph: '♈', name: 'Aries' },
-  { glyph: '♉', name: 'Taurus' },
-  { glyph: '♊', name: 'Gemini' },
-  { glyph: '♋', name: 'Cancer' },
-  { glyph: '♌', name: 'Leo' },
-  { glyph: '♍', name: 'Virgo' },
-  { glyph: '♎', name: 'Libra' },
-  { glyph: '♏', name: 'Scorpio' },
-  { glyph: '♐', name: 'Sagittarius' },
-  { glyph: '♑', name: 'Capricorn' },
-  { glyph: '♒', name: 'Aquarius' },
-  { glyph: '♓', name: 'Pisces' },
+  { glyph: '♈' + T, name: 'Aries' },
+  { glyph: '♉' + T, name: 'Taurus' },
+  { glyph: '♊' + T, name: 'Gemini' },
+  { glyph: '♋' + T, name: 'Cancer' },
+  { glyph: '♌' + T, name: 'Leo' },
+  { glyph: '♍' + T, name: 'Virgo' },
+  { glyph: '♎' + T, name: 'Libra' },
+  { glyph: '♏' + T, name: 'Scorpio' },
+  { glyph: '♐' + T, name: 'Sagittarius' },
+  { glyph: '♑' + T, name: 'Capricorn' },
+  { glyph: '♒' + T, name: 'Aquarius' },
+  { glyph: '♓' + T, name: 'Pisces' },
 ];
 
 const PLANETS = [
-  { glyph: '☉', angle: 22,  r: 185, color: '#F3B757', size: 5 },
-  { glyph: '☽', angle: 65,  r: 192, color: '#c7d2fe', size: 4 },
-  { glyph: '♂', angle: 120, r: 188, color: '#fca5a5', size: 4 },
-  { glyph: '♃', angle: 190, r: 183, color: '#86efac', size: 5 },
-  { glyph: '♄', angle: 255, r: 190, color: '#93c5fd', size: 4 },
-  { glyph: '♀', angle: 310, r: 186, color: '#f9a8d4', size: 4 },
-  { glyph: '☿', angle: 350, r: 181, color: '#fde68a', size: 3.5 },
+  { glyph: '☉' + T, angle: 22,  r: 185, color: '#F3B757', size: 5 },
+  { glyph: '☽' + T, angle: 65,  r: 192, color: '#c7d2fe', size: 4 },
+  { glyph: '♂' + T, angle: 120, r: 188, color: '#fca5a5', size: 4 },
+  { glyph: '♃' + T, angle: 190, r: 183, color: '#86efac', size: 5 },
+  { glyph: '♄' + T, angle: 255, r: 190, color: '#93c5fd', size: 4 },
+  { glyph: '♀' + T, angle: 310, r: 186, color: '#f9a8d4', size: 4 },
+  { glyph: '☿' + T, angle: 350, r: 181, color: '#fde68a', size: 3.5 },
 ];
 
 const ASPECT_PAIRS = [[0, 3], [1, 4], [2, 5], [3, 6]];
@@ -224,11 +226,11 @@ const PARTICLES = [
 ];
 
 const FLOATING_GLYPHS = [
-  { glyph: '♈', x: '6%',  y: '22%', delay: 0   },
-  { glyph: '♌', x: '90%', y: '18%', delay: 1   },
-  { glyph: '♎', x: '4%',  y: '72%', delay: 2   },
-  { glyph: '♐', x: '92%', y: '68%', delay: 0.5 },
-  { glyph: '♒', x: '48%', y: '5%',  delay: 1.5 },
+  { glyph: '♈' + T, x: '6%',  y: '22%', delay: 0   },
+  { glyph: '♌' + T, x: '90%', y: '18%', delay: 1   },
+  { glyph: '♎' + T, x: '4%',  y: '72%', delay: 2   },
+  { glyph: '♐' + T, x: '92%', y: '68%', delay: 0.5 },
+  { glyph: '♒' + T, x: '48%', y: '5%',  delay: 1.5 },
 ];
 
 const itemVariants = {

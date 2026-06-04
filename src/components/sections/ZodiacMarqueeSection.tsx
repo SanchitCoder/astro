@@ -1,19 +1,21 @@
 ﻿import type { CSSProperties } from 'react';
 import { useEffect, useId, useMemo, useRef, useState } from 'react';
 
+/* \uFE0E = Variation Selector-15: forces text (not emoji) rendering on Android/iOS */
+const VS_TEXT = '\uFE0E';
 const SIGNS = [
-  { id: 'aries', name: 'Aries', glyph: '\u2648' },
-  { id: 'taurus', name: 'Taurus', glyph: '\u2649' },
-  { id: 'gemini', name: 'Gemini', glyph: '\u264A' },
-  { id: 'cancer', name: 'Cancer', glyph: '\u264B' },
-  { id: 'leo', name: 'Leo', glyph: '\u264C' },
-  { id: 'virgo', name: 'Virgo', glyph: '\u264D' },
-  { id: 'libra', name: 'Libra', glyph: '\u264E' },
-  { id: 'scorpio', name: 'Scorpio', glyph: '\u264F' },
-  { id: 'sagittarius', name: 'Sagittarius', glyph: '\u2650' },
-  { id: 'capricorn', name: 'Capricorn', glyph: '\u2651' },
-  { id: 'aquarius', name: 'Aquarius', glyph: '\u2652' },
-  { id: 'pisces', name: 'Pisces', glyph: '\u2653' },
+  { id: 'aries',       name: 'Aries',       glyph: '\u2648' + VS_TEXT },
+  { id: 'taurus',      name: 'Taurus',      glyph: '\u2649' + VS_TEXT },
+  { id: 'gemini',      name: 'Gemini',      glyph: '\u264A' + VS_TEXT },
+  { id: 'cancer',      name: 'Cancer',      glyph: '\u264B' + VS_TEXT },
+  { id: 'leo',         name: 'Leo',         glyph: '\u264C' + VS_TEXT },
+  { id: 'virgo',       name: 'Virgo',       glyph: '\u264D' + VS_TEXT },
+  { id: 'libra',       name: 'Libra',       glyph: '\u264E' + VS_TEXT },
+  { id: 'scorpio',     name: 'Scorpio',     glyph: '\u264F' + VS_TEXT },
+  { id: 'sagittarius', name: 'Sagittarius', glyph: '\u2650' + VS_TEXT },
+  { id: 'capricorn',   name: 'Capricorn',   glyph: '\u2651' + VS_TEXT },
+  { id: 'aquarius',    name: 'Aquarius',    glyph: '\u2652' + VS_TEXT },
+  { id: 'pisces',      name: 'Pisces',      glyph: '\u2653' + VS_TEXT },
 ] as const;
 
 type Sign = (typeof SIGNS)[number];

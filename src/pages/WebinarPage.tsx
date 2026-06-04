@@ -318,11 +318,11 @@ export function WebinarPage() {
 
           <div className="space-y-3">
             {[
-              { time: '11:00', dur: '10 min', title: 'Welcome & Vedic Foundations',         glyph: '☉' },
-              { time: '11:10', dur: '20 min', title: 'Reading the Blueprint of Your Chart', glyph: '♄' },
-              { time: '11:30', dur: '20 min', title: 'Dashas — The Clock of Destiny',       glyph: '☽' },
-              { time: '11:50', dur: '20 min', title: 'Love, Wealth & Career Indicators',    glyph: '♃' },
-              { time: '12:10', dur: '20 min', title: 'Live Q&A with Gurudev Anand',         glyph: '♀' },
+              { time: '11:00', dur: '10 min', title: 'Welcome & Vedic Foundations',         glyph: '☉︎' },
+              { time: '11:10', dur: '20 min', title: 'Reading the Blueprint of Your Chart', glyph: '♄︎' },
+              { time: '11:30', dur: '20 min', title: 'Dashas — The Clock of Destiny',       glyph: '☽︎' },
+              { time: '11:50', dur: '20 min', title: 'Love, Wealth & Career Indicators',    glyph: '♃︎' },
+              { time: '12:10', dur: '20 min', title: 'Live Q&A with Gurudev Anand',         glyph: '♀︎' },
             ].map((item, i) => (
               <motion.div key={item.time}
                 initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, margin: '-30px' }}

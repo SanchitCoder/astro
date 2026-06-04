@@ -5,9 +5,9 @@ import { User, Calendar, Clock, MapPin, ChevronRight, Star, Loader2 } from 'luci
 import { submitToN8nWebhook, WebhookSubmitError } from '../../lib/submitToWebhook';
 
 const REVEALS = [
-  { glyph: '☉', label: 'Ascendant, moon sign & all planetary positions' },
-  { glyph: '♄', label: 'Active dasha periods shaping your life right now' },
-  { glyph: '♃', label: 'Key houses — career, relationships, wealth, health' },
+  { glyph: '☉︎', label: 'Ascendant, moon sign & all planetary positions' },
+  { glyph: '♄︎', label: 'Active dasha periods shaping your life right now' },
+  { glyph: '♃︎', label: 'Key houses — career, relationships, wealth, health' },
 ];
 
 const KUNDLI_INPUT =

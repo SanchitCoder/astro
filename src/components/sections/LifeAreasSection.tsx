@@ -3,9 +3,11 @@ import { TextReveal } from '../ui/TextReveal';
 import { ArrowRight } from 'lucide-react';
 import type { MouseEvent as ReactMouseEvent } from 'react';
 
+/* ︎ = Variation Selector-15: forces text (not emoji) rendering on Android/iOS */
+const T = '︎';
 const AREAS = [
   {
-    glyph: '♄',
+    glyph: '♄' + T,
     planet: 'Saturn',
     title: 'Career & Purpose',
     body: 'Your 10th house and Saturn cycles govern ambition, recognition, and the precise window for your professional breakthrough.',
@@ -18,7 +20,7 @@ const AREAS = [
     ringColor2: 'rgba(51,135,211,0.06)',
   },
   {
-    glyph: '♀',
+    glyph: '♀' + T,
     planet: 'Venus',
     title: 'Love & Marriage',
     body: 'Venus transits, the 7th house, and navamsa compatibility — read together to reveal the timing and nature of your union.',
@@ -31,7 +33,7 @@ const AREAS = [
     ringColor2: 'rgba(251,113,133,0.06)',
   },
   {
-    glyph: '♂',
+    glyph: '♂' + T,
     planet: 'Mars',
     title: 'Health & Vitality',
     body: 'Classical Vedic tradition maps bodily tendencies to planetary positions — a precise map of what to watch and when.',
@@ -44,7 +46,7 @@ const AREAS = [
     ringColor2: 'rgba(52,211,153,0.06)',
   },
   {
-    glyph: '♃',
+    glyph: '♃' + T,
     planet: 'Jupiter',
     title: 'Wealth & Prosperity',
     body: "Jupiter's transit through your 2nd and 11th houses marks the dasha windows most aligned with financial growth.",

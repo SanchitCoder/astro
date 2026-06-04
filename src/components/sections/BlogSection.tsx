@@ -4,6 +4,8 @@ import { ArrowRight, Clock } from 'lucide-react';
 
 const DARK_BG = 'linear-gradient(160deg, #001D48 0%, #002D60 40%, #003D78 70%, #001530 100%)';
 
+/* ︎ = Variation Selector-15: forces text (not emoji) rendering on Android/iOS */
+const T = '︎';
 const ARTICLES = [
   {
     category: 'Vedic Astrology',
@@ -12,7 +14,7 @@ const ARTICLES = [
     read: '5 min read',
     accent: '#D88A22',
     img: 'https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?w=800&q=80&auto=format&fit=crop',
-    glyph: '♄',
+    glyph: '♄' + T,
   },
   {
     category: 'Medical Astrology',
@@ -21,7 +23,7 @@ const ARTICLES = [
     read: '6 min read',
     accent: '#34d399',
     img: 'https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?w=800&q=80&auto=format&fit=crop',
-    glyph: '♂',
+    glyph: '♂' + T,
   },
   {
     category: 'Vastu Shastra',
@@ -30,7 +32,7 @@ const ARTICLES = [
     read: '4 min read',
     accent: '#3387D3',
     img: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80&auto=format&fit=crop',
-    glyph: '✦',
+    glyph: '✦' + T,
   },
 ];
 

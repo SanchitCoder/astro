@@ -69,11 +69,13 @@ function AnnouncementBar({ onBook }: { onBook?: () => void }) {
 /* ══════════════════════════════════════════════════════════════
    2. HERO — full-bleed image with overlay text
 ══════════════════════════════════════════════════════════════ */
+/* ︎ = Variation Selector-15: forces text (not emoji) rendering on Android/iOS */
+const T = '︎';
 const HERO_STATS = [
-  { value: '1.2L+', label: 'Consultations', glyph: '☉' },
-  { value: '50+',   label: 'Countries',     glyph: '♃' },
-  { value: '25+',   label: 'Years',         glyph: '♄' },
-  { value: '4.9★',  label: '10k Reviews',   glyph: '♀' },
+  { value: '1.2L+', label: 'Consultations', glyph: '☉' + T },
+  { value: '50+',   label: 'Countries',     glyph: '♃' + T },
+  { value: '25+',   label: 'Years',         glyph: '♄' + T },
+  { value: '4.9★',  label: '10k Reviews',   glyph: '♀' + T },
 ];
 
 function HeroSection({
@@ -401,11 +403,11 @@ function PainPointsSection({ onBook }: { onBook?: () => void }) {
    5. PATTERNS — "It's about PATTERNS" with life area visuals
 ══════════════════════════════════════════════════════════════ */
 const AREAS = [
-  { img: SCIENCE_IMG_JYOTISH, glyph: '♑', title: 'Your Personality Blueprint', sub: 'Who you truly are — beneath every role you play' },
-  { img: SCIENCE_IMG_VASTU,   glyph: '♀', title: 'Career & Money Timing',      sub: 'When to act, when to wait, which direction opens' },
-  { img: SCIENCE_IMG_MEDICAL, glyph: '♂', title: 'Relationship Dynamics',      sub: 'Compatibility, timing, and repeating patterns' },
-  { img: null,                glyph: '♃', title: 'Health & Energy Cycles',     sub: 'Why your body responds differently at certain times' },
-  { img: null,                glyph: '☉', title: 'Auspicious Timing',          sub: 'The most underrated factor in every major decision' },
+  { img: SCIENCE_IMG_JYOTISH, glyph: '♑' + T, title: 'Your Personality Blueprint', sub: 'Who you truly are — beneath every role you play' },
+  { img: SCIENCE_IMG_VASTU,   glyph: '♀' + T, title: 'Career & Money Timing',      sub: 'When to act, when to wait, which direction opens' },
+  { img: SCIENCE_IMG_MEDICAL, glyph: '♂' + T, title: 'Relationship Dynamics',      sub: 'Compatibility, timing, and repeating patterns' },
+  { img: null,                glyph: '♃' + T, title: 'Health & Energy Cycles',     sub: 'Why your body responds differently at certain times' },
+  { img: null,                glyph: '☉' + T, title: 'Auspicious Timing',          sub: 'The most underrated factor in every major decision' },
 ];
 
 function PatternsSection({ onBook }: { onBook?: () => void }) {

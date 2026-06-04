@@ -3,13 +3,15 @@ import { TextReveal } from '../ui/TextReveal';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import type { MouseEvent as ReactMouseEvent } from 'react';
 
+/* ︎ = Variation Selector-15: forces text (not emoji) rendering on Android/iOS */
+const T = '︎';
 const ITEMS = [
-  { num: '01', icon: Compass,  title: 'General Consultation', desc: 'A full chart reading — career, relationships, finance, and life direction.', accent: '#D88A22', glyph: '☉', tint: 'rgba(216,138,34,0.06)' },
-  { num: '02', icon: Clock,    title: 'Urgent Consultation',  desc: 'Priority session for decisions that cannot wait. Focused, direct, clear.',    accent: '#f59e0b', glyph: '♄', tint: 'rgba(245,158,11,0.06)' },
-  { num: '03', icon: Heart,    title: 'Couple Consultation',  desc: 'Compatibility, marriage timing, and harmony — both charts read together.',    accent: '#C62828', glyph: '♀', tint: 'rgba(198,40,40,0.06)' },
-  { num: '04', icon: Activity, title: 'Medical Astrology',    desc: 'Health-related planetary patterns with classical Vedic preventive remedies.', accent: '#10b981', glyph: '♂', tint: 'rgba(16,185,129,0.06)' },
-  { num: '05', icon: HomeIcon, title: 'Vastu Consultation',   desc: 'Align your home or workspace with what your birth chart reveals.',           accent: '#005EA8', glyph: '✦', tint: 'rgba(0,94,168,0.06)' },
-  { num: '06', icon: Sparkles, title: 'Personalised Remedies', desc: 'Mantras, rituals, and gemstone guidance chosen for your kundali alone.',    accent: '#a78bfa', glyph: '♃', tint: 'rgba(167,139,250,0.06)' },
+  { num: '01', icon: Compass,  title: 'General Consultation',  desc: 'A full chart reading — career, relationships, finance, and life direction.', accent: '#D88A22', glyph: '☉' + T, tint: 'rgba(216,138,34,0.06)' },
+  { num: '02', icon: Clock,    title: 'Urgent Consultation',   desc: 'Priority session for decisions that cannot wait. Focused, direct, clear.',    accent: '#f59e0b', glyph: '♄' + T, tint: 'rgba(245,158,11,0.06)' },
+  { num: '03', icon: Heart,    title: 'Couple Consultation',   desc: 'Compatibility, marriage timing, and harmony — both charts read together.',    accent: '#C62828', glyph: '♀' + T, tint: 'rgba(198,40,40,0.06)' },
+  { num: '04', icon: Activity, title: 'Medical Astrology',     desc: 'Health-related planetary patterns with classical Vedic preventive remedies.', accent: '#10b981', glyph: '♂' + T, tint: 'rgba(16,185,129,0.06)' },
+  { num: '05', icon: HomeIcon, title: 'Vastu Consultation',    desc: 'Align your home or workspace with what your birth chart reveals.',           accent: '#005EA8', glyph: '✦' + T, tint: 'rgba(0,94,168,0.06)' },
+  { num: '06', icon: Sparkles, title: 'Personalised Remedies', desc: 'Mantras, rituals, and gemstone guidance chosen for your kundali alone.',    accent: '#a78bfa', glyph: '♃' + T, tint: 'rgba(167,139,250,0.06)' },
 ];
 
 function ServiceCard({ item, index }: { item: typeof ITEMS[0]; index: number }) {
