@@ -6,7 +6,8 @@ import {
   GURU_IMG,
   GURU_IMG_RESOURCE,
 } from '../lib/constants';
-import './MegaWebinarPage.css'; /* reuse the shared landing-page stylesheet */
+import './MegaWebinarPage.css';
+import { LeadFormModalProvider, useOpenLeadForm } from '../components/LeadFormModalProvider';
 
 /* ── Palette (matches site tokens) ── */
 const P        = '#D88A22';
@@ -29,10 +30,20 @@ const sans:  CSSProperties = { fontFamily: "'Poppins', sans-serif" };
 function CTABtn({
   text = 'Secure Your Seat — Join the Masterclass',
   full = false,
-  sm   = false,
-}: { text?: string; full?: boolean; sm?: boolean }) {
+  sm = false,
+  onClick,
+}: {
+  text?: string;
+  full?: boolean;
+  sm?: boolean;
+  onClick?: () => void;
+}) {
   return (
-    <button className={`mw-btn${full ? ' mw-btn-full' : ''}${sm ? ' mw-btn-sm' : ''}`}>
+    <button
+      type="button"
+      onClick={onClick}
+      className={`mw-btn${full ? ' mw-btn-full' : ''}${sm ? ' mw-btn-sm' : ''}`}
+    >
       {text}
     </button>
   );
@@ -151,7 +162,8 @@ const FAQ_DATA = [
 /* ─────────────────────────────────────────
    Main Component
 ───────────────────────────────────────── */
-export function MasterclassPage() {
+function MasterclassPageContent() {
+  const openForm = useOpenLeadForm();
   const [openFAQ, setOpenFAQ] = useState<number | null>(null);
 
   /* Body padding for fixed bars */
@@ -244,7 +256,7 @@ export function MasterclassPage() {
               ))}
             </div>
 
-            <CTABtn full />
+            <CTABtn onClick={openForm} full />
             <p style={{ textAlign: 'center', color: PL, fontSize: '13px', fontWeight: 500, marginTop: '10px' }}>
               ⚡ Limited Seats — Register Before They Fill Up
             </p>
@@ -332,7 +344,7 @@ export function MasterclassPage() {
           <p className="mw-anim" style={{ textAlign: 'center', fontStyle: 'italic', fontWeight: 500, fontSize: '16px', color: P, marginBottom: '28px' }}>
             Your Kundli holds every answer. This masterclass teaches you how to find them. 🔥
           </p>
-          <div style={{ textAlign: 'center' }}><CTABtn /></div>
+          <div style={{ textAlign: 'center' }}><CTABtn onClick={openForm} /></div>
         </div>
       </section>
 
@@ -367,7 +379,7 @@ export function MasterclassPage() {
             ))}
           </div>
 
-          <div style={{ textAlign: 'center' }}><CTABtn /></div>
+          <div style={{ textAlign: 'center' }}><CTABtn onClick={openForm} /></div>
         </div>
       </section>
 
@@ -420,7 +432,7 @@ export function MasterclassPage() {
             ))}
           </div>
 
-          <div style={{ textAlign: 'center' }}><CTABtn /></div>
+          <div style={{ textAlign: 'center' }}><CTABtn onClick={openForm} /></div>
         </div>
       </section>
 
@@ -459,7 +471,7 @@ export function MasterclassPage() {
             ))}
           </div>
 
-          <div style={{ textAlign: 'center' }}><CTABtn /></div>
+          <div style={{ textAlign: 'center' }}><CTABtn onClick={openForm} /></div>
         </div>
       </section>
 
@@ -518,7 +530,7 @@ export function MasterclassPage() {
               ))}
             </div>
 
-            <CTABtn />
+            <CTABtn onClick={openForm} />
           </div>
 
         </div>
@@ -568,7 +580,7 @@ export function MasterclassPage() {
               Every registered participant receives a concise PDF reference sheet covering the key frameworks taught in the masterclass — free to keep forever.
             </p>
             {BONUS_FEATURES.map(f => <Check key={f}>{f}</Check>)}
-            <div style={{ marginTop: '22px' }}><CTABtn text="Claim Your Spot + Free Guide" /></div>
+            <div style={{ marginTop: '22px' }}><CTABtn onClick={openForm} text="Claim Your Spot + Free Guide" /></div>
           </div>
 
         </div>
@@ -624,9 +636,17 @@ export function MasterclassPage() {
           <br />
           <span style={{ fontSize: '12px', color: PL, fontWeight: 400, ...sans }}>(Limited Seats)</span>
         </div>
-        <CTABtn text="Register Now →" sm />
+        <CTABtn onClick={openForm} text="Register Now →" sm />
       </div>
 
     </div>
+  );
+}
+
+export function MasterclassPage() {
+  return (
+    <LeadFormModalProvider source="masterclass">
+      <MasterclassPageContent />
+    </LeadFormModalProvider>
   );
 }

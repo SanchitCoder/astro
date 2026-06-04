@@ -4,6 +4,8 @@ export type FormSource =
   | 'connect_modal'
   | 'contact_form'
   | 'consultation_form'
+  | 'mega_webinar'
+  | 'masterclass'
   | 'kundli_calculator'
   | 'webinar_registration';
 

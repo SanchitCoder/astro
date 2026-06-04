@@ -2,14 +2,16 @@ import { useEffect, useState, FormEvent } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Loader2, CheckCircle2, Sparkles } from 'lucide-react';
 import { submitToN8nWebhook, WebhookSubmitError } from '../lib/submitToWebhook';
+import type { FormSource } from '../lib/submitToWebhook';
 import { PHONE } from '../lib/constants';
 
 type Props = {
   open: boolean;
   onClose: () => void;
+  source?: FormSource;
 };
 
-export function ConnectModal({ open, onClose }: Props) {
+export function ConnectModal({ open, onClose, source = 'connect_modal' }: Props) {
   const [loading, setLoading] = useState(false);
   const [done, setDone] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -31,7 +33,7 @@ export function ConnectModal({ open, onClose }: Props) {
     setError(null);
     try {
       await submitToN8nWebhook({
-        source: 'connect_modal',
+        source,
         name: form.name.trim(),
         email: form.email.trim(),
         phone: form.phone.trim(),

@@ -8,11 +8,11 @@ import {
   GURU_IMG_GALLERY,
   PRICE_AUDIO_INR,
   PRICE_VIDEO_INR,
-  WHATSAPP_URL,
   PHONE_TEL,
   PHONE,
 } from '../lib/constants';
 import './MegaWebinarPage.css';
+import { LeadFormModalProvider, useOpenLeadForm } from '../components/LeadFormModalProvider';
 
 /* ── Tokens ── */
 const P        = '#D88A22';
@@ -30,24 +30,23 @@ const sans:  CSSProperties = { fontFamily: "'Poppins', sans-serif" };
 const fmt = (n: number) => `₹${n.toLocaleString('en-IN')}`;
 
 /* ── Shared micro-components ── */
-function CTABtn({ text = 'Book Your Consultation', full = false, sm = false, href }: {
-  text?: string; full?: boolean; sm?: boolean; href?: string;
+function CTABtn({
+  text = 'Book Your Consultation',
+  full = false,
+  sm = false,
+  onClick,
+}: {
+  text?: string;
+  full?: boolean;
+  sm?: boolean;
+  onClick?: () => void;
 }) {
-  if (href) {
-    return (
-      <a
-        href={href}
-        target="_blank"
-        rel="noopener noreferrer"
-        className={`mw-btn${full ? ' mw-btn-full' : ''}${sm ? ' mw-btn-sm' : ''}`}
-        style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '6px' }}
-      >
-        {text}
-      </a>
-    );
-  }
   return (
-    <button className={`mw-btn${full ? ' mw-btn-full' : ''}${sm ? ' mw-btn-sm' : ''}`}>
+    <button
+      type="button"
+      onClick={onClick}
+      className={`mw-btn${full ? ' mw-btn-full' : ''}${sm ? ' mw-btn-sm' : ''}`}
+    >
       {text}
     </button>
   );
@@ -161,7 +160,8 @@ const FAQ_DATA = [
 ];
 
 /* ── Main Component ── */
-export function ConsultationLandingPage() {
+function ConsultationLandingPageContent() {
+  const openForm = useOpenLeadForm();
   const [openFAQ, setOpenFAQ] = useState<number | null>(null);
 
   useEffect(() => {
@@ -241,7 +241,7 @@ export function ConsultationLandingPage() {
             </div>
 
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
-              <CTABtn href={WHATSAPP_URL} text="Book on WhatsApp →" />
+              <CTABtn onClick={openForm} text="Book Your Consultation →" />
               <a href={PHONE_TEL} style={{
                 display: 'inline-flex', alignItems: 'center', gap: '6px',
                 border: '1px solid rgba(255,255,255,0.25)', borderRadius: '9999px',
@@ -368,7 +368,7 @@ export function ConsultationLandingPage() {
 
                 <CTABtn
                   full
-                  href={WHATSAPP_URL}
+                  onClick={openForm}
                   text={`Book ${c.type.split(' ')[0]} Call`}
                 />
               </div>
@@ -451,7 +451,7 @@ export function ConsultationLandingPage() {
           </div>
 
           <div style={{ textAlign: 'center', marginTop: '44px' }}>
-            <CTABtn href={WHATSAPP_URL} text="Book Your Session →" />
+            <CTABtn onClick={openForm} text="Book Your Session →" />
           </div>
         </div>
       </section>
@@ -544,7 +544,7 @@ export function ConsultationLandingPage() {
           </div>
 
           <div style={{ textAlign: 'center' }}>
-            <CTABtn href={WHATSAPP_URL} />
+            <CTABtn onClick={openForm} />
           </div>
         </div>
       </section>
@@ -599,9 +599,17 @@ export function ConsultationLandingPage() {
           <br />
           <span style={{ fontSize: '11px', color: 'rgba(255,255,255,0.55)', fontWeight: 400, ...sans }}>Audio & Video sessions available</span>
         </div>
-        <CTABtn href={WHATSAPP_URL} text="Book Now →" sm />
+        <CTABtn onClick={openForm} text="Book Now →" sm />
       </div>
 
     </div>
+  );
+}
+
+export function ConsultationLandingPage() {
+  return (
+    <LeadFormModalProvider source="consultation_form">
+      <ConsultationLandingPageContent />
+    </LeadFormModalProvider>
   );
 }

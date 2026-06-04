@@ -7,6 +7,7 @@ import {
   GURU_IMG_RESOURCE,
 } from '../lib/constants';
 import './MegaWebinarPage.css';
+import { LeadFormModalProvider, useOpenLeadForm } from '../components/LeadFormModalProvider';
 
 /* Homepage-aligned palette (navy + gold) */
 const P = '#D88A22';
@@ -31,13 +32,17 @@ function CTABtn({
   text = "Uncover Life's Secrets – Join Now",
   full = false,
   sm = false,
+  onClick,
 }: {
   text?: string;
   full?: boolean;
   sm?: boolean;
+  onClick?: () => void;
 }) {
   return (
     <button
+      type="button"
+      onClick={onClick}
       className={`mw-btn${full ? ' mw-btn-full' : ''}${sm ? ' mw-btn-sm' : ''}`}
     >
       {text}
@@ -146,7 +151,8 @@ const FAQ_DATA = [
 /* ─────────────────────────────────────────
    Main Page Component
 ───────────────────────────────────────── */
-export function MegaWebinarPage() {
+function MegaWebinarPageContent() {
+  const openForm = useOpenLeadForm();
   const [openFAQ, setOpenFAQ] = useState<number | null>(null);
 
   /* Patch body padding for this standalone page's fixed bars */
@@ -252,7 +258,7 @@ export function MegaWebinarPage() {
               ))}
             </div>
 
-            <CTABtn full />
+            <CTABtn onClick={openForm} full />
             <p style={{ textAlign: 'center', color: PL, fontSize: '13px', fontWeight: 500, marginTop: '10px' }}>
               ⚡ Book Your Seat Now – Hurry Up! Few Seats Left
             </p>
@@ -360,7 +366,7 @@ export function MegaWebinarPage() {
           }}>
             The answer lies in your Kundli 🔥
           </p>
-          <div style={{ textAlign: 'center' }}><CTABtn /></div>
+          <div style={{ textAlign: 'center' }}><CTABtn onClick={openForm} /></div>
         </div>
       </section>
 
@@ -398,7 +404,7 @@ export function MegaWebinarPage() {
             ))}
           </div>
 
-          <div style={{ textAlign: 'center' }}><CTABtn /></div>
+          <div style={{ textAlign: 'center' }}><CTABtn onClick={openForm} /></div>
         </div>
       </section>
 
@@ -436,7 +442,7 @@ export function MegaWebinarPage() {
             ))}
           </div>
 
-          <div style={{ textAlign: 'center' }}><CTABtn /></div>
+          <div style={{ textAlign: 'center' }}><CTABtn onClick={openForm} /></div>
         </div>
       </section>
 
@@ -482,7 +488,7 @@ export function MegaWebinarPage() {
               ))}
             </div>
 
-            <CTABtn />
+            <CTABtn onClick={openForm} />
           </div>
 
           {/* Right: image placeholder */}
@@ -555,7 +561,7 @@ export function MegaWebinarPage() {
               Get Foundation Astrology knowledge completely free when you register
             </p>
             {BONUS_FEATURES.map(f => <Check key={f}>{f}</Check>)}
-            <div style={{ marginTop: '22px' }}><CTABtn text="Book Your Spot Now" /></div>
+            <div style={{ marginTop: '22px' }}><CTABtn onClick={openForm} text="Book Your Spot Now" /></div>
           </div>
 
         </div>
@@ -627,9 +633,17 @@ export function MegaWebinarPage() {
           <br />
           <span style={{ fontSize: '12px', color: PL, fontWeight: 400, ...sans }}>(Few Seats Left)</span>
         </div>
-        <CTABtn text="Register Now →" sm />
+        <CTABtn onClick={openForm} text="Register Now →" sm />
       </div>
 
     </div>
+  );
+}
+
+export function MegaWebinarPage() {
+  return (
+    <LeadFormModalProvider source="mega_webinar">
+      <MegaWebinarPageContent />
+    </LeadFormModalProvider>
   );
 }
