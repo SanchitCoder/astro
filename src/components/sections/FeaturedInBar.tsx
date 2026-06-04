@@ -20,7 +20,7 @@ export function FeaturedInBar() {
         <div className="flex-1 h-px bg-gradient-to-r from-white/10 to-transparent" />
       </div>
 
-      <div className="relative overflow-hidden [mask-image:linear-gradient(90deg,transparent_0%,black_6%,black_94%,transparent_100%)]">
+      <div className="relative [mask-image:linear-gradient(90deg,transparent_0%,black_6%,black_94%,transparent_100%)] [-webkit-mask-image:linear-gradient(90deg,transparent_0%,black_6%,black_94%,transparent_100%)]">
         <div className="press-marquee-track flex w-max gap-3">
           {ITEMS.map((name, i) => (
             <span

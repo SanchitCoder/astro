@@ -8,32 +8,59 @@
     overflow-x: clip;
   }
 
+  body, p, span, a, li, input, button, label, td, th {
+    font-family: 'Poppins', system-ui, sans-serif;
+    font-weight: 400;
+  }
+
   body {
-    @apply font-sans antialiased;
+    @apply antialiased;
     background-color: #F8F9FB;
     color: #2D3748;
     overflow-x: clip;
     -webkit-text-size-adjust: 100%;
-    font-weight: 400;
-    letter-spacing: 0.012em;
+    letter-spacing: 0.01em;
   }
 
-  h1, h2, h3, h4 {
-    @apply font-serif font-semibold;
+  h1, h2 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: 700;
     color: #1A202C;
-    line-height: 1.12;
-    letter-spacing: 0.018em;
+    line-height: 1.15;
+    letter-spacing: 0.01em;
+  }
+
+  h3, h4, h5, h6 {
+    font-family: 'Poppins', system-ui, sans-serif;
+    font-weight: 600;
+    color: #1A202C;
+    line-height: 1.3;
+    letter-spacing: 0.005em;
   }
 
   p {
-    line-height: 1.78;
+    line-height: 1.75;
     color: #4A5568;
-    letter-spacing: 0.008em;
+  }
+
+  button, .btn, [class*="button"] {
+    font-family: 'Poppins', system-ui, sans-serif;
+    font-weight: 600;
+  }
+
+  nav, nav a, .navbar, .nav-link {
+    font-family: 'Poppins', system-ui, sans-serif;
+    font-weight: 500;
+  }
+
+  [lang="hi"], .hindi-text {
+    font-family: 'Hind', sans-serif;
   }
 
   input, textarea, select {
     background-color: #FFFFFF;
     color: #1A202C;
+    font-family: 'Poppins', system-ui, sans-serif;
   }
 
   input::placeholder, textarea::placeholder {
@@ -178,12 +205,17 @@
 
   /* ── Section headings ── */
   .section-heading {
-    @apply font-serif text-3xl md:text-4xl lg:text-5xl font-semibold tracking-[0.018em];
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: 700;
+    @apply text-3xl md:text-4xl lg:text-5xl tracking-[0.01em];
     color: #1A202C;
+    line-height: 1.15;
   }
 
   .section-eyebrow {
-    @apply inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.22em];
+    font-family: 'Poppins', system-ui, sans-serif;
+    font-weight: 500;
+    @apply inline-flex items-center gap-2 text-xs uppercase tracking-[0.22em];
     color: #D88A22;
   }
 
@@ -215,7 +247,7 @@
 
   /* ── Quote ── */
   .quote-script {
-    font-family: 'Cormorant Garamond', 'Great Vibes', cursive;
+    font-family: 'Playfair Display', Georgia, serif;
     font-style: italic;
     font-weight: 400;
     background: linear-gradient(135deg, #D88A22 0%, #E09A30 60%);
@@ -346,6 +378,11 @@
   to   { transform: translateX(-50%); }
 }
 
+@-webkit-keyframes press-marquee {
+  from { -webkit-transform: translateX(0); transform: translateX(0); }
+  to   { -webkit-transform: translateX(-50%); transform: translateX(-50%); }
+}
+
 /* ════════════════════════════════════════
    Zodiac Marquee (preserved)
 ════════════════════════════════════════ */
@@ -355,16 +392,26 @@
   100% { transform: translate3d(0, 0, 0); }
 }
 
+/* Safari/iOS requires the -webkit- prefixed keyframe definition */
+@-webkit-keyframes zodiac-marquee-ltr {
+  0%   { -webkit-transform: translate3d(-50%, 0, 0); transform: translate3d(-50%, 0, 0); }
+  100% { -webkit-transform: translate3d(0, 0, 0);    transform: translate3d(0, 0, 0); }
+}
+
 .zodiac-marquee-track {
   animation: zodiac-marquee-ltr 78s linear infinite;
+  -webkit-animation: zodiac-marquee-ltr 78s linear infinite;
   will-change: transform;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
+  /* Force GPU layer so iOS Safari doesn't drop the composited element */
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
 }
 
 @media (max-width: 639px) {
   .zodiac-marquee-track {
-    animation-duration: 52s;
+    animation: zodiac-marquee-ltr 52s linear infinite;
     -webkit-animation: zodiac-marquee-ltr 52s linear infinite;
   }
 
@@ -374,17 +421,22 @@
   }
 
   .press-marquee-track {
-    animation-duration: 28s !important;
+    animation: press-marquee 28s linear infinite !important;
     -webkit-animation: press-marquee 28s linear infinite !important;
     will-change: transform;
     backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
   }
 }
 
 .press-marquee-track {
   animation: press-marquee 38s linear infinite;
+  -webkit-animation: press-marquee 38s linear infinite;
   will-change: transform;
   backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
 }
 
 @keyframes zodiac-icon-float {

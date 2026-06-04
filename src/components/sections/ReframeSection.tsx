@@ -68,7 +68,7 @@ export function ReframeSection() {
               <div className="mb-5 flex items-center gap-3">
                 <div
                   className="w-12 h-12 rounded-2xl flex items-center justify-center text-2xl shrink-0 font-serif"
-                  style={{ background: `${t.accent}14`, border: `1px solid ${t.accent}28`, color: t.accent, fontFamily: '"Cormorant Garamond","Apple Symbols","Segoe UI Symbol",serif' }}
+                  style={{ background: `${t.accent}14`, border: `1px solid ${t.accent}28`, color: t.accent, fontFamily: '"Playfair Display","Apple Symbols","Segoe UI Symbol",serif' }}
                 >
                   {t.glyph}
                 </div>

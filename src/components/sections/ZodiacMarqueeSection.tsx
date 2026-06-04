@@ -131,7 +131,7 @@ function ZodiacCell({
         />
         <span
           className="relative zodiac-icon-float inline-flex select-none bg-gradient-to-b from-[#FBE7C7] from-25% via-[#D88A22] to-[#9A5E14] bg-clip-text font-serif text-[2.1rem] leading-none text-transparent drop-shadow-[0_0_14px_rgba(216,138,34,0.5)] transition-[transform,filter] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] md:text-[2.65rem] group-hover:scale-[1.06] group-hover:drop-shadow-[0_0_22px_rgba(0,94,168,0.55),0_0_36px_rgba(216,138,34,0.4)] motion-reduce:group-hover:scale-100"
-          style={{ fontFamily: '"Cormorant Garamond", "Apple Symbols", "Segoe UI Symbol", serif' }}
+          style={{ fontFamily: '"Playfair Display", "Apple Symbols", "Segoe UI Symbol", serif' }}
         >
           {sign.glyph}
         </span>
@@ -276,7 +276,7 @@ export function ZodiacMarqueeSection() {
       />
 
       <div
-        className="relative z-[2] w-full overflow-hidden [mask-image:linear-gradient(90deg,transparent,black_4%,black_96%,transparent)] [-webkit-mask-image:linear-gradient(90deg,transparent,black_4%,black_96%,transparent)]"
+        className="relative z-[2] w-full overflow-hidden"
         style={isMobile ? undefined : { perspective: '1400px' }}
       >
         <div

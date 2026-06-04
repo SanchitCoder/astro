@@ -141,7 +141,7 @@ function AreaCard({
               WebkitBackgroundClip: 'text',
               backgroundClip: 'text',
               filter: `drop-shadow(0 0 30px ${area.glow})`,
-              fontFamily: '"Cormorant Garamond", "Apple Symbols", "Segoe UI Symbol", serif',
+              fontFamily: '"Playfair Display", "Apple Symbols", "Segoe UI Symbol", serif',
             }}
           >
             {area.glyph}

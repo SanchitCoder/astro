@@ -41,7 +41,7 @@ function MandalaDecor() {
         return (
           <text key={g} x={140 + 82 * Math.cos(a)} y={140 + 82 * Math.sin(a)}
             fontSize="13" fill="#F3B757" opacity="0.35" textAnchor="middle" dominantBaseline="central"
-            fontFamily='"Cormorant Garamond","Apple Symbols","Segoe UI Symbol",serif'>
+            fontFamily='"Playfair Display","Apple Symbols","Segoe UI Symbol",serif'>
             {g}
           </text>
         );

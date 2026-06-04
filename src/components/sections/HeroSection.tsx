@@ -142,7 +142,7 @@ function ZodiacWheel({ className }: { className?: string }) {
             fontSize="18"
             fill="#F3B757"
             opacity="0.7"
-            fontFamily='"Cormorant Garamond","Apple Symbols","Segoe UI Symbol",serif'
+            fontFamily='"Playfair Display","Apple Symbols","Segoe UI Symbol",serif'
           >
             {sign.glyph}
           </text>
@@ -181,7 +181,7 @@ function ZodiacWheel({ className }: { className?: string }) {
             fontSize="9"
             fill={p.color}
             opacity="0.65"
-            fontFamily='"Cormorant Garamond","Apple Symbols","Segoe UI Symbol",serif'
+            fontFamily='"Playfair Display","Apple Symbols","Segoe UI Symbol",serif'
           >
             {p.glyph}
           </text>
@@ -281,7 +281,7 @@ export function HeroSection() {
             style={{
               left: g.x, top: g.y,
               color: '#D88A22',
-              fontFamily: '"Cormorant Garamond","Apple Symbols","Segoe UI Symbol",serif',
+              fontFamily: '"Playfair Display","Apple Symbols","Segoe UI Symbol",serif',
             }}
             animate={{ y: [0, -14, 0], opacity: [0.1, 0.25, 0.1] }}
             transition={{ duration: 8, repeat: Infinity, delay: g.delay, ease: 'easeInOut' }}

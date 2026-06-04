@@ -329,7 +329,7 @@ export function WebinarPage() {
                 transition={{ duration: 0.55, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
                 className="flex items-center gap-4 rounded-2xl px-5 py-4 bg-white border border-warm-200 shadow-card hover:shadow-card-hover transition-shadow duration-300">
                 <div className="w-10 h-10 rounded-xl flex items-center justify-center text-lg shrink-0"
-                  style={{ background: 'rgba(216,138,34,0.08)', border: '1px solid rgba(216,138,34,0.18)', color: '#D88A22', fontFamily: '"Cormorant Garamond","Apple Symbols","Segoe UI Symbol",serif' }}>
+                  style={{ background: 'rgba(216,138,34,0.08)', border: '1px solid rgba(216,138,34,0.18)', color: '#D88A22', fontFamily: '"Playfair Display","Apple Symbols","Segoe UI Symbol",serif' }}>
                   {item.glyph}
                 </div>
                 <span className="font-cinzel text-xs font-bold w-12 shrink-0 text-gold-400">{item.time}</span>
@@ -370,7 +370,7 @@ export function WebinarPage() {
               <div className="flex flex-wrap gap-3 mb-7">
                 {[{ g: '♄', v: '25+', l: 'Years' }, { g: '☉', v: '1.2L+', l: 'Clients' }, { g: '♃', v: '50+', l: 'Countries' }].map((s) => (
                   <div key={s.l} className="flex items-center gap-2 rounded-xl px-4 py-2.5" style={{ background: 'rgba(243,183,87,0.07)', border: '1px solid rgba(243,183,87,0.18)' }}>
-                    <span className="text-base" style={{ color: '#F3B757', fontFamily: '"Cormorant Garamond","Apple Symbols","Segoe UI Symbol",serif' }}>{s.g}</span>
+                    <span className="text-base" style={{ color: '#F3B757', fontFamily: '"Playfair Display","Apple Symbols","Segoe UI Symbol",serif' }}>{s.g}</span>
                     <div>
                       <div className="font-cinzel text-sm font-bold leading-none" style={{ background: GOLD, WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent' }}>{s.v}</div>
                       <div className="text-[9px] text-white/40 uppercase tracking-wide mt-0.5">{s.l}</div>

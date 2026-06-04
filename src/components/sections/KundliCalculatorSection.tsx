@@ -56,7 +56,7 @@ function SpinningChart() {
           <g key={g}>
             <circle cx={cx + pr * Math.cos(a)} cy={cy + pr * Math.sin(a)} r="5" fill={c} opacity="0.2" />
             <circle cx={cx + pr * Math.cos(a)} cy={cy + pr * Math.sin(a)} r="2.5" fill={c} opacity="0.8" />
-            <text x={cx + pr * Math.cos(a) + 9} y={cy + pr * Math.sin(a) + 4} fontSize="9" fill={c} opacity="0.6" fontFamily="serif">
+            <text x={cx + pr * Math.cos(a) + 9} y={cy + pr * Math.sin(a) + 4} fontSize="9" fill={c} opacity="0.6" fontFamily="'Playfair Display',serif">
               {g}
             </text>
           </g>

@@ -47,7 +47,7 @@ function ServiceCard({ item, index }: { item: typeof ITEMS[0]; index: number }) 
 
       <div
         className="pointer-events-none absolute -right-3 top-0 select-none text-[4.5rem] leading-none opacity-[0.06] transition-opacity duration-500 group-hover:opacity-[0.1] sm:text-[6rem] lg:text-[8rem]"
-        style={{ color: item.accent, fontFamily: '"Cormorant Garamond","Apple Symbols","Segoe UI Symbol",serif' }}
+        style={{ color: item.accent, fontFamily: '"Playfair Display","Apple Symbols","Segoe UI Symbol",serif' }}
       >
         {item.glyph}
       </div>

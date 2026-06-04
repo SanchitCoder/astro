@@ -251,7 +251,7 @@ function HeroSection({
               key={s.label}
               className="rounded-2xl border border-white/[0.08] bg-white/[0.06] px-4 py-3 text-center backdrop-blur-sm"
             >
-              <div className="font-serif text-sm mb-0.5" style={{ color: '#F3B757', fontFamily: '"Cormorant Garamond","Apple Symbols","Segoe UI Symbol",serif' }}>
+              <div className="font-serif text-sm mb-0.5" style={{ color: '#F3B757', fontFamily: '"Playfair Display","Apple Symbols","Segoe UI Symbol",serif' }}>
                 {s.glyph}
               </div>
               <div className="font-cinzel text-lg font-bold" style={{ background: GOLD_GRD, WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent' }}>
@@ -283,7 +283,7 @@ function FeaturedInBar() {
         <span className="shrink-0 text-[9px] font-bold uppercase tracking-[0.3em] text-white/50">Featured In</span>
         <div className="flex-1 h-px bg-gradient-to-r from-white/10 to-transparent" />
       </div>
-      <div className="relative overflow-hidden [mask-image:linear-gradient(90deg,transparent,black_8%,black_92%,transparent)]">
+      <div className="relative [mask-image:linear-gradient(90deg,transparent,black_8%,black_92%,transparent)] [-webkit-mask-image:linear-gradient(90deg,transparent,black_8%,black_92%,transparent)]">
         <div className="press-marquee-track flex w-max gap-3" style={{ animationDuration: '40s' }}>
           {PRESS2.map((n, i) => (
             <span key={i} className="shrink-0 whitespace-nowrap rounded-full border border-white/20 bg-white/[0.06] px-4 py-2 text-[11px] font-bold uppercase tracking-[0.18em] text-white/70 hover:border-gold-400/40 hover:text-white transition-colors">
@@ -454,7 +454,7 @@ function PatternsSection({ onBook }: { onBook?: () => void }) {
                 <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg,#002D60,#003D78)' }} />
               )}
               <div className="relative p-6 flex flex-col justify-end h-full" style={{ minHeight: 220 }}>
-                <div className="font-serif text-3xl mb-3" style={{ color: '#F3B757', fontFamily: '"Cormorant Garamond","Apple Symbols","Segoe UI Symbol",serif' }}>
+                <div className="font-serif text-3xl mb-3" style={{ color: '#F3B757', fontFamily: '"Playfair Display","Apple Symbols","Segoe UI Symbol",serif' }}>
                   {a.glyph}
                 </div>
                 <h3 className="font-semibold text-white text-base leading-snug mb-1">{a.title}</h3>
@@ -476,7 +476,7 @@ function PatternsSection({ onBook }: { onBook?: () => void }) {
             >
               <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg,#002D60,#003D78)' }} />
               <div className="relative p-6 flex flex-col justify-end h-full" style={{ minHeight: 160 }}>
-                <div className="font-serif text-3xl mb-2" style={{ color: '#F3B757', fontFamily: '"Cormorant Garamond","Apple Symbols","Segoe UI Symbol",serif' }}>
+                <div className="font-serif text-3xl mb-2" style={{ color: '#F3B757', fontFamily: '"Playfair Display","Apple Symbols","Segoe UI Symbol",serif' }}>
                   {a.glyph}
                 </div>
                 <h3 className="font-semibold text-white text-sm leading-snug mb-1">{a.title}</h3>
@@ -714,7 +714,7 @@ function MentorSection({ onBook }: { onBook?: () => void }) {
                 { val: '50+', lab: 'Countries', g: '♃' },
               ].map((s) => (
                 <div key={s.lab} className="rounded-2xl border border-white/[0.08] bg-white/[0.04] p-4 text-center">
-                  <div className="font-serif text-lg mb-0.5" style={{ color: '#F3B757', fontFamily: '"Cormorant Garamond","Apple Symbols","Segoe UI Symbol",serif' }}>{s.g}</div>
+                  <div className="font-serif text-lg mb-0.5" style={{ color: '#F3B757', fontFamily: '"Playfair Display","Apple Symbols","Segoe UI Symbol",serif' }}>{s.g}</div>
                   <div className="font-cinzel text-base font-bold" style={{ background: GOLD_GRD, WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent' }}>{s.val}</div>
                   <div className="text-[10px] text-white/50 uppercase tracking-wide mt-0.5">{s.lab}</div>
                 </div>

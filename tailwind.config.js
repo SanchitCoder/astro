@@ -4,12 +4,16 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Raleway', 'system-ui', 'sans-serif'],
-        serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
-        montserrat: ['Montserrat', 'system-ui', 'sans-serif'],
-        cinzel: ['Cinzel', 'serif'],
-        script: ['"Great Vibes"', 'cursive'],
-        mono: ['"Iosevka Charon Mono"', 'ui-monospace', 'monospace'],
+        sans:      ['Poppins', 'system-ui', 'sans-serif'],
+        serif:     ['"Playfair Display"', 'Georgia', 'serif'],
+        heading:   ['"Playfair Display"', 'Georgia', 'serif'],
+        body:      ['Poppins', 'system-ui', 'sans-serif'],
+        hindi:     ['Hind', 'sans-serif'],
+        /* Legacy aliases — remapped so existing font-cinzel / font-montserrat / font-script classes still work */
+        cinzel:    ['Poppins', 'system-ui', 'sans-serif'],
+        montserrat:['Poppins', 'system-ui', 'sans-serif'],
+        script:    ['"Playfair Display"', 'Georgia', 'serif'],
+        mono:      ['ui-monospace', 'monospace'],
       },
       colors: {
         /* Dark backgrounds — navbar, footer, hero */

@@ -101,7 +101,7 @@ export function BlogSection({ onConnect }: { onConnect?: () => void }) {
                 {/* Planet glyph overlay */}
                 <div
                   className="absolute top-3 right-3 text-4xl opacity-20 group-hover:opacity-35 transition-opacity duration-500"
-                  style={{ color: a.accent, fontFamily: '"Cormorant Garamond","Apple Symbols","Segoe UI Symbol",serif' }}
+                  style={{ color: a.accent, fontFamily: '"Playfair Display","Apple Symbols","Segoe UI Symbol",serif' }}
                 >
                   {a.glyph}
                 </div>
