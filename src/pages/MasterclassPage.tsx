@@ -1,5 +1,4 @@
-import { useState, useEffect, useRef, useCallback, type CSSProperties } from 'react';
-import { Play, Pause, Volume2, VolumeX } from 'lucide-react';
+import { useState, useEffect, useRef, type CSSProperties } from 'react';
 import {
   THEME_DARK_BG,
   THEME_GOLD_GRD,
@@ -8,8 +7,7 @@ import {
 } from '../lib/constants';
 import './MegaWebinarPage.css';
 import { LeadFormModalProvider, useOpenLeadForm } from '../components/LeadFormModalProvider';
-
-const MASTERCLASS_HERO_VIDEO = '/masterclass-90min.mp4';
+import { YouTubeHeroPlayer } from '../components/YouTubeHeroPlayer';
 
 /* ── Palette (matches site tokens) ── */
 const P        = '#D88A22';
@@ -22,20 +20,6 @@ const LIGHT_ALT= '#EFF1F5';
 const BORDER   = '#E5E7EB';
 const CTA_TEXT = '#002D60';
 const ACCENT   = '#C62828';
-
-const VIDEO_CTRL_BTN: CSSProperties = {
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  width: '42px',
-  height: '42px',
-  borderRadius: '50%',
-  border: '1px solid rgba(243,183,87,0.45)',
-  background: 'rgba(0,15,35,0.88)',
-  color: PL,
-  cursor: 'pointer',
-  backdropFilter: 'blur(8px)',
-};
 
 const serif: CSSProperties = { fontFamily: "'Playfair Display', serif" };
 const sans:  CSSProperties = { fontFamily: "'Poppins', sans-serif" };
@@ -168,27 +152,7 @@ const FAQ_DATA = [
 function MasterclassPageContent() {
   const openForm = useOpenLeadForm();
   const heroRef = useRef<HTMLElement>(null);
-  const heroVideoRef = useRef<HTMLVideoElement>(null);
   const [openFAQ, setOpenFAQ] = useState<number | null>(null);
-  const [isPlaying, setIsPlaying] = useState(true);
-  const [isMuted, setIsMuted] = useState(true);
-
-  const togglePlayPause = useCallback(() => {
-    const video = heroVideoRef.current;
-    if (!video) return;
-    if (video.paused) void video.play().catch(() => {});
-    else video.pause();
-  }, []);
-
-  const toggleMute = useCallback(() => {
-    const video = heroVideoRef.current;
-    if (!video) return;
-    const nextMuted = !video.muted;
-    video.muted = nextMuted;
-    if (!nextMuted) video.volume = 1;
-    setIsMuted(nextMuted);
-    if (video.paused) void video.play().catch(() => {});
-  }, []);
 
   /* Body padding for fixed bars */
   useEffect(() => {
@@ -209,59 +173,6 @@ function MasterclassPageContent() {
     );
     document.querySelectorAll('.mw-anim').forEach(el => io.observe(el));
     return () => io.disconnect();
-  }, []);
-
-  /* Sync play / pause state with the video element */
-  useEffect(() => {
-    const video = heroVideoRef.current;
-    if (!video) return;
-
-    const onPlay = () => setIsPlaying(true);
-    const onPause = () => setIsPlaying(false);
-
-    video.addEventListener('play', onPlay);
-    video.addEventListener('pause', onPause);
-    return () => {
-      video.removeEventListener('play', onPlay);
-      video.removeEventListener('pause', onPause);
-    };
-  }, []);
-
-  /* Hero video: autoplay in view, pause when scrolled away */
-  useEffect(() => {
-    const hero = heroRef.current;
-    const video = heroVideoRef.current;
-    if (!hero || !video) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          void video.play().catch(() => {});
-        } else {
-          video.pause();
-        }
-      },
-      { threshold: 0.2 },
-    );
-
-    observer.observe(hero);
-    return () => observer.disconnect();
-  }, []);
-
-  /* Try unmuted autoplay; fall back to muted + prompt if blocked */
-  useEffect(() => {
-    const video = heroVideoRef.current;
-    if (!video) return;
-
-    video.volume = 1;
-    video.muted = false;
-    void video.play().then(() => {
-      setIsMuted(false);
-    }).catch(() => {
-      video.muted = true;
-      setIsMuted(true);
-      void video.play().catch(() => {});
-    });
   }, []);
 
   const toggle = (i: number) => setOpenFAQ(p => (p === i ? null : i));
@@ -342,60 +253,9 @@ function MasterclassPageContent() {
             </p>
           </div>
 
-          {/* RIGHT — Hero video only */}
-          <div className="mw-anim mw-delay" style={{
-            position: 'relative',
-            width: '100%',
-            aspectRatio: '4 / 3',
-            minHeight: '200px',
-            borderRadius: '16px',
-            overflow: 'hidden',
-            border: '1px solid rgba(216,138,34,0.25)',
-            boxShadow: '0 4px 24px rgba(0,0,0,0.35)',
-            background: '#000',
-          }}>
-            <video
-              ref={heroVideoRef}
-              src={MASTERCLASS_HERO_VIDEO}
-              autoPlay
-              muted={isMuted}
-              playsInline
-              loop
-              preload="auto"
-              style={{ width: '100%', height: '100%', objectFit: 'contain', objectPosition: 'center', display: 'block' }}
-              aria-label="90-minute masterclass preview"
-            />
-            <div
-              style={{
-                position: 'absolute',
-                left: 0,
-                right: 0,
-                bottom: 0,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '12px',
-                padding: '14px',
-                background: 'linear-gradient(transparent, rgba(0,0,0,0.72))',
-              }}
-            >
-              <button
-                type="button"
-                onClick={togglePlayPause}
-                aria-label={isPlaying ? 'Pause video' : 'Play video'}
-                style={VIDEO_CTRL_BTN}
-              >
-                {isPlaying ? <Pause size={18} fill="currentColor" /> : <Play size={18} fill="currentColor" />}
-              </button>
-              <button
-                type="button"
-                onClick={toggleMute}
-                aria-label={isMuted ? 'Unmute video' : 'Mute video'}
-                style={VIDEO_CTRL_BTN}
-              >
-                {isMuted ? <VolumeX size={18} /> : <Volume2 size={18} />}
-              </button>
-            </div>
+          {/* RIGHT — YouTube hero video */}
+          <div className="mw-anim mw-delay">
+            <YouTubeHeroPlayer observeRef={heroRef} ariaLabel="90-minute masterclass preview" />
           </div>
 
         </div>
