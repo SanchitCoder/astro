@@ -1,11 +1,10 @@
-import { useState, useEffect, type CSSProperties } from 'react';
+import { useState, useEffect, useRef, useCallback, type CSSProperties } from 'react';
+import { Play, Pause, Volume2, VolumeX } from 'lucide-react';
 import {
   THEME_DARK_BG,
   THEME_GOLD_GRD,
   THEME_DARK_STRIP_BG,
-  GURU_IMG,
   GURU_IMG_RESOURCE,
-  GURU_IMG_GALLERY,
   PRICE_AUDIO_INR,
   PRICE_VIDEO_INR,
   PHONE_TEL,
@@ -24,6 +23,22 @@ const LIGHT    = '#F8F9FB';
 const LIGHT_ALT= '#EFF1F5';
 const BORDER   = '#E5E7EB';
 const CTA_TEXT = '#002D60';
+
+const CONSULTATION_HERO_VIDEO = '/consultation-hero.mp4';
+
+const VIDEO_CTRL_BTN: CSSProperties = {
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  width: '42px',
+  height: '42px',
+  borderRadius: '50%',
+  border: '1px solid rgba(243,183,87,0.45)',
+  background: 'rgba(0,15,35,0.88)',
+  color: PL,
+  cursor: 'pointer',
+  backdropFilter: 'blur(8px)',
+};
 
 const serif: CSSProperties = { fontFamily: "'Playfair Display', serif" };
 const sans:  CSSProperties = { fontFamily: "'Poppins', sans-serif" };
@@ -162,7 +177,28 @@ const FAQ_DATA = [
 /* ── Main Component ── */
 function ConsultationLandingPageContent() {
   const openForm = useOpenLeadForm();
+  const heroRef = useRef<HTMLElement>(null);
+  const heroVideoRef = useRef<HTMLVideoElement>(null);
   const [openFAQ, setOpenFAQ] = useState<number | null>(null);
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [isMuted, setIsMuted] = useState(true);
+
+  const togglePlayPause = useCallback(() => {
+    const video = heroVideoRef.current;
+    if (!video) return;
+    if (video.paused) void video.play().catch(() => {});
+    else video.pause();
+  }, []);
+
+  const toggleMute = useCallback(() => {
+    const video = heroVideoRef.current;
+    if (!video) return;
+    const nextMuted = !video.muted;
+    video.muted = nextMuted;
+    if (!nextMuted) video.volume = 1;
+    setIsMuted(nextMuted);
+    if (video.paused) void video.play().catch(() => {});
+  }, []);
 
   useEffect(() => {
     const prev = { top: document.body.style.paddingTop, bottom: document.body.style.paddingBottom };
@@ -181,6 +217,56 @@ function ConsultationLandingPageContent() {
     );
     document.querySelectorAll('.mw-anim').forEach(el => io.observe(el));
     return () => io.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const video = heroVideoRef.current;
+    if (!video) return;
+
+    const onPlay = () => setIsPlaying(true);
+    const onPause = () => setIsPlaying(false);
+
+    video.addEventListener('play', onPlay);
+    video.addEventListener('pause', onPause);
+    return () => {
+      video.removeEventListener('play', onPlay);
+      video.removeEventListener('pause', onPause);
+    };
+  }, []);
+
+  useEffect(() => {
+    const hero = heroRef.current;
+    const video = heroVideoRef.current;
+    if (!hero || !video) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          void video.play().catch(() => {});
+        } else {
+          video.pause();
+        }
+      },
+      { threshold: 0.2 },
+    );
+
+    observer.observe(hero);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const video = heroVideoRef.current;
+    if (!video) return;
+
+    video.volume = 1;
+    video.muted = false;
+    void video.play().then(() => {
+      setIsMuted(false);
+    }).catch(() => {
+      video.muted = true;
+      setIsMuted(true);
+      void video.play().catch(() => {});
+    });
   }, []);
 
   const toggle = (i: number) => setOpenFAQ(p => (p === i ? null : i));
@@ -203,7 +289,10 @@ function ConsultationLandingPageContent() {
       {/* ══════════════════════════════════════
           §2  HERO
       ══════════════════════════════════════ */}
-      <section style={{ background: THEME_DARK_BG, padding: '64px 20px 72px', position: 'relative', overflow: 'hidden' }}>
+      <section
+        ref={heroRef}
+        style={{ background: THEME_DARK_BG, padding: '64px 20px 72px', position: 'relative', overflow: 'hidden' }}
+      >
         <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', background: 'radial-gradient(ellipse 55% 65% at 70% 50%, rgba(216,138,34,0.08), transparent 65%)' }} />
 
         <div className="mw-wrap mw-grid-2 mw-grid-2-center" style={{ position: 'relative', zIndex: 1 }}>
@@ -253,29 +342,61 @@ function ConsultationLandingPageContent() {
             </div>
           </div>
 
-          {/* Right — Portrait */}
-          <div className="mw-anim mw-delay" style={{ display: 'flex', justifyContent: 'center' }}>
-            <div style={{ position: 'relative', width: '100%', maxWidth: '380px' }}>
-              <div style={{
-                borderRadius: '20px', overflow: 'hidden',
-                boxShadow: '0 24px 60px -10px rgba(0,0,0,0.45)',
-                border: '1px solid rgba(216,138,34,0.2)',
-              }}>
-                <img
-                  src={GURU_IMG}
-                  alt="Gurudev Anand"
-                  style={{ width: '100%', display: 'block', objectFit: 'contain', background: LIGHT }}
-                />
-              </div>
-              {/* Floating stat */}
-              <div style={{
-                position: 'absolute', bottom: '-14px', left: '-14px',
-                background: THEME_GOLD_GRD, borderRadius: '14px',
-                padding: '12px 18px', boxShadow: '0 8px 24px rgba(216,138,34,0.35)',
-              }}>
-                <div style={{ fontSize: '18px', fontWeight: 700, color: CTA_TEXT, lineHeight: 1, ...sans }}>1.2 Lakh+</div>
-                <div style={{ fontSize: '11px', color: CTA_TEXT, opacity: 0.8, marginTop: '2px', ...sans }}>Consultations</div>
-              </div>
+          {/* RIGHT — Hero video only */}
+          <div className="mw-anim mw-delay" style={{
+            position: 'relative',
+            width: '100%',
+            maxWidth: '380px',
+            margin: '0 auto',
+            aspectRatio: '4 / 3',
+            minHeight: '200px',
+            borderRadius: '20px',
+            overflow: 'hidden',
+            border: '1px solid rgba(216,138,34,0.25)',
+            boxShadow: '0 24px 60px -10px rgba(0,0,0,0.45)',
+            background: '#000',
+          }}>
+            <video
+              ref={heroVideoRef}
+              src={CONSULTATION_HERO_VIDEO}
+              autoPlay
+              muted={isMuted}
+              playsInline
+              loop
+              preload="auto"
+              style={{ width: '100%', height: '100%', objectFit: 'contain', objectPosition: 'center', display: 'block' }}
+              aria-label="Consultation preview"
+            />
+            <div
+              style={{
+                position: 'absolute',
+                left: 0,
+                right: 0,
+                bottom: 0,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '12px',
+                padding: '14px',
+                background: 'linear-gradient(transparent, rgba(0,0,0,0.72))',
+              }}
+            >
+              <button
+                type="button"
+                onClick={togglePlayPause}
+                aria-label={isPlaying ? 'Pause video' : 'Play video'}
+                style={VIDEO_CTRL_BTN}
+              >
+                {isPlaying ? <Pause size={18} fill="currentColor" /> : <Play size={18} fill="currentColor" />}
+              </button>
+              <button
+                type="button"
+                onClick={toggleMute}
+                aria-label={isMuted ? 'Unmute video' : 'Mute video'}
+                style={VIDEO_CTRL_BTN}
+              >
+                {isMuted ? <VolumeX size={18} /> : <Volume2 size={18} />}
+              </button>
             </div>
           </div>
 

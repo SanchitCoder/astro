@@ -1,13 +1,15 @@
-import { useState, useEffect, type CSSProperties } from 'react';
+import { useState, useEffect, useRef, useCallback, type CSSProperties } from 'react';
+import { Play, Pause, Volume2, VolumeX } from 'lucide-react';
 import {
   THEME_DARK_BG,
   THEME_GOLD_GRD,
   THEME_DARK_STRIP_BG,
-  GURU_IMG,
   GURU_IMG_RESOURCE,
 } from '../lib/constants';
 import './MegaWebinarPage.css';
 import { LeadFormModalProvider, useOpenLeadForm } from '../components/LeadFormModalProvider';
+
+const MASTERCLASS_HERO_VIDEO = '/masterclass-90min.mp4';
 
 /* ── Palette (matches site tokens) ── */
 const P        = '#D88A22';
@@ -20,6 +22,20 @@ const LIGHT_ALT= '#EFF1F5';
 const BORDER   = '#E5E7EB';
 const CTA_TEXT = '#002D60';
 const ACCENT   = '#C62828';
+
+const VIDEO_CTRL_BTN: CSSProperties = {
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  width: '42px',
+  height: '42px',
+  borderRadius: '50%',
+  border: '1px solid rgba(243,183,87,0.45)',
+  background: 'rgba(0,15,35,0.88)',
+  color: PL,
+  cursor: 'pointer',
+  backdropFilter: 'blur(8px)',
+};
 
 const serif: CSSProperties = { fontFamily: "'Playfair Display', serif" };
 const sans:  CSSProperties = { fontFamily: "'Poppins', sans-serif" };
@@ -80,19 +96,6 @@ const TOPICS = [
   'Dasha Periods & Life Timing',
   'Career & Wealth Indicators',
   'Relationship Compatibility Secrets',
-];
-
-const MENTOR_CREDS = [
-  '31+ years of legacy in astrology',
-  'Thousands of successful consultations completed',
-  'Expert in Vedic Astrology, Numerology & Vastu',
-  'Proven track record of mentoring astrologers',
-];
-
-const STATS = [
-  { val: '2 Lakh+',      label: 'Kundlis Analyzed' },
-  { val: '1.9 Million+', label: 'Social Followers'  },
-  { val: '50+',          label: 'Countries Reached' },
 ];
 
 const PRESS_BADGES = ['Outlook', 'The Telegraph', 'News18', 'LatestLY', 'The Tribune'];
@@ -164,7 +167,28 @@ const FAQ_DATA = [
 ───────────────────────────────────────── */
 function MasterclassPageContent() {
   const openForm = useOpenLeadForm();
+  const heroRef = useRef<HTMLElement>(null);
+  const heroVideoRef = useRef<HTMLVideoElement>(null);
   const [openFAQ, setOpenFAQ] = useState<number | null>(null);
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [isMuted, setIsMuted] = useState(true);
+
+  const togglePlayPause = useCallback(() => {
+    const video = heroVideoRef.current;
+    if (!video) return;
+    if (video.paused) void video.play().catch(() => {});
+    else video.pause();
+  }, []);
+
+  const toggleMute = useCallback(() => {
+    const video = heroVideoRef.current;
+    if (!video) return;
+    const nextMuted = !video.muted;
+    video.muted = nextMuted;
+    if (!nextMuted) video.volume = 1;
+    setIsMuted(nextMuted);
+    if (video.paused) void video.play().catch(() => {});
+  }, []);
 
   /* Body padding for fixed bars */
   useEffect(() => {
@@ -187,6 +211,59 @@ function MasterclassPageContent() {
     return () => io.disconnect();
   }, []);
 
+  /* Sync play / pause state with the video element */
+  useEffect(() => {
+    const video = heroVideoRef.current;
+    if (!video) return;
+
+    const onPlay = () => setIsPlaying(true);
+    const onPause = () => setIsPlaying(false);
+
+    video.addEventListener('play', onPlay);
+    video.addEventListener('pause', onPause);
+    return () => {
+      video.removeEventListener('play', onPlay);
+      video.removeEventListener('pause', onPause);
+    };
+  }, []);
+
+  /* Hero video: autoplay in view, pause when scrolled away */
+  useEffect(() => {
+    const hero = heroRef.current;
+    const video = heroVideoRef.current;
+    if (!hero || !video) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          void video.play().catch(() => {});
+        } else {
+          video.pause();
+        }
+      },
+      { threshold: 0.2 },
+    );
+
+    observer.observe(hero);
+    return () => observer.disconnect();
+  }, []);
+
+  /* Try unmuted autoplay; fall back to muted + prompt if blocked */
+  useEffect(() => {
+    const video = heroVideoRef.current;
+    if (!video) return;
+
+    video.volume = 1;
+    video.muted = false;
+    void video.play().then(() => {
+      setIsMuted(false);
+    }).catch(() => {
+      video.muted = true;
+      setIsMuted(true);
+      void video.play().catch(() => {});
+    });
+  }, []);
+
   const toggle = (i: number) => setOpenFAQ(p => (p === i ? null : i));
 
   return (
@@ -207,7 +284,10 @@ function MasterclassPageContent() {
       {/* ══════════════════════════════════════
           §2  HERO
       ══════════════════════════════════════ */}
-      <section style={{ background: THEME_DARK_BG, padding: '64px 20px 72px', position: 'relative', overflow: 'hidden' }}>
+      <section
+        ref={heroRef}
+        style={{ background: THEME_DARK_BG, padding: '64px 20px 72px', position: 'relative', overflow: 'hidden' }}
+      >
         {/* ambient glow */}
         <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', background: 'radial-gradient(ellipse 70% 60% at 40% 50%, rgba(216,138,34,0.1), transparent 65%)' }} />
 
@@ -262,34 +342,59 @@ function MasterclassPageContent() {
             </p>
           </div>
 
-          {/* RIGHT — Mentor card */}
+          {/* RIGHT — Hero video only */}
           <div className="mw-anim mw-delay" style={{
-            background: 'white', borderRadius: '16px', padding: '24px',
-            boxShadow: '0 4px 24px rgba(0,0,0,0.25)', border: '1px solid rgba(216,138,34,0.2)',
+            position: 'relative',
+            width: '100%',
+            aspectRatio: '4 / 3',
+            minHeight: '200px',
+            borderRadius: '16px',
+            overflow: 'hidden',
+            border: '1px solid rgba(216,138,34,0.25)',
+            boxShadow: '0 4px 24px rgba(0,0,0,0.35)',
+            background: '#000',
           }}>
-            <div style={{
-              width: '100%', aspectRatio: '4 / 3', minHeight: '200px',
-              borderRadius: '12px', overflow: 'hidden',
-              marginBottom: '18px', border: '1px solid rgba(216,138,34,0.15)',
-              background: LIGHT,
-            }}>
-              <img src={GURU_IMG} alt="Gurudev Anand" style={{ width: '100%', height: '100%', objectFit: 'contain', objectPosition: 'center' }} />
-            </div>
-
-            <p style={{ fontSize: '12px', fontWeight: 600, color: P, textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '4px', ...sans }}>Your Mentor</p>
-            <h3 style={{ ...serif, fontSize: '22px', color: INK, marginBottom: '14px', fontWeight: 700 }}>Gurudev Anand</h3>
-
-            {MENTOR_CREDS.map(c => <Check key={c}>{c}</Check>)}
-
-            <hr style={{ border: 'none', borderTop: `1px solid ${BORDER}`, margin: '16px 0' }} />
-
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)' }}>
-              {STATS.map((s, i) => (
-                <div className="mw-stat-col" key={s.label} style={{ borderLeft: i > 0 ? `1px solid ${BORDER}` : 'none' }}>
-                  <div style={{ fontSize: '13px', fontWeight: 700, color: P }}>{s.val}</div>
-                  <div style={{ fontSize: '11px', color: INK_MUTED, marginTop: '2px' }}>{s.label}</div>
-                </div>
-              ))}
+            <video
+              ref={heroVideoRef}
+              src={MASTERCLASS_HERO_VIDEO}
+              autoPlay
+              muted={isMuted}
+              playsInline
+              loop
+              preload="auto"
+              style={{ width: '100%', height: '100%', objectFit: 'contain', objectPosition: 'center', display: 'block' }}
+              aria-label="90-minute masterclass preview"
+            />
+            <div
+              style={{
+                position: 'absolute',
+                left: 0,
+                right: 0,
+                bottom: 0,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '12px',
+                padding: '14px',
+                background: 'linear-gradient(transparent, rgba(0,0,0,0.72))',
+              }}
+            >
+              <button
+                type="button"
+                onClick={togglePlayPause}
+                aria-label={isPlaying ? 'Pause video' : 'Play video'}
+                style={VIDEO_CTRL_BTN}
+              >
+                {isPlaying ? <Pause size={18} fill="currentColor" /> : <Play size={18} fill="currentColor" />}
+              </button>
+              <button
+                type="button"
+                onClick={toggleMute}
+                aria-label={isMuted ? 'Unmute video' : 'Mute video'}
+                style={VIDEO_CTRL_BTN}
+              >
+                {isMuted ? <VolumeX size={18} /> : <Volume2 size={18} />}
+              </button>
             </div>
           </div>
 
