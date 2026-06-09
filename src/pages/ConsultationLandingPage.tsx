@@ -4,8 +4,6 @@ import {
   THEME_GOLD_GRD,
   THEME_DARK_STRIP_BG,
   GURU_IMG_RESOURCE,
-  PRICE_AUDIO_INR,
-  PRICE_VIDEO_INR,
   PHONE_TEL,
   PHONE,
 } from '../lib/constants';
@@ -28,7 +26,6 @@ const CTA_TEXT = '#002D60';
 
 const serif: CSSProperties = { fontFamily: "'Playfair Display', serif" };
 const sans:  CSSProperties = { fontFamily: "'Poppins', sans-serif" };
-const fmt = (n: number) => `₹${n.toLocaleString('en-IN')}`;
 
 /* ── Shared micro-components ── */
 function CTABtn({
@@ -82,7 +79,6 @@ const CONSULT_TYPES = [
     icon: '📞',
     type: 'Audio Consultation',
     duration: '45–60 min',
-    price: fmt(PRICE_AUDIO_INR),
     includes: [
       'Full Kundli reading by Gurudev Anand',
       'Career, relationship & finance insights',
@@ -96,7 +92,6 @@ const CONSULT_TYPES = [
     icon: '🎥',
     type: 'Video Consultation',
     duration: '45–60 min',
-    price: fmt(PRICE_VIDEO_INR),
     includes: [
       'Everything in Audio, plus face-to-face clarity',
       'Screen-shared chart walkthrough',
@@ -117,7 +112,7 @@ const RECEIVE = [
 ];
 
 const STEPS = [
-  { n: '01', title: 'Book & Pay',          desc: 'Select your session type and complete the secure payment. Instant confirmation via email.' },
+  { n: '01', title: 'Book Your Session',   desc: 'Select your preferred format and submit your details. Our team confirms your booking via email.' },
   { n: '02', title: 'Share Birth Details', desc: 'Provide your full name, date, time, and place of birth via WhatsApp or email.' },
   { n: '03', title: 'Receive a Time Slot', desc: 'Gurudev Anand\'s team schedules your session within 24–48 hours of booking.' },
   { n: '04', title: 'Your Session',        desc: 'Join the private call. Ask everything. Walk away with clarity you can act on.' },
@@ -310,7 +305,7 @@ function ConsultationLandingPageContent() {
       </section>
 
       {/* ══════════════════════════════════════
-          §5  CONSULTATION TYPES (PRICING)
+          §5  CONSULTATION TYPES
       ══════════════════════════════════════ */}
       <section style={{ background: 'white', padding: '72px 20px' }}>
         <div className="mw-wrap">
@@ -343,12 +338,7 @@ function ConsultationLandingPageContent() {
 
                 <div style={{ fontSize: '28px', marginBottom: '12px' }}>{c.icon}</div>
                 <h3 style={{ ...sans, fontSize: '17px', fontWeight: 700, color: INK, marginBottom: '4px' }}>{c.type}</h3>
-                <p style={{ fontSize: '13px', color: INK_MUTED, marginBottom: '18px' }}>{c.duration}</p>
-
-                <div style={{ marginBottom: '20px' }}>
-                  <span style={{ ...serif, fontSize: '32px', fontWeight: 700, color: P }}>{c.price}</span>
-                  <span style={{ fontSize: '13px', color: INK_MUTED, marginLeft: '6px' }}>per session</span>
-                </div>
+                <p style={{ fontSize: '13px', color: INK_MUTED, marginBottom: '22px' }}>{c.duration}</p>
 
                 <div style={{ marginBottom: '22px' }}>
                   {c.includes.map(line => <Check key={line}>{line}</Check>)}
@@ -583,7 +573,7 @@ function ConsultationLandingPageContent() {
         display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 24px',
       }}>
         <div style={{ lineHeight: 1.2 }}>
-          <span style={{ fontSize: '18px', fontWeight: 700, color: PL, ...sans }}>From {fmt(PRICE_AUDIO_INR)}</span>
+          <span style={{ fontSize: '18px', fontWeight: 700, color: PL, ...sans }}>1-on-1 Consultation</span>
           <br />
           <span style={{ fontSize: '11px', color: 'rgba(255,255,255,0.55)', fontWeight: 400, ...sans }}>Audio & Video sessions available</span>
         </div>

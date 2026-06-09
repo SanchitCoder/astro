@@ -1,22 +1,91 @@
 ﻿import { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Sparkles, ArrowRight, Menu, X, Phone } from 'lucide-react';
+import { Sparkles, ArrowRight, Menu, X, Phone, ChevronDown } from 'lucide-react';
 import { PHONE, PHONE_TEL } from '../../lib/constants';
 
-const LINKS = [
-  { label: 'Home',         to: '/',                 hash: '#home'      },
-  { label: 'About',        to: '/',                 hash: '#about'     },
-  { label: 'Services',     to: '/',                 hash: '#services'  },
-  { label: 'Consultation', to: '/book-consultation'                    },
-  { label: 'Articles',     to: '/',                 hash: '#knowledge' },
-  { label: 'Contact',      to: '/contact'                              },
+const PROGRAM_LINKS = [
+  { label: 'Masterclass',    to: '/masterclass'       },
+  { label: '2 Day Webinar',  to: '/mega-webinar'      },
+  { label: 'One to One',     to: '/book-consultation' },
 ];
+
+const LINKS = [
+  { label: 'Home',     to: '/',        hash: '#home'      },
+  { label: 'About',    to: '/',        hash: '#about'     },
+  { label: 'Services', to: '/',        hash: '#services'  },
+  { label: 'Articles', to: '/',        hash: '#knowledge' },
+  { label: 'Contact',  to: '/contact'                   },
+];
+
+const programPaths = new Set(PROGRAM_LINKS.map((l) => l.to));
+
+function NavProgramsDropdown({ onNavigate }: { onNavigate?: () => void }) {
+  const location = useLocation();
+  const [open, setOpen] = useState(false);
+  const isActive = programPaths.has(location.pathname);
+
+  const itemCls =
+    'block px-4 py-2.5 text-[11px] font-bold uppercase tracking-[0.12em] text-white/90 transition-colors hover:bg-white/10 hover:text-gold-300';
+
+  return (
+    <div
+      className="relative md:inline-block w-full md:w-auto"
+      onMouseEnter={() => setOpen(true)}
+      onMouseLeave={() => setOpen(false)}
+    >
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        aria-expanded={open}
+        aria-haspopup="true"
+        className={`relative flex w-full items-center justify-between gap-1 py-1 text-left text-[11px] font-bold uppercase tracking-[0.15em] transition-colors duration-200 group md:inline-flex md:w-auto md:justify-start ${
+          isActive ? 'text-gold-300' : 'text-white/95 hover:text-gold-300'
+        }`}
+      >
+        Programs
+        <ChevronDown
+          size={14}
+          className={`shrink-0 transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
+        />
+        <span className="absolute -bottom-0.5 left-0 h-px w-0 bg-gold-400 transition-all duration-300 group-hover:w-full" />
+      </button>
+
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0, y: -6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.18 }}
+            className="md:absolute md:left-0 md:top-full md:z-50 md:mt-2 md:min-w-[200px] md:overflow-hidden md:rounded-xl md:border md:border-white/10 md:bg-nebula-700 md:py-1 md:shadow-[0_12px_32px_rgba(0,0,0,0.35)] mt-2 pl-3 md:pl-0 md:mt-2 border-l border-white/15 md:border-l-0"
+          >
+            {PROGRAM_LINKS.map((item) => (
+              <Link
+                key={item.to}
+                to={item.to}
+                onClick={() => {
+                  setOpen(false);
+                  onNavigate?.();
+                }}
+                className={`${itemCls} ${
+                  location.pathname === item.to ? 'text-gold-300 md:bg-white/5' : ''
+                }`}
+              >
+                {item.label}
+              </Link>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
 
 function NavItem({ to, hash, label, onClick }: { to: string; hash?: string; label: string; onClick?: () => void }) {
   const location = useLocation();
   const navigate = useNavigate();
-  const isPageRoute = to === '/contact' || to === '/book-consultation';
+  const isPageRoute = to === '/contact';
   const isActive = isPageRoute
     ? location.pathname === to
     : location.pathname === '/' && hash && location.hash === hash;
@@ -99,7 +168,11 @@ export function Navbar() {
 
         {/* Desktop nav */}
         <nav className="hidden md:flex items-center gap-7">
-          {LINKS.map((l) => (
+          {LINKS.slice(0, 3).map((l) => (
+            <NavItem key={l.label} to={l.to} hash={l.hash} label={l.label} />
+          ))}
+          <NavProgramsDropdown />
+          {LINKS.slice(3).map((l) => (
             <NavItem key={l.label} to={l.to} hash={l.hash} label={l.label} />
           ))}
         </nav>
@@ -133,7 +206,15 @@ export function Navbar() {
             transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
             className="md:hidden max-h-[min(70dvh,100svh)] overflow-y-auto overscroll-contain bg-nebula-700 border-t border-white/10 px-4 pt-4 pb-5 space-y-1 shadow-lg"
           >
-            {LINKS.map((l) => (
+            {LINKS.slice(0, 3).map((l) => (
+              <div key={l.label} className="border-b border-white/10 py-2.5">
+                <NavItem to={l.to} hash={l.hash} label={l.label} onClick={() => setMobileOpen(false)} />
+              </div>
+            ))}
+            <div className="border-b border-white/10 py-2.5">
+              <NavProgramsDropdown onNavigate={() => setMobileOpen(false)} />
+            </div>
+            {LINKS.slice(3).map((l) => (
               <div key={l.label} className="border-b border-white/10 py-2.5 last:border-0">
                 <NavItem to={l.to} hash={l.hash} label={l.label} onClick={() => setMobileOpen(false)} />
               </div>

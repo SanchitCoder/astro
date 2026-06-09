@@ -6,6 +6,7 @@ import { ContactPage } from './pages/ContactPage';
 import { WebinarPage } from './pages/WebinarPage';
 import { MegaWebinarPage } from './pages/MegaWebinarPage';
 import { MasterclassPage } from './pages/MasterclassPage';
+import { MasterclassThankYouPage } from './pages/MasterclassThankYouPage';
 import { ConsultationLandingPage } from './pages/ConsultationLandingPage';
 
 function App() {
@@ -15,7 +16,8 @@ function App() {
       <Routes>
         {/* Standalone landing pages — no site navbar/footer */}
         <Route path="mega-webinar"       element={<MegaWebinarPage />} />
-        <Route path="masterclass"        element={<MasterclassPage />} />
+        <Route path="masterclass"              element={<MasterclassPage />} />
+        <Route path="masterclass/thank-you"    element={<MasterclassThankYouPage />} />
         <Route path="book-consultation"  element={<ConsultationLandingPage />} />
 
         <Route element={<SiteLayout />}>

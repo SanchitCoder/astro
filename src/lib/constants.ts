@@ -8,6 +8,11 @@ export const EMAIL = 'info@gurudev-anand.com';
 export const EMAIL_MAILTO = `mailto:${EMAIL}`;
 export const WHATSAPP_URL = 'https://wa.me/919876344400';
 
+/** Masterclass thank-you page — WhatsApp community invite */
+export const MASTERCLASS_WHATSAPP_COMMUNITY_URL =
+  import.meta.env.VITE_MASTERCLASS_WHATSAPP_COMMUNITY_URL ??
+  'https://chat.whatsapp.com/Ey6uYBilZCaEOPB8tA9CX4';
+
 /** Site-wide section backgrounds & CTA gradients */
 export const THEME_DARK_BG =
   'linear-gradient(160deg, #001D48 0%, #002D60 40%, #003D78 70%, #001530 100%)';

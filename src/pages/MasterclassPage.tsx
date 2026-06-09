@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, type CSSProperties } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   THEME_DARK_BG,
   THEME_GOLD_GRD,
@@ -28,7 +29,7 @@ const sans:  CSSProperties = { fontFamily: "'Poppins', sans-serif" };
    Shared sub-components (same as mega page)
 ───────────────────────────────────────── */
 function CTABtn({
-  text = 'Secure Your Seat — Join the Masterclass',
+  text = 'Join Free — Reserve Your Seat',
   full = false,
   sm = false,
   onClick,
@@ -72,7 +73,7 @@ function Eyebrow({ children }: { children: React.ReactNode }) {
 const INFO_CARDS = [
   { icon: '📅', label: 'Date',     val: 'Coming Soon'   },
   { icon: '⏱️', label: 'Duration', val: '90 Minutes'    },
-  { icon: '🎯', label: 'Format',   val: 'Live + Replay' },
+  { icon: '🎁', label: 'Access',   val: '100% Free'     },
 ];
 
 const TOPICS = [
@@ -94,7 +95,7 @@ const PAIN_POINTS = [
 ];
 
 const WHY_MASTERCLASS = [
-  { icon: '⚡', title: 'Zero Fluff — All Substance', desc: '90 minutes of dense, practical knowledge. No filler, no sales pitches — just the exact frameworks Gurudev Anand uses in every consultation.' },
+  { icon: '⚡', title: 'Zero Fluff — All Substance', desc: '90 minutes of dense, practical knowledge. No filler — just the exact frameworks Gurudev Anand uses in every consultation. Completely free to attend.' },
   { icon: '🎯', title: 'Laser-Focused Curriculum',    desc: 'Unlike multi-day courses, every minute is planned. You leave with immediately actionable insights, not homework assignments.' },
   { icon: '🙋', title: 'Live Interactive Q&A',        desc: 'Ask Gurudev Anand your specific question live. Real answers about your real chart — not pre-recorded scripts.' },
   { icon: '📲', title: '7-Day Replay Access',         desc: "Can't attend live? Replay is sent within 24 hours and stays accessible for 7 days so you can revisit key moments." },
@@ -138,12 +139,12 @@ const FAQ_DATA = [
     a: 'Keep your date, time, and place of birth handy. A notebook to take notes. We recommend generating a free Kundli chart at any reputed online platform before the session starts.' },
   { q: 'Will I get a recording if I can\'t attend live?',
     a: 'Yes. A full replay is sent within 24 hours of the live session. Replay access is available for 7 days from the date of the session.' },
-  { q: 'What is the registration fee?',
-    a: 'The registration fee is ₹149 only. This nominal fee ensures you are committed to attending and covers platform and resource costs.' },
+  { q: 'Is the masterclass really free?',
+    a: 'Yes — this 90-minute masterclass is completely free. There is no registration fee or hidden charge. Simply register to reserve your seat and receive the joining link via email and WhatsApp.' },
   { q: 'Can I ask Gurudev Anand my personal chart question?',
     a: 'Yes! The last 10 minutes are a dedicated live Q&A. While we cannot guarantee every question will be answered live, all submitted questions are reviewed and addressed either in the session or via a follow-up.' },
   { q: 'Is this different from the 2-Day Mega Webinar?',
-    a: 'Yes. The masterclass is a single 90-minute intensive session focused on giving you the core framework in one sitting. The 2-Day Webinar covers a broader curriculum over two evenings. This masterclass is ideal for those who want concentrated, fast results.' },
+    a: 'Yes. The masterclass is a single free 90-minute intensive session focused on giving you the core framework in one sitting. The 2-Day Mega Webinar covers a broader curriculum over two evenings and has a nominal registration fee. This masterclass is ideal for those who want concentrated, fast results at no cost.' },
 ];
 
 /* ─────────────────────────────────────────
@@ -189,7 +190,7 @@ function MasterclassPageContent() {
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         fontSize: '13px', color: CTA_TEXT, letterSpacing: '1px', fontWeight: '600', ...sans,
       }}>
-        🔴 LIVE &nbsp;&nbsp; 90-Minute Power Masterclass
+        🔴 LIVE &nbsp;&nbsp; Free 90-Minute Masterclass
       </div>
 
       {/* ══════════════════════════════════════
@@ -207,7 +208,7 @@ function MasterclassPageContent() {
           {/* LEFT */}
           <div className="mw-anim">
             <span className="mw-pill" style={{ border: '1px solid rgba(243,183,87,0.35)', background: 'rgba(243,183,87,0.1)', color: PL, marginBottom: '18px', display: 'inline-flex' }}>
-              ⚡ 90-Minute Masterclass
+              ⚡ Free 90-Minute Masterclass
             </span>
 
             <h1 style={{ ...serif, fontSize: 'clamp(26px, 4.5vw, 44px)', lineHeight: 1.22, color: 'white', fontWeight: 700, marginBottom: '14px' }}>
@@ -217,7 +218,7 @@ function MasterclassPageContent() {
             </h1>
 
             <p style={{ fontSize: '15px', color: 'rgba(255,255,255,0.88)', lineHeight: 1.65, marginBottom: '26px' }}>
-              One live session. Zero fluff. Walk away knowing how to read your Kundli, understand your Dasha timing, and identify the planetary patterns driving your career, love, and wealth — right now.
+              One free live session. Zero fluff. Walk away knowing how to read your Kundli, understand your Dasha timing, and identify the planetary patterns driving your career, love, and wealth — right now.
             </p>
 
             {/* Info cards */}
@@ -249,7 +250,7 @@ function MasterclassPageContent() {
 
             <CTABtn onClick={openForm} full />
             <p style={{ textAlign: 'center', color: PL, fontSize: '13px', fontWeight: 500, marginTop: '10px' }}>
-              ⚡ Limited Seats — Register Before They Fill Up
+              ✦ 100% Free to attend — Limited seats available
             </p>
           </div>
 
@@ -545,7 +546,7 @@ function MasterclassPageContent() {
               Every registered participant receives a concise PDF reference sheet covering the key frameworks taught in the masterclass — free to keep forever.
             </p>
             {BONUS_FEATURES.map(f => <Check key={f}>{f}</Check>)}
-            <div style={{ marginTop: '22px' }}><CTABtn onClick={openForm} text="Claim Your Spot + Free Guide" /></div>
+            <div style={{ marginTop: '22px' }}><CTABtn onClick={openForm} text="Join Free + Get Your Guide" /></div>
           </div>
 
         </div>
@@ -596,12 +597,12 @@ function MasterclassPageContent() {
         display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 24px',
       }}>
         <div style={{ lineHeight: 1.2 }}>
-          <span style={{ fontSize: '20px', fontWeight: 700, color: PL, ...sans }}>₹149/-</span>
-          <span style={{ fontSize: '14px', color: 'rgba(255,255,255,0.85)', marginLeft: '4px', ...sans }}>Only</span>
+          <span style={{ fontSize: '20px', fontWeight: 700, color: PL, ...sans }}>FREE</span>
+          <span style={{ fontSize: '14px', color: 'rgba(255,255,255,0.85)', marginLeft: '4px', ...sans }}>90-Min Masterclass</span>
           <br />
           <span style={{ fontSize: '12px', color: PL, fontWeight: 400, ...sans }}>(Limited Seats)</span>
         </div>
-        <CTABtn onClick={openForm} text="Register Now →" sm />
+        <CTABtn onClick={openForm} text="Join Free →" sm />
       </div>
 
     </div>
@@ -609,8 +610,12 @@ function MasterclassPageContent() {
 }
 
 export function MasterclassPage() {
+  const navigate = useNavigate();
   return (
-    <LeadFormModalProvider source="masterclass">
+    <LeadFormModalProvider
+      source="masterclass"
+      onSuccess={() => navigate('/masterclass/thank-you')}
+    >
       <MasterclassPageContent />
     </LeadFormModalProvider>
   );

@@ -15,10 +15,11 @@ export function useOpenLeadForm(): () => void {
 type Props = {
   children: ReactNode;
   source: FormSource;
+  onSuccess?: () => void;
 };
 
 /** Standalone landing pages: shared CTA modal + n8n webhook submit */
-export function LeadFormModalProvider({ children, source }: Props) {
+export function LeadFormModalProvider({ children, source, onSuccess }: Props) {
   const [open, setOpen] = useState(false);
   const openForm = useCallback(() => setOpen(true), []);
   const closeForm = useCallback(() => setOpen(false), []);
@@ -26,7 +27,7 @@ export function LeadFormModalProvider({ children, source }: Props) {
   return (
     <OpenLeadFormContext.Provider value={openForm}>
       {children}
-      <ConnectModal open={open} onClose={closeForm} source={source} />
+      <ConnectModal open={open} onClose={closeForm} source={source} onSuccess={onSuccess} />
     </OpenLeadFormContext.Provider>
   );
 }

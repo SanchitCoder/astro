@@ -9,9 +9,11 @@ type Props = {
   open: boolean;
   onClose: () => void;
   source?: FormSource;
+  /** When set, called after a successful submit instead of showing the inline thank-you state */
+  onSuccess?: () => void;
 };
 
-export function ConnectModal({ open, onClose, source = 'connect_modal' }: Props) {
+export function ConnectModal({ open, onClose, source = 'connect_modal', onSuccess }: Props) {
   const [loading, setLoading] = useState(false);
   const [done, setDone] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -38,6 +40,11 @@ export function ConnectModal({ open, onClose, source = 'connect_modal' }: Props)
         email: form.email.trim(),
         phone: form.phone.trim(),
       });
+      if (onSuccess) {
+        onClose();
+        onSuccess();
+        return;
+      }
       setDone(true);
     } catch (err) {
       setError(err instanceof WebhookSubmitError ? err.message : 'Something went wrong. Please try again.');
