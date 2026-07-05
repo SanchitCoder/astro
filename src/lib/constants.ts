@@ -8,13 +8,6 @@ export const EMAIL = 'info@gurudev-anand.com';
 export const EMAIL_MAILTO = `mailto:${EMAIL}`;
 export const WHATSAPP_URL = 'https://wa.me/919876344400';
 
-/** Official social profiles — Gurudev Anand */
-export const SOCIAL_LINKS = {
-  facebook: 'https://www.facebook.com/share/1P4EGGYixN/',
-  instagram: 'https://www.instagram.com/gurudev.v.anand/',
-  youtube: 'https://youtube.com/@sadhguruanandji',
-} as const;
-
 /** Masterclass thank-you page — WhatsApp community invite */
 export const MASTERCLASS_WHATSAPP_COMMUNITY_URL =
   import.meta.env.VITE_MASTERCLASS_WHATSAPP_COMMUNITY_URL ??

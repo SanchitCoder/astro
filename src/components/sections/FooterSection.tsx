@@ -1,13 +1,6 @@
 ﻿import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { Sparkles, Phone, Mail, MapPin, Facebook, Instagram, Youtube } from 'lucide-react';
-import { EMAIL, EMAIL_MAILTO, PHONE, PHONE_TEL, SOCIAL_LINKS } from '../../lib/constants';
-
-const SOCIAL_LINKS_LIST = [
-  { Icon: Facebook, href: SOCIAL_LINKS.facebook, label: 'Facebook' },
-  { Icon: Instagram, href: SOCIAL_LINKS.instagram, label: 'Instagram' },
-  { Icon: Youtube, href: SOCIAL_LINKS.youtube, label: 'YouTube' },
-] as const;
+import { Sparkles, Phone, Mail, MapPin } from 'lucide-react';
+import { EMAIL, EMAIL_MAILTO, PHONE, PHONE_TEL } from '../../lib/constants';
 
 export function FooterSection() {
   return (
@@ -31,22 +24,6 @@ export function FooterSection() {
             Vedic astrologer, Vastu consultant, and Medical astrology practitioner with over
             twenty-five years of one-to-one guidance for clients worldwide.
           </p>
-          <div className="mt-6 flex gap-2.5">
-            {SOCIAL_LINKS_LIST.map(({ Icon, href, label }) => (
-              <motion.a
-                key={label}
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={label}
-                whileHover={{ scale: 1.1, y: -2 }}
-                transition={{ duration: 0.2 }}
-                className="w-9 h-9 rounded-full bg-white/[0.07] border border-white/10 flex items-center justify-center text-white/90 hover:text-gold-400 hover:border-gold-400/30 transition-colors duration-200"
-              >
-                <Icon size={14} />
-              </motion.a>
-            ))}
-          </div>
         </div>
 
         {/* Explore */}
